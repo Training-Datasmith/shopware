@@ -45,7 +45,7 @@ class ServiceSourceResolver implements Source
     public function supports(Manifest|AppEntity $app): bool
     {
         return match (true) {
-            $app instanceof AppEntity => $app->getSourceType() === $this->name(),
+            $app instanceof AppEntity => $app->getSourceType() === static::name(),
             $app instanceof Manifest => preg_match('#^https?://#', $app->getPath()) && $app->getMetadata()->isSelfManaged(),
         };
     }

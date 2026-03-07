@@ -23,10 +23,12 @@ class EditedFilter extends AbstractFilter implements SnippetFilterInterface
         $result = [];
         foreach ($snippets as $setId => $set) {
             foreach ($set['snippets'] as $translationKey => $snippet) {
-                if ($snippet['id'] === null || mb_strpos((string) $snippet['author'], 'user/') === 0) {
+                if ($snippet['id'] === null) {
                     continue;
                 }
-
+                if (mb_strpos((string) $snippet['author'], 'user/') === 0) {
+                    continue;
+                }
                 $result[$setId]['snippets'][$translationKey] = $snippet;
             }
         }

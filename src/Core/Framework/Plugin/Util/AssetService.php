@@ -222,8 +222,8 @@ class AssetService
     private function buildBundleManifest(array $files): array
     {
         $localManifest = array_combine(
-            array_map(static fn (SplFileInfo $file) => $file->getRelativePathname(), $files),
-            array_map(static fn (SplFileInfo $file) => Hasher::hashFile($file->getPathname()), $files)
+            array_map(static fn (SplFileInfo $file): string => $file->getRelativePathname(), $files),
+            array_map(static fn (SplFileInfo $file): string => Hasher::hashFile($file->getPathname()), $files)
         );
 
         ksort($localManifest);

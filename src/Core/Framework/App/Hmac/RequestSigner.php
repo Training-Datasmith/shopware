@@ -24,7 +24,7 @@ class RequestSigner
 
         $request->getBody()->rewind();
 
-        if (!\strlen($body)) {
+        if (!\strlen((string) $body)) {
             return clone $request;
         }
 

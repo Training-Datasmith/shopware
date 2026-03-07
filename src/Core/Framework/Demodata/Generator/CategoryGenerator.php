@@ -127,7 +127,7 @@ class CategoryGenerator implements DemodataGeneratorInterface
 
             if (!empty($chosenTags)) {
                 $tagAssignments = array_map(
-                    fn ($id) => ['id' => $id],
+                    fn ($id): array => ['id' => $id],
                     $chosenTags
                 );
             }

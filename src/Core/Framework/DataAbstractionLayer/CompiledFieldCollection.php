@@ -117,7 +117,7 @@ class CompiledFieldCollection extends FieldCollection
     public function getBasicFields(): self
     {
         return $this->filter(
-            function (Field $field) {
+            function (Field $field): bool {
                 if ($field instanceof AssociationField) {
                     return $field->getAutoload();
                 }
@@ -137,7 +137,7 @@ class CompiledFieldCollection extends FieldCollection
      */
     public function filterByFlag(string $flagClass): self
     {
-        return $this->filter(static fn (Field $field) => $field->is($flagClass));
+        return $this->filter(static fn (Field $field): bool => $field->is($flagClass));
     }
 
     public function getChildrenAssociationField(): ?ChildrenAssociationField

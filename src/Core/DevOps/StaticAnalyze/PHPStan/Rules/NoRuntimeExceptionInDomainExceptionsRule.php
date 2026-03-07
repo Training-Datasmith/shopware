@@ -36,7 +36,7 @@ class NoRuntimeExceptionInDomainExceptionsRule implements Rule
     public function processNode(Node $node, Scope $scope): array
     {
         // Only care about static methods
-        if (!$node instanceof ClassMethod || !$node->isStatic()) {
+        if (!$node->isStatic()) {
             return [];
         }
 

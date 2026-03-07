@@ -43,7 +43,7 @@ class TranslationMetadataLoader
         $localMetadata = $this->getLocalMetadata();
         $remoteMetadata = $this->fetchRemoteMetadataArray();
 
-        $locales = $locales ?? $localMetadata->getKeys();
+        $locales ??= $localMetadata->getKeys();
 
         foreach ($locales as $locale) {
             $remoteEntry = $remoteMetadata[$locale] ?? null;

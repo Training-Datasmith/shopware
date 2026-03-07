@@ -96,8 +96,6 @@ class CustomSnippetFormatController
             ->notName('render.html.twig')
             ->ignoreUnreadableDirs();
 
-        $snippets = array_values(array_map(static fn (\SplFileInfo $file): string => ltrim(mb_substr(str_replace('.html.twig', '', $file->getPathname()), mb_strlen($directory)), '/'), iterator_to_array($finder)));
-
-        return $snippets;
+        return array_values(array_map(static fn (\SplFileInfo $file): string => ltrim(mb_substr(str_replace('.html.twig', '', $file->getPathname()), mb_strlen($directory)), '/'), iterator_to_array($finder)));
     }
 }

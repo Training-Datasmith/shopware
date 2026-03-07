@@ -229,7 +229,7 @@ class DeliveryCalculator
     private function getMatchingPriceOfRule(Delivery $delivery, SalesChannelContext $context, ShippingMethodPriceCollection $shippingPrices): ?CalculatedPrice
     {
         $shippingPrices->sort(
-            function (ShippingMethodPriceEntity $priceEntityA, ShippingMethodPriceEntity $priceEntityB) use ($context) {
+            function (ShippingMethodPriceEntity $priceEntityA, ShippingMethodPriceEntity $priceEntityB) use ($context): int {
                 $priceCollectionA = $priceEntityA->getCurrencyPrice();
                 $priceA = $priceCollectionA ? $this->getCurrencyPrice($priceCollectionA, $context) : null;
 

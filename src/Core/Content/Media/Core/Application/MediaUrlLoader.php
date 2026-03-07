@@ -57,8 +57,10 @@ class MediaUrlLoader
             }
 
             $entity->assign(['url' => $urls[$entity->getUniqueIdentifier()]]);
-
-            if (!$entity->has('thumbnails') || $entity->get('thumbnails') === null) {
+            if (!$entity->has('thumbnails')) {
+                continue;
+            }
+            if ($entity->get('thumbnails') === null) {
                 continue;
             }
 
@@ -83,24 +85,34 @@ class MediaUrlLoader
         $mapped = [];
 
         foreach ($entities as $entity) {
-            if (!$entity->has('path') || empty($entity->get('path'))) {
+            if (!$entity->has('path')) {
+                continue;
+            }
+            if (empty($entity->get('path'))) {
                 continue;
             }
             // don't generate private urls
-            if (!$entity->has('private') || $entity->get('private')) {
+            if (!$entity->has('private')) {
                 continue;
             }
-
+            if ($entity->get('private')) {
+                continue;
+            }
             $mapped[$entity->getUniqueIdentifier()] = UrlParams::fromMedia($entity);
-
-            if (!$entity->has('thumbnails') || $entity->get('thumbnails') === null) {
+            if (!$entity->has('thumbnails')) {
+                continue;
+            }
+            if ($entity->get('thumbnails') === null) {
                 continue;
             }
 
             /** @var Entity $thumbnail */
             foreach ($entity->get('thumbnails') as $thumbnail) {
                 \assert($thumbnail instanceof Entity);
-                if (!$thumbnail->has('path') || empty($thumbnail->get('path'))) {
+                if (!$thumbnail->has('path')) {
+                    continue;
+                }
+                if (empty($thumbnail->get('path'))) {
                     continue;
                 }
 

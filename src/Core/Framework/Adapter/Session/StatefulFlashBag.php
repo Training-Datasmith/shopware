@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 #[Package('framework')]
 class StatefulFlashBag implements FlashBagInterface
 {
-    private FlashBag $inner;
+    private readonly FlashBag $inner;
 
     private bool $displayedAnyFlashes = false;
 

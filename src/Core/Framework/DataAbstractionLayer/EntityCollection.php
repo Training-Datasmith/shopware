@@ -48,9 +48,7 @@ class EntityCollection extends Collection
      */
     public function getIds(): array
     {
-        return $this->fmap(static function (Entity $entity) {
-            return $entity->getUniqueIdentifier();
-        });
+        return $this->fmap(static fn(Entity $entity) => $entity->getUniqueIdentifier());
     }
 
     /**
@@ -59,9 +57,7 @@ class EntityCollection extends Collection
     public function filterByProperty(string $property, $value): static
     {
         return $this->filter(
-            static function (Entity $struct) use ($property, $value) {
-                return $struct->get($property) === $value;
-            }
+            static fn(Entity $struct) => $struct->get($property) === $value
         );
     }
 

@@ -40,7 +40,7 @@ class UseCLIContextRule implements Rule
             return [];
         }
 
-        if (!$node->class instanceof Name || $node->class->toString() !== 'Shopware\Core\Framework\Context') {
+        if (!$node->class instanceof Name || $node->class->toString() !== \Shopware\Core\Framework\Context::class) {
             return [];
         }
 

@@ -263,7 +263,7 @@ class CategoryBreadcrumbBuilder
             $salesChannel->getFooterCategoryId(),
         ]);
 
-        return new OrFilter(array_map(static fn (string $id) => new ContainsFilter($field, '|' . $id . '|'), $ids));
+        return new OrFilter(array_map(static fn (string $id): \Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter => new ContainsFilter($field, '|' . $id . '|'), $ids));
     }
 
     /**
@@ -354,8 +354,6 @@ class CategoryBreadcrumbBuilder
      */
     private function filterCategorySeoUrls(array $seoUrls, string $categoryId): array
     {
-        return array_filter($seoUrls, static function (array $seoUrl) use ($categoryId): bool {
-            return $seoUrl['categoryId'] === $categoryId;
-        });
+        return array_filter($seoUrls, static fn(array $seoUrl): bool => $seoUrl['categoryId'] === $categoryId);
     }
 }

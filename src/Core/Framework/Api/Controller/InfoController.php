@@ -102,7 +102,7 @@ class InfoController extends AbstractController
     public function queue(): JsonResponse
     {
         if (Feature::isActive('v6.8.0.0')) { // avoiding polluting logs, as our code still calling this endpoint
-            Feature::triggerDeprecationOrThrow('v6.8.0.0', Feature::deprecatedMethodMessage(__CLASS__, __METHOD__, 'v6.8.0.0', '\Shopware\Core\Framework\Api\Controller\InfoController::messageStats'));
+            Feature::triggerDeprecationOrThrow('v6.8.0.0', Feature::deprecatedMethodMessage(self::class, __METHOD__, 'v6.8.0.0', '\Shopware\Core\Framework\Api\Controller\InfoController::messageStats'));
         }
 
         try {
@@ -115,7 +115,7 @@ class InfoController extends AbstractController
         // Fetch unlimited message_queue_stats
         $entries = $gateway->list('message_queue_stats', -1);
 
-        return new JsonResponse(array_map(static fn (array $entry) => [
+        return new JsonResponse(array_map(static fn (array $entry): array => [
             'name' => $entry['key'],
             'size' => $entry['count'],
         ], array_values($entries)));
@@ -250,7 +250,7 @@ class InfoController extends AbstractController
     public function getRoutes(): JsonResponse
     {
         $endpoints = array_map(
-            static fn (RouteInfo $endpoint) => ['path' => $endpoint->path, 'methods' => $endpoint->methods],
+            static fn (RouteInfo $endpoint): array => ['path' => $endpoint->path, 'methods' => $endpoint->methods],
             $this->apiRouteInfoResolver->getApiRoutes(ApiRouteScope::ID)
         );
 
@@ -368,8 +368,8 @@ FROM app
 LEFT JOIN acl_role ar on app.acl_role_id = ar.id
 WHERE app.active = 1 AND app.base_app_url is not null');
 
-        return array_map(static function (array $item) {
-            $privileges = $item['privileges'] ? json_decode($item['privileges'], true, 512, \JSON_THROW_ON_ERROR) : [];
+        return array_map(static function (array $item): array {
+            $privileges = $item['privileges'] ? json_decode((string) $item['privileges'], true, 512, \JSON_THROW_ON_ERROR) : [];
 
             $item['privileges'] = [];
 
@@ -392,7 +392,7 @@ WHERE app.active = 1 AND app.base_app_url is not null');
     {
         $shopwareVersion = $this->params->get('kernel.shopware_version');
         if ($shopwareVersion === Kernel::SHOPWARE_FALLBACK_VERSION) {
-            $shopwareVersion = str_replace('.9999999-dev', '.9999999.9999999-dev', $shopwareVersion);
+            return str_replace('.9999999-dev', '.9999999.9999999-dev', $shopwareVersion);
         }
 
         return $shopwareVersion;

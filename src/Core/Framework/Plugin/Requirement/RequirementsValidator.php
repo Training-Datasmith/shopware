@@ -79,7 +79,7 @@ class RequirementsValidator
      */
     public function resolveActiveDependants(PluginEntity $dependency, array $dependants): array
     {
-        return array_values(array_filter($dependants, function (PluginEntity $dependant) use ($dependency) {
+        return array_values(array_filter($dependants, function (PluginEntity $dependant) use ($dependency): bool {
             if (!$dependant->getActive()) {
                 return false;
             }
@@ -262,7 +262,7 @@ class RequirementsValidator
     private function getComposerPackagesFromPlugins(): array
     {
         $packages = $this->shopwareProjectComposer->getRepositoryManager()->getLocalRepository()->getPackages();
-        $pluginPackages = array_filter($packages, static fn (PackageInterface $package) => $package->getType() === PluginFinder::COMPOSER_TYPE);
+        $pluginPackages = array_filter($packages, static fn (PackageInterface $package): bool => $package->getType() === PluginFinder::COMPOSER_TYPE);
 
         $pluginPackagesWithNameAsKey = [];
         foreach ($pluginPackages as $pluginPackage) {

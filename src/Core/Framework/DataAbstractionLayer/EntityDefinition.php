@@ -312,13 +312,9 @@ abstract class EntityDefinition
             return $this->primaryKeys;
         }
 
-        $fields = $this->getFields()->filter(function (Field $field): bool {
-            return $field->is(PrimaryKey::class);
-        });
+        $fields = $this->getFields()->filter(fn(Field $field): bool => $field->is(PrimaryKey::class));
 
-        $fields->sort(static function (Field $a, Field $b) {
-            return $b->getExtractPriority() <=> $a->getExtractPriority();
-        });
+        $fields->sort(static fn(Field $a, Field $b) => $b->getExtractPriority() <=> $a->getExtractPriority());
 
         return $this->primaryKeys = $fields;
     }

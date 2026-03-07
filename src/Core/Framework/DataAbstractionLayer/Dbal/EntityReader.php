@@ -118,7 +118,7 @@ class EntityReader implements EntityReaderInterface
         // Do not re-use `$isPartialLoading` here, as this method could be called for associations
         // and only the initial call is relevant for marking the whole read as partial
         if ($fieldsForPartialLoading !== []) {
-            $fields = $definition->getFields()->filter(function (Field $field) use (&$fieldsForPartialLoading) {
+            $fields = $definition->getFields()->filter(function (Field $field) use (&$fieldsForPartialLoading): bool {
                 if ($field->getFlag(PrimaryKey::class)) {
                     $fieldsForPartialLoading[$field->getPropertyName()] = [];
 
@@ -179,7 +179,7 @@ class EntityReader implements EntityReaderInterface
         array $fieldsForPartialLoading = [],
     ): void {
         $isPartial = $fieldsForPartialLoading !== [];
-        $filtered = $fields->filter(static function (Field $field) use ($isPartial, $fieldsForPartialLoading) {
+        $filtered = $fields->filter(static function (Field $field) use ($isPartial, $fieldsForPartialLoading): bool {
             if ($field->is(Runtime::class)) {
                 return false;
             }
@@ -636,8 +636,13 @@ class EntityReader implements EntityReaderInterface
                 // otherwise the data will be assigned directly as properties
                 $entity->assign([$association->getPropertyName() => $structData]);
             }
-
-            if (!$association->is(Inherited::class) || \count($structData) > 0 || !$context->considerInheritance()) {
+            if (!$association->is(Inherited::class)) {
+                continue;
+            }
+            if (\count($structData) > 0) {
+                continue;
+            }
+            if (!$context->considerInheritance()) {
                 continue;
             }
 
@@ -754,8 +759,13 @@ class EntityReader implements EntityReaderInterface
 
                 $entity->assign([$association->getPropertyName() => $structData]);
             }
-
-            if (!$association->is(Inherited::class) || \count($structData) || !$context->considerInheritance()) {
+            if (!$association->is(Inherited::class)) {
+                continue;
+            }
+            if (\count($structData)) {
+                continue;
+            }
+            if (!$context->considerInheritance()) {
                 continue;
             }
 
@@ -1140,7 +1150,7 @@ class EntityReader implements EntityReaderInterface
         $wrapper->andWhere($root . '.id IN (:rootIds)');
 
         $bytes = $collection->map(
-            fn (Entity $entity) => Uuid::fromHexToBytes($entity->getUniqueIdentifier())
+            fn (Entity $entity): string => Uuid::fromHexToBytes($entity->getUniqueIdentifier())
         );
 
         if ($definition->isInheritanceAware() && $context->considerInheritance()) {
@@ -1249,13 +1259,19 @@ class EntityReader implements EntityReaderInterface
         }
 
         $fieldCriteria = $criteria->getAssociation($accessor);
-
-        return $fieldCriteria->getOffset() !== null
-            || $fieldCriteria->getLimit() !== null
-            || $fieldCriteria->getSorting() !== []
-            || $fieldCriteria->getFilters() !== []
-            || $fieldCriteria->getPostFilters() !== []
-        ;
+        if ($fieldCriteria->getOffset() !== null) {
+            return true;
+        }
+        if ($fieldCriteria->getLimit() !== null) {
+            return true;
+        }
+        if ($fieldCriteria->getSorting() !== []) {
+            return true;
+        }
+        if ($fieldCriteria->getFilters() !== []) {
+            return true;
+        }
+        return $fieldCriteria->getPostFilters() !== [];
     }
 
     private function addAssociationFieldsToCriteria(

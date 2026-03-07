@@ -69,7 +69,7 @@ class QuantityPriceDefinition extends Struct implements PriceDefinitionInterface
     public static function fromArray(array $data): self
     {
         $taxRules = array_map(
-            fn (array $tax) => new TaxRule(
+            fn (array $tax): \Shopware\Core\Checkout\Cart\Tax\Struct\TaxRule => new TaxRule(
                 (float) $tax['taxRate'],
                 (float) $tax['percentage']
             ),

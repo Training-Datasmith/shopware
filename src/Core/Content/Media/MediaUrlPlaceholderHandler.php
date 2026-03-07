@@ -36,9 +36,7 @@ class MediaUrlPlaceholderHandler implements MediaUrlPlaceholderHandlerInterface
             if (preg_match_all('/' . self::DOMAIN_PLACEHOLDER . preg_quote(self::PREFIX, '/') . '[^#]*#/', $content, $matches)) {
                 $seoMapping = $this->createMediaMapping($matches[0]);
 
-                return (string) preg_replace_callback('/' . self::DOMAIN_PLACEHOLDER . preg_quote(self::PREFIX, '/') . '[^#]*#/', static function (array $match) use ($seoMapping) {
-                    return $seoMapping[$match[0]] ?? $match[0];
-                }, $content);
+                return (string) preg_replace_callback('/' . self::DOMAIN_PLACEHOLDER . preg_quote(self::PREFIX, '/') . '[^#]*#/', static fn(array $match) => $seoMapping[$match[0]] ?? $match[0], $content);
             }
 
             return $content;

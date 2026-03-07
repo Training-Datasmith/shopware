@@ -40,9 +40,8 @@ class TemplateFinder implements TemplateFinderInterface, ResetInterface
 
         $template = explode('/', $template);
         array_shift($template);
-        $template = implode('/', $template);
 
-        return $template;
+        return implode('/', $template);
     }
 
     /**

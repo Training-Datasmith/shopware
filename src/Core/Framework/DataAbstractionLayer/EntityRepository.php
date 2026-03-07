@@ -65,7 +65,7 @@ class EntityRepository
             return $this->_search($criteria, $context);
         }
 
-        return Profiler::trace($criteria->getTitle(), fn () => $this->_search($criteria, $context), 'repository');
+        return Profiler::trace($criteria->getTitle(), fn (): \Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult => $this->_search($criteria, $context), 'repository');
     }
 
     public function aggregate(Criteria $criteria, Context $context): AggregationResultCollection
@@ -74,7 +74,7 @@ class EntityRepository
             return $this->_aggregate($criteria, $context);
         }
 
-        return Profiler::trace($criteria->getTitle(), fn () => $this->_aggregate($criteria, $context), 'repository');
+        return Profiler::trace($criteria->getTitle(), fn (): \Shopware\Core\Framework\DataAbstractionLayer\Search\AggregationResult\AggregationResultCollection => $this->_aggregate($criteria, $context), 'repository');
     }
 
     /**
@@ -90,7 +90,7 @@ class EntityRepository
             return $this->_searchIds($criteria, $context);
         }
 
-        return Profiler::trace($criteria->getTitle(), fn () => $this->_searchIds($criteria, $context), 'repository');
+        return Profiler::trace($criteria->getTitle(), fn (): \Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult => $this->_searchIds($criteria, $context), 'repository');
     }
 
     /**

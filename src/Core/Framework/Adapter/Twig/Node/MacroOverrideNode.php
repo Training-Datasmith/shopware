@@ -52,8 +52,8 @@ class MacroOverrideNode extends MacroNode
             $name = $pair['key'];
             /** @phpstan-ignore typePerfect.noMixedMethodCaller (code copied from twig, and twig relies on dynamic php) */
             $var = $name->getAttribute('name');
-            if (str_starts_with($var, "\u{035C}")) {
-                $var = substr($var, \strlen("\u{035C}"));
+            if (str_starts_with((string) $var, "\u{035C}")) {
+                $var = substr((string) $var, \strlen("\u{035C}"));
             }
             $compiler
                 ->write('')

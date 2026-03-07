@@ -111,7 +111,7 @@ class SnippetService
             $unusedThemes = $this->getUnusedThemes($usingThemes, $unusedThemes);
         }
 
-        $snippetCollection = $snippetFileCollection->filter(fn (AbstractSnippetFile $snippetFile) => !\in_array($snippetFile->getTechnicalName(), $unusedThemes, true));
+        $snippetCollection = $snippetFileCollection->filter(fn (AbstractSnippetFile $snippetFile): bool => !\in_array($snippetFile->getTechnicalName(), $unusedThemes, true));
 
         $fallbackSnippets = [];
 
@@ -149,11 +149,11 @@ class SnippetService
                     $snippets,
                     $locale,
                     $catalog,
-                    $snippetSetId,
+                    string $snippetSetId,
                     $fallbackLocale,
                     $salesChannelId,
-                    $unusedThemes
-                ) => array_replace_recursive(
+                    array $unusedThemes
+                ): array => array_replace_recursive(
                     $snippets,
                     $this->fetchSnippetsFromDatabase($snippetSetId, $unusedThemes)
                 )
@@ -248,11 +248,7 @@ class SnippetService
             ['locales' => ArrayParameterType::STRING]
         );
 
-        if (isset($sets[$locale])) {
-            return $sets[$locale];
-        }
-
-        return array_pop($sets);
+        return $sets[$locale] ?? array_pop($sets);
     }
 
     /**
@@ -551,9 +547,9 @@ class SnippetService
         $mainSet = $snippets[$sort['sortBy']];
         unset($snippets[$sort['sortBy']]);
 
-        uasort($mainSet['snippets'], static function ($a, $b) use ($sort) {
-            $a = mb_strtolower($a['value']);
-            $b = mb_strtolower($b['value']);
+        uasort($mainSet['snippets'], static function (array $a, array $b) use ($sort): int {
+            $a = mb_strtolower((string) $a['value']);
+            $b = mb_strtolower((string) $b['value']);
 
             return $sort['sortDirection'] !== 'DESC' ? $a <=> $b : $b <=> $a;
         });

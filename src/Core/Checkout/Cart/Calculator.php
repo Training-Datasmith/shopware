@@ -61,13 +61,9 @@ class Calculator
         }
 
         return $calculated->filter(
-            function (LineItem $lineItem) use ($filter, $context) {
-                $match = $filter->match(
-                    new LineItemScope($lineItem, $context)
-                );
-
-                return $match;
-            }
+            fn(LineItem $lineItem): bool => $filter->match(
+                new LineItemScope($lineItem, $context)
+            )
         );
     }
 

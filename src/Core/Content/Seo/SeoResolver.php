@@ -49,7 +49,7 @@ class SeoResolver extends AbstractSeoResolver
         $seoPaths = $query->executeQuery()->fetchAllAssociative();
 
         // sort seoPaths by filled salesChannelId and isCanonical, save file sort on SQL server
-        usort($seoPaths, static function ($a, $b) {
+        usort($seoPaths, static function (array $a, array $b): int {
             if ($a['isCanonical'] === null) {
                 return 1;
             }

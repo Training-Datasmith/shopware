@@ -23,7 +23,7 @@ class PipeFactory extends AbstractPipeFactory
 
     public function create(ImportExportLogEntity $logEntity): AbstractPipe
     {
-        $pipe = new ChainPipe([
+        return new ChainPipe([
             new EntityPipe(
                 $this->definitionInstanceRegistry,
                 $this->serializerRegistry,
@@ -33,8 +33,6 @@ class PipeFactory extends AbstractPipeFactory
             ),
             new KeyMappingPipe(),
         ]);
-
-        return $pipe;
     }
 
     public function supports(ImportExportLogEntity $logEntity): bool

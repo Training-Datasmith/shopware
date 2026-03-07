@@ -28,7 +28,7 @@ class HttpCacheKernel extends HttpCache
      */
     public function __construct(
         HttpKernelInterface $kernel,
-        private StoreInterface $store,
+        private readonly StoreInterface $store,
         SurrogateInterface $surrogate,
         array $options,
         private readonly EventDispatcherInterface $eventDispatcher,
@@ -66,7 +66,7 @@ class HttpCacheKernel extends HttpCache
         }
 
         if ($ips = $response->headers->get(self::MAINTENANCE_WHITELIST_HEADER)) {
-            $ips = array_filter(explode(',', $ips));
+            $ips = array_filter(explode(',', (string) $ips));
 
             if (IpUtils::checkIp((string) $request->getClientIp(), $ips)) {
                 $response = $this->getKernel()->handle($request, $type, $catch);

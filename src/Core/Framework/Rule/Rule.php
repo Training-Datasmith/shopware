@@ -86,9 +86,7 @@ abstract class Rule extends Struct
         $data['_name'] = $this->getName();
 
         // filter out null values to avoid constraint violations with empty operator
-        return array_filter($data, function ($value) {
-            return $value !== null;
-        });
+        return array_filter($data, fn($value) => $value !== null);
     }
 
     public function getApiAlias(): string

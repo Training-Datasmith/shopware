@@ -24,7 +24,7 @@ use Shopware\Core\Framework\Log\Package;
 #[Package('framework')]
 class NoAddCacheTagEventRule implements Rule
 {
-    private PrettyPrinter $printer;
+    private readonly PrettyPrinter $printer;
 
     public function __construct()
     {

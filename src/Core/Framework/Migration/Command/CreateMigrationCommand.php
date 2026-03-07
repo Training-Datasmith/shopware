@@ -109,14 +109,14 @@ class CreateMigrationCommand extends Command
 
     private function createPluginMigration(OutputInterface $output, string $pluginName, int $timestamp, string $name): void
     {
-        $pluginBundles = array_filter($this->kernelPluginCollection->all(), static fn (Plugin $value) => mb_strpos($value->getName(), $pluginName) === 0);
+        $pluginBundles = array_filter($this->kernelPluginCollection->all(), static fn (Plugin $value): bool => mb_strpos($value->getName(), $pluginName) === 0);
 
         if ($pluginBundles === []) {
             throw MigrationException::pluginNotFound($pluginName);
         }
 
         if (\count($pluginBundles) > 1) {
-            $pluginBundles = array_filter($pluginBundles, static fn (Plugin $value) => $pluginName === $value->getName());
+            $pluginBundles = array_filter($pluginBundles, static fn (Plugin $value): bool => $pluginName === $value->getName());
 
             if (\count($pluginBundles) > 1) {
                 throw MigrationException::moreThanOnePluginFound($pluginName, array_keys($pluginBundles));

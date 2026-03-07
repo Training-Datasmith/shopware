@@ -28,9 +28,7 @@ class SmtpOauthTokenProvider
 
     public function getToken(): string
     {
-        return $this->cache->get(self::CACHE_KEY, function (ItemInterface $cacheItem) {
-            return $this->fetchToken($cacheItem);
-        });
+        return $this->cache->get(self::CACHE_KEY, fn(ItemInterface $cacheItem) => $this->fetchToken($cacheItem));
     }
 
     private function fetchToken(ItemInterface $cacheItem): string

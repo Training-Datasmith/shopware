@@ -19,7 +19,7 @@ class LineItemGroupPriceDescSorter implements LineItemGroupSorterInterface
     {
         $sorted = $items->getElements();
 
-        usort($sorted, static function (LineItem $a, LineItem $b) {
+        usort($sorted, static function (LineItem $a, LineItem $b): int {
             if ($a->getPrice() === null) {
                 return 1;
             }

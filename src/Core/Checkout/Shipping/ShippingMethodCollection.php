@@ -26,7 +26,7 @@ class ShippingMethodCollection extends EntityCollection
         );
 
         return $this->filter(
-            function (ShippingMethodEntity $shippingMethod) use ($salesChannelContext) {
+            function (ShippingMethodEntity $shippingMethod) use ($salesChannelContext): bool {
                 if ($shippingMethod->getAvailabilityRuleId() === null) {
                     return true;
                 }

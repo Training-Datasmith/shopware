@@ -234,7 +234,7 @@ class SearchKeywordUpdater implements ResetInterface
         foreach ($accessors as $accessor) {
             $fields = EntityDefinitionQueryHelper::getFieldsOfAccessor($definition, $accessor);
 
-            $fields = array_filter($fields, fn (Field $field) => $field instanceof AssociationField);
+            $fields = array_filter($fields, fn (Field $field): bool => $field instanceof AssociationField);
 
             if ($fields === []) {
                 continue;
@@ -242,7 +242,7 @@ class SearchKeywordUpdater implements ResetInterface
 
             $lastAssociationField = $fields[\count($fields) - 1];
 
-            $path = array_map(fn (Field $field) => $field->getPropertyName(), $fields);
+            $path = array_map(fn (Field $field): string => $field->getPropertyName(), $fields);
 
             $association = implode('.', $path);
             if ($criteria->hasAssociation($association)) {
@@ -304,7 +304,7 @@ class SearchKeywordUpdater implements ResetInterface
         /** @var list<ConfigField> $all */
         $all = $query->executeQuery()->fetchAllAssociative();
 
-        $fields = array_filter($all, fn (array $field) => $field['language_id'] === $languageId);
+        $fields = array_filter($all, fn (array $field): bool => $field['language_id'] === $languageId);
 
         if ($fields !== []) {
             $this->config[$languageId] = $fields;
@@ -312,7 +312,7 @@ class SearchKeywordUpdater implements ResetInterface
             return $fields;
         }
 
-        $fields = array_filter($all, fn (array $field) => $field['language_id'] === Defaults::LANGUAGE_SYSTEM);
+        $fields = array_filter($all, fn (array $field): bool => $field['language_id'] === Defaults::LANGUAGE_SYSTEM);
         $this->config[$languageId] = $fields;
 
         return $fields;
@@ -331,7 +331,7 @@ class SearchKeywordUpdater implements ResetInterface
         return array_filter(array_merge(
             [$defaultLanguage],
             $languages->filterByProperty('parentId', null)->getElements(),
-            $languages->filter(fn (LanguageEntity $language) => $language->getParentId() !== null)->getElements()
+            $languages->filter(fn (LanguageEntity $language): bool => $language->getParentId() !== null)->getElements()
         ));
     }
 }

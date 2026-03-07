@@ -199,7 +199,7 @@ class PromotionCodeService
      */
     private function prepareCodeEntities(string $promotionId, array $codes): array
     {
-        return array_values(array_map(static fn ($code) => [
+        return array_values(array_map(static fn (string $code): array => [
             'promotionId' => $promotionId,
             'code' => $code,
         ], $codes));

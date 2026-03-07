@@ -22,7 +22,10 @@ class MaintenanceModeResolver
 
     public function shouldBeCached(Request $request): bool
     {
-        return !$this->isActive($request) || !$this->isClientAllowed($request, self::getIps($request));
+        if (!$this->isActive($request)) {
+            return true;
+        }
+        return !$this->isClientAllowed($request, self::getIps($request));
     }
 
     /**

@@ -75,7 +75,7 @@ class EntityWriteEvent extends Event implements ShopwareEvent
     {
         return array_values(array_filter(
             $this->commands,
-            static fn (WriteCommand $command) => $command->getEntityName() === $entityName
+            static fn (WriteCommand $command): bool => $command->getEntityName() === $entityName
         ));
     }
 

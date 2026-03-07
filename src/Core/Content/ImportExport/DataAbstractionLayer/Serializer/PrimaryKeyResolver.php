@@ -71,7 +71,7 @@ class PrimaryKeyResolver
             return $record;
         }
 
-        $idFields = $definition->getPrimaryKeys()->filter(fn (Field $field) => $field instanceof IdField);
+        $idFields = $definition->getPrimaryKeys()->filter(fn (Field $field): bool => $field instanceof IdField);
         $idField = $idFields->first();
 
         if ($idFields->count() !== 1 || !$idField) {
@@ -204,14 +204,18 @@ class PrimaryKeyResolver
             $manyToManyDefinition = $field->getToManyReferenceDefinition();
             $updatedBy = $config->getUpdateBy()->get($manyToManyDefinition->getEntityName());
             $record = \is_array($record) ? $record : iterator_to_array($record);
-
-            if (!$updatedBy || empty($record[$field->getPropertyName()])) {
+            if (!$updatedBy) {
+                continue;
+            }
+            if (empty($record[$field->getPropertyName()])) {
                 continue;
             }
 
             $updateByField = $updatedBy->getMappedKey();
-
-            if (empty($updateByField) || $definition->getField($updateByField) instanceof IdField) {
+            if (empty($updateByField)) {
+                continue;
+            }
+            if ($definition->getField($updateByField) instanceof IdField) {
                 continue;
             }
 

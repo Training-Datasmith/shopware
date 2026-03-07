@@ -258,7 +258,7 @@ class BaseSalesChannelContextFactory extends AbstractBaseSalesChannelContextFact
                 throw SalesChannelException::countryNotFound($state->getCountryId());
             }
 
-            return new ShippingLocation($country, $state, null);
+            return new ShippingLocation($country, $state);
         }
 
         $countryId = $options[SalesChannelContextService::COUNTRY_ID] ?? $salesChannel->getCountryId();

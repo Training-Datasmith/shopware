@@ -129,7 +129,7 @@ class SnippetFixer
         reset($keyParts);
         foreach ($keyParts as $keyPart) {
             if ($keyPart === $lastKey) {
-                $currentJson[$keyPart] = preg_replace('/\]\s*1\s*,\s*Inf\s*\[/i', '[0,Inf[', $currentJson[$keyPart]);
+                $currentJson[$keyPart] = preg_replace('/\]\s*1\s*,\s*Inf\s*\[/i', '[0,Inf[', (string) $currentJson[$keyPart]);
 
                 continue;
             }

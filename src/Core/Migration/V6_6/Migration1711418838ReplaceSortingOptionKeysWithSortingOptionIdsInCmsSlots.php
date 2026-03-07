@@ -36,7 +36,7 @@ class Migration1711418838ReplaceSortingOptionKeysWithSortingOptionIdsInCmsSlots 
         SQL);
 
         foreach ($slots as $slot) {
-            $originalConfig = $updatedConfig = json_decode($slot['config'], true);
+            $originalConfig = $updatedConfig = json_decode((string) $slot['config'], true);
 
             $currentConfigValue = $originalConfig['defaultSorting']['value'] ?? false;
 

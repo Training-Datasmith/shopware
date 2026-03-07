@@ -27,9 +27,7 @@ class RemoveShippingMethodCommandHandler extends AbstractCheckoutGatewayCommandH
         $technicalName = $command->shippingMethodTechnicalName;
         $methods = $response->getAvailableShippingMethods();
 
-        $methods = $methods->filter(function (ShippingMethodEntity $method) use ($technicalName) {
-            return $method->getTechnicalName() !== $technicalName;
-        });
+        $methods = $methods->filter(fn(ShippingMethodEntity $method) => $method->getTechnicalName() !== $technicalName);
 
         $response->setAvailableShippingMethods($methods);
     }

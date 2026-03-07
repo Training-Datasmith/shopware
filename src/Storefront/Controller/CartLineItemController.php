@@ -52,7 +52,7 @@ class CartLineItemController extends StorefrontController
     #[Route(path: '/checkout/line-item/delete/{id}', name: 'frontend.checkout.line-item.delete', defaults: ['XmlHttpRequest' => true], methods: ['POST', 'DELETE'])]
     public function deleteLineItem(Cart $cart, string $id, Request $request, SalesChannelContext $context): Response
     {
-        return Profiler::trace('cart::delete-line-item', function () use ($cart, $id, $request, $context) {
+        return Profiler::trace('cart::delete-line-item', function () use ($cart, $id, $request, $context): \Symfony\Component\HttpFoundation\Response {
             try {
                 if (!$cart->has($id)) {
                     throw CartException::lineItemNotFound($id);
@@ -90,7 +90,7 @@ class CartLineItemController extends StorefrontController
     #[Route(path: '/checkout/line-item/delete', name: 'frontend.checkout.line-items.delete', defaults: ['XmlHttpRequest' => true], methods: ['POST', 'DELETE'])]
     public function deleteLineItems(Cart $cart, Request $request, SalesChannelContext $context): Response
     {
-        return Profiler::trace('cart::delete-line-items', function () use ($cart, $request, $context) {
+        return Profiler::trace('cart::delete-line-items', function () use ($cart, $request, $context): \Symfony\Component\HttpFoundation\Response {
             try {
                 $idData = RequestParamHelper::get($request, 'ids');
                 if (!\is_array($idData) || $idData === []) {
@@ -126,7 +126,7 @@ class CartLineItemController extends StorefrontController
     #[Route(path: '/checkout/promotion/add', name: 'frontend.checkout.promotion.add', defaults: ['XmlHttpRequest' => true], methods: ['POST'])]
     public function addPromotion(Cart $cart, Request $request, SalesChannelContext $context): Response
     {
-        return Profiler::trace('cart::add-promotion', function () use ($cart, $request, $context) {
+        return Profiler::trace('cart::add-promotion', function () use ($cart, $request, $context): \Symfony\Component\HttpFoundation\Response {
             try {
                 $code = mb_trim((string) $request->request->get('code'));
 
@@ -150,7 +150,7 @@ class CartLineItemController extends StorefrontController
     #[Route(path: '/checkout/line-item/change-quantity/{id}', name: 'frontend.checkout.line-item.change-quantity', defaults: ['XmlHttpRequest' => true], methods: ['POST'])]
     public function changeQuantity(Cart $cart, string $id, Request $request, SalesChannelContext $context): Response
     {
-        return Profiler::trace('cart::change-quantity', function () use ($cart, $id, $request, $context) {
+        return Profiler::trace('cart::change-quantity', function () use ($cart, $id, $request, $context): \Symfony\Component\HttpFoundation\Response {
             try {
                 $quantity = RequestParamHelper::get($request, 'quantity');
 
@@ -191,7 +191,7 @@ class CartLineItemController extends StorefrontController
     #[Route(path: '/checkout/line-item/update', name: 'frontend.checkout.line-items.update', defaults: ['XmlHttpRequest' => true], methods: ['POST', 'PATCH'])]
     public function updateLineItems(Cart $cart, RequestDataBag $requestDataBag, Request $request, SalesChannelContext $context): Response
     {
-        return Profiler::trace('cart::update-line-items', function () use ($cart, $requestDataBag, $request, $context) {
+        return Profiler::trace('cart::update-line-items', function () use ($cart, $requestDataBag, $request, $context): \Symfony\Component\HttpFoundation\Response {
             try {
                 $lineItems = $requestDataBag->get('lineItems');
                 if (!$lineItems instanceof RequestDataBag) {
@@ -219,7 +219,7 @@ class CartLineItemController extends StorefrontController
     #[Route(path: '/checkout/product/add-by-number', name: 'frontend.checkout.product.add-by-number', methods: ['POST'])]
     public function addProductByNumber(Request $request, SalesChannelContext $context): Response
     {
-        return Profiler::trace('cart::add-product-by-number', function () use ($request, $context) {
+        return Profiler::trace('cart::add-product-by-number', function () use ($request, $context): \Symfony\Component\HttpFoundation\Response {
             $number = (string) $request->request->get('number');
 
             if (!$number) {
@@ -279,7 +279,7 @@ class CartLineItemController extends StorefrontController
     #[Route(path: '/checkout/line-item/add', name: 'frontend.checkout.line-item.add', defaults: ['XmlHttpRequest' => true], methods: ['POST'])]
     public function addLineItems(Cart $cart, RequestDataBag $requestDataBag, Request $request, SalesChannelContext $context): Response
     {
-        return Profiler::trace('cart::add-line-item', function () use ($cart, $requestDataBag, $request, $context) {
+        return Profiler::trace('cart::add-line-item', function () use ($cart, $requestDataBag, $request, $context): \Symfony\Component\HttpFoundation\Response {
             /** @var RequestDataBag|null $lineItems */
             $lineItems = $requestDataBag->get('lineItems');
             if (!$lineItems) {
@@ -341,7 +341,7 @@ class CartLineItemController extends StorefrontController
             return false;
         }
 
-        $this->addCartErrors($cart, fn (Error $error) => $error->isPersistent());
+        $this->addCartErrors($cart, fn (Error $error): bool => $error->isPersistent());
 
         return true;
     }

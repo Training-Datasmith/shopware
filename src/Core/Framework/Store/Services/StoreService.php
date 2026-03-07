@@ -35,7 +35,7 @@ class StoreService
 
         $storeToken = $accessToken->getShopUserToken()->getToken();
 
-        $context->scope(Context::SYSTEM_SCOPE, function ($context) use ($userId, $storeToken): void {
+        $context->scope(Context::SYSTEM_SCOPE, function (\Shopware\Core\Framework\Context $context) use ($userId, $storeToken): void {
             $this->userRepository->update([['id' => $userId, 'storeToken' => $storeToken]], $context);
         });
     }

@@ -61,7 +61,7 @@ class AddCustomerTagAction extends FlowAction implements DelayableAction
             return;
         }
 
-        $tags = array_map(static fn ($tagId) => ['id' => $tagId], $tagIds);
+        $tags = array_map(static fn ($tagId): array => ['id' => $tagId], $tagIds);
 
         $this->customerRepository->update([
             [

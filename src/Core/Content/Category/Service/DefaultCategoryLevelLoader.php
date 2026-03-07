@@ -66,10 +66,12 @@ class DefaultCategoryLevelLoader implements DefaultCategoryLevelLoaderInterface
     {
         $counts = [];
         foreach ($levels as $category) {
-            if (!$category->getActive() || !$category->getVisible()) {
+            if (!$category->getActive()) {
                 continue;
             }
-
+            if (!$category->getVisible()) {
+                continue;
+            }
             $parentId = $category->getParentId();
             $counts[$parentId] ??= 0;
             ++$counts[$parentId];

@@ -186,9 +186,7 @@ class FileSaver
                     );
                 }
 
-                $updateData['thumbnails'] = array_map(function ($id, $path) {
-                    return ['id' => $id, 'path' => $path];
-                }, array_keys($thumbnails), $thumbnails);
+                $updateData['thumbnails'] = array_map(fn($id, int|string $path) => ['id' => $id, 'path' => $path], array_keys($thumbnails), $thumbnails);
             }
         }
 
@@ -396,14 +394,15 @@ class FileSaver
         );
 
         foreach ($mediaWithRelatedFileName as $media) {
-            if (
-                !$media->hasFile()
-                || $destination !== $media->getFileName()
-                || $media->isPrivate() !== $currentMedia->isPrivate()
-            ) {
+            if (!$media->hasFile()) {
                 continue;
             }
-
+            if ($destination !== $media->getFileName()) {
+                continue;
+            }
+            if ($media->isPrivate() !== $currentMedia->isPrivate()) {
+                continue;
+            }
             throw MediaException::duplicatedMediaFileName($destination, $fileExtension);
         }
     }

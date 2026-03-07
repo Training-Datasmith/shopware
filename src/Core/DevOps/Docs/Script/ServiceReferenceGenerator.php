@@ -146,7 +146,7 @@ class ServiceReferenceGenerator implements ScriptReferenceGenerator
             new \ReflectionClass(ServiceStubs::class)
         )->getTagsByName('method');
 
-        return array_values(array_filter($tags, static fn ($tag) => $tag instanceof Method));
+        return array_values(array_filter($tags, static fn ($tag): bool => $tag instanceof Method));
     }
 
     /**

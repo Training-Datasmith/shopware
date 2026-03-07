@@ -65,8 +65,10 @@ class RuleAreaUpdater implements EventSubscriberInterface
         foreach ($event->getCommands() as $command) {
             $entity = $command->getEntityName();
             $definition = $this->definitionRegistry->getByEntityName($entity);
-
-            if (!$command instanceof ChangeSetAware || !\in_array($entity, $associatedEntities, true)) {
+            if (!$command instanceof ChangeSetAware) {
+                continue;
+            }
+            if (!\in_array($entity, $associatedEntities, true)) {
                 continue;
             }
 
@@ -146,8 +148,10 @@ class RuleAreaUpdater implements EventSubscriberInterface
                 }
 
                 $field = $associationFields->get($propertyName);
-
-                if (!$field || !$flag = $field->getFlag(RuleAreas::class)) {
+                if (!$field) {
+                    continue;
+                }
+                if (!$flag = $field->getFlag(RuleAreas::class)) {
                     continue;
                 }
 
@@ -306,9 +310,7 @@ class RuleAreaUpdater implements EventSubscriberInterface
     private function getAssociationEntities(): array
     {
         return $this->getAssociationFields()
-            ->fmap(static function (Field $associationField): ?string {
-                return $associationField instanceof OneToManyAssociationField || $associationField instanceof ManyToManyAssociationField ? $associationField->getReferenceDefinition()->getEntityName() : null;
-            });
+            ->fmap(static fn(Field $associationField): ?string => $associationField instanceof OneToManyAssociationField || $associationField instanceof ManyToManyAssociationField ? $associationField->getReferenceDefinition()->getEntityName() : null);
     }
 
     private function getAssociationDefinitionByEntity(CompiledFieldCollection $collection, string $entityName): ?EntityDefinition

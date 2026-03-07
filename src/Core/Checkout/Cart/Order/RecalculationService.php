@@ -291,7 +291,7 @@ class RecalculationService
         $this->deleteOldDiscountDeliveries($orderData, $order, $context);
 
         // change scope to be able to write protected state fields of transactions and deliveries
-        $context->scope(Context::SYSTEM_SCOPE, fn (Context $context) => $this->orderRepository->upsert([$orderData], $context));
+        $context->scope(Context::SYSTEM_SCOPE, fn (Context $context): \Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent => $this->orderRepository->upsert([$orderData], $context));
     }
 
     /**
@@ -304,8 +304,8 @@ class RecalculationService
         $toDeleteIds = \array_values(\array_diff($originalIds, $newIds));
 
         if ($toDeleteIds !== []) {
-            $context->scope(Context::SYSTEM_SCOPE, fn (Context $context) => $this->orderLineItemRepository->delete(
-                \array_map(static fn (string $id) => ['id' => $id], $toDeleteIds),
+            $context->scope(Context::SYSTEM_SCOPE, fn (Context $context): \Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent => $this->orderLineItemRepository->delete(
+                \array_map(static fn (string $id): array => ['id' => $id], $toDeleteIds),
                 $context
             ));
         }
@@ -328,17 +328,17 @@ class RecalculationService
         }
 
         $newIds = \array_column(
-            \array_filter($deliveries, static fn (array $delivery) => $delivery['shippingCosts']->getTotalPrice() < 0),
+            \array_filter($deliveries, static fn (array $delivery): bool => $delivery['shippingCosts']->getTotalPrice() < 0),
             'id',
         );
         $originalIds = $order->getDeliveries()?->filter(
-            static fn (OrderDeliveryEntity $delivery) => $delivery->getShippingCosts()->getTotalPrice() < 0,
+            static fn (OrderDeliveryEntity $delivery): bool => $delivery->getShippingCosts()->getTotalPrice() < 0,
         )->getKeys() ?? [];
         $toDeleteIds = \array_values(\array_diff($originalIds, $newIds));
 
         if ($toDeleteIds !== []) {
-            $context->scope(Context::SYSTEM_SCOPE, fn (Context $context) => $this->orderDeliveryRepository->delete(
-                \array_map(static fn (string $id) => ['id' => $id], $toDeleteIds),
+            $context->scope(Context::SYSTEM_SCOPE, fn (Context $context): \Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent => $this->orderDeliveryRepository->delete(
+                \array_map(static fn (string $id): array => ['id' => $id], $toDeleteIds),
                 $context
             ));
         }
@@ -438,7 +438,7 @@ class RecalculationService
     private function recalculateCart(Cart $cart, SalesChannelContext $context): Cart
     {
         // we switch to the live version that we don't have to consider live version fallbacks inside the calculation
-        return $context->live(function ($live) use ($cart): Cart {
+        return $context->live(function (\Shopware\Core\System\SalesChannel\SalesChannelContext $live) use ($cart): Cart {
             /** @deprecated tag:v6.8.0 - `$isRecalculation` will be removed */
             $behavior = new CartBehavior($live->getPermissions(), true, isRecalculation: !Feature::isActive('v6.8.0.0'));
 
@@ -447,7 +447,7 @@ class RecalculationService
 
             // validate cart against the context rules
             $validatedCart = $this->cartRuleLoader->loadByCart($live, $cart, $behavior)->getCart();
-            $validatedCart->addErrors(...$cart->getErrors()->filter(fn (Error $error) => !$error->isPersistent()));
+            $validatedCart->addErrors(...$cart->getErrors()->filter(fn (Error $error): bool => !$error->isPersistent()));
 
             return $validatedCart;
         });

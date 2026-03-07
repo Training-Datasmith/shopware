@@ -227,17 +227,17 @@ class CookieProvider
             }
 
             if (\array_key_exists('snippet_description', $legacyCookieGroup)) {
-                $description = (string) $legacyCookieGroup['snippet_description'];
+                $description = $legacyCookieGroup['snippet_description'];
                 $cookieGroup->description = $description !== '' ? $description : null;
             }
 
             if (\array_key_exists('cookie', $legacyCookieGroup)) {
-                $cookie = (string) $legacyCookieGroup['cookie'];
+                $cookie = $legacyCookieGroup['cookie'];
                 $cookieGroup->setCookie($cookie !== '' ? $cookie : null);
             }
 
             if (\array_key_exists('value', $legacyCookieGroup)) {
-                $value = (string) $legacyCookieGroup['value'];
+                $value = $legacyCookieGroup['value'];
                 $cookieGroup->value = $value !== '' ? $value : null;
             }
 
@@ -246,7 +246,7 @@ class CookieProvider
             }
 
             if (isset($legacyCookieGroup['isRequired'])) {
-                $cookieGroup->isRequired = (bool) $legacyCookieGroup['isRequired'];
+                $cookieGroup->isRequired = $legacyCookieGroup['isRequired'];
             }
 
             if (\array_key_exists('entries', $legacyCookieGroup)) {
@@ -264,17 +264,17 @@ class CookieProvider
                     $cookieEntry = new CookieEntry((string) $cookie);
 
                     if (\array_key_exists('snippet_name', $entry)) {
-                        $name = (string) $entry['snippet_name'];
+                        $name = $entry['snippet_name'];
                         $cookieEntry->name = $name !== '' ? $name : null;
                     }
 
                     if (\array_key_exists('snippet_description', $entry)) {
-                        $description = (string) $entry['snippet_description'];
+                        $description = $entry['snippet_description'];
                         $cookieEntry->description = $description !== '' ? $description : null;
                     }
 
                     if (\array_key_exists('value', $entry)) {
-                        $value = (string) $entry['value'];
+                        $value = $entry['value'];
                         $cookieEntry->value = $value !== '' ? $value : null;
                     }
 
@@ -283,7 +283,7 @@ class CookieProvider
                     }
 
                     if (isset($entry['hidden'])) {
-                        $cookieEntry->hidden = (bool) $entry['hidden'];
+                        $cookieEntry->hidden = $entry['hidden'];
                     }
 
                     $cookieEntries->add($cookieEntry);

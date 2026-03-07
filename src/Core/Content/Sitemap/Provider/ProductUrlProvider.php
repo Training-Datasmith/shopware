@@ -184,7 +184,7 @@ class ProductUrlProvider extends AbstractUrlProvider
             return [];
         }
 
-        $excludedUrls = array_filter($excludedUrls, static function (array $excludedUrl) use ($salesChannelId) {
+        $excludedUrls = array_filter($excludedUrls, static function (array $excludedUrl) use ($salesChannelId): bool {
             if ($excludedUrl['resource'] !== ProductEntity::class) {
                 return false;
             }

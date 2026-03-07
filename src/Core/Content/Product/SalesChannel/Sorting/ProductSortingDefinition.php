@@ -50,7 +50,7 @@ class ProductSortingDefinition extends EntityDefinition
 
     protected function defineFields(): FieldCollection
     {
-        $collection = new FieldCollection([
+        return new FieldCollection([
             (new IdField('id', 'id'))->addFlags(new PrimaryKey(), new Required()),
             new LockedField(),
             (new StringField('url_key', 'key'))->addFlags(new ApiAware(), new Required()),
@@ -60,7 +60,5 @@ class ProductSortingDefinition extends EntityDefinition
             (new TranslatedField('label'))->addFlags(new ApiAware()),
             (new TranslationsAssociationField(ProductSortingTranslationDefinition::class, 'product_sorting_id'))->addFlags(new Inherited(), new Required()),
         ]);
-
-        return $collection;
     }
 }

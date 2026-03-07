@@ -84,9 +84,9 @@ class SchemaUpdater
         $table->setComment(self::COMMENT);
 
         // we have to add only fields, which are not marked as translated
-        $filtered = array_filter($fields, fn (array $field) => ($field['translatable'] ?? false) === false);
+        $filtered = array_filter($fields, fn (array $field): bool => ($field['translatable'] ?? false) === false);
 
-        $filtered = array_filter($filtered, fn (array $field) => !$this->isAssociation($field));
+        $filtered = array_filter($filtered, fn (array $field): bool => !$this->isAssociation($field));
 
         $this->addColumns($schema, $table, $filtered);
 
@@ -123,7 +123,7 @@ class SchemaUpdater
     private function addAssociationFields(Schema $schema, string $name, array $fields): void
     {
         $table = $this->createTable($schema, $name);
-        $filtered = array_filter($fields, fn (array $field) => $this->isAssociation($field));
+        $filtered = array_filter($fields, $this->isAssociation(...));
         $this->addColumns($schema, $table, $filtered);
     }
 

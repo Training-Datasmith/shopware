@@ -24,7 +24,7 @@ class RobotsUserAgentBlock
     {
         return array_values(array_filter(
             $this->directives,
-            static fn (RobotsDirective $directive) => $directive->isPathBased()
+            static fn (RobotsDirective $directive): bool => $directive->isPathBased()
         ));
     }
 
@@ -35,7 +35,7 @@ class RobotsUserAgentBlock
     {
         return array_values(array_filter(
             $this->directives,
-            static fn (RobotsDirective $directive) => !$directive->isPathBased()
+            static fn (RobotsDirective $directive): bool => !$directive->isPathBased()
         ));
     }
 
@@ -59,7 +59,7 @@ class RobotsUserAgentBlock
         return Hasher::hash([
             $this->userAgent,
             array_map(
-                static fn (RobotsDirective $d) => [$d->type->value, $d->value],
+                static fn (RobotsDirective $d): array => [$d->type->value, $d->value],
                 $this->getNonPathDirectives()
             ),
         ]);

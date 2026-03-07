@@ -81,7 +81,7 @@ class ProductListingRoute extends AbstractProductListingRoute
         $criteria = $this->extensions->publish(
             name: ProductListingCriteriaExtension::NAME,
             extension: new ProductListingCriteriaExtension($criteria, $context, $categoryId),
-            function: function ($criteria, $context, $categoryId) use ($category): Criteria {
+            function: function (\Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria $criteria, \Shopware\Core\System\SalesChannel\SalesChannelContext $context, $categoryId) use ($category): Criteria {
                 $this->extendCriteria($context, $criteria, $category);
 
                 return $criteria;

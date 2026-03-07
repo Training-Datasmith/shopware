@@ -16,12 +16,12 @@ class MailTemplateTranslationCollection extends EntityCollection
      */
     public function getMailTemplateIds(): array
     {
-        return $this->fmap(fn (MailTemplateTranslationEntity $mailTemplateTranslation) => $mailTemplateTranslation->getMailTemplateId());
+        return $this->fmap(fn (MailTemplateTranslationEntity $mailTemplateTranslation): string => $mailTemplateTranslation->getMailTemplateId());
     }
 
     public function filterByMailTemplateId(string $id): self
     {
-        return $this->filter(fn (MailTemplateTranslationEntity $mailTemplateTranslation) => $mailTemplateTranslation->getMailTemplateId() === $id);
+        return $this->filter(fn (MailTemplateTranslationEntity $mailTemplateTranslation): bool => $mailTemplateTranslation->getMailTemplateId() === $id);
     }
 
     /**
@@ -29,12 +29,12 @@ class MailTemplateTranslationCollection extends EntityCollection
      */
     public function getLanguageIds(): array
     {
-        return $this->fmap(fn (MailTemplateTranslationEntity $mailTemplateTranslation) => $mailTemplateTranslation->getLanguageId());
+        return $this->fmap(fn (MailTemplateTranslationEntity $mailTemplateTranslation): string => $mailTemplateTranslation->getLanguageId());
     }
 
     public function filterByLanguageId(string $id): self
     {
-        return $this->filter(fn (MailTemplateTranslationEntity $mailTemplateTranslation) => $mailTemplateTranslation->getLanguageId() === $id);
+        return $this->filter(fn (MailTemplateTranslationEntity $mailTemplateTranslation): bool => $mailTemplateTranslation->getLanguageId() === $id);
     }
 
     public function getApiAlias(): string

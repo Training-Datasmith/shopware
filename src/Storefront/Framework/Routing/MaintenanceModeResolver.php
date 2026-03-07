@@ -50,7 +50,10 @@ class MaintenanceModeResolver
 
     public function shouldBeCached(Request $request): bool
     {
-        return !$this->isMaintenanceModeActive() || !$this->isClientAllowed($request);
+        if (!$this->isMaintenanceModeActive()) {
+            return true;
+        }
+        return !$this->isClientAllowed($request);
     }
 
     /**

@@ -111,7 +111,7 @@ class UnusedMediaPurger
 
             if ($idBatch !== []) {
                 $this->mediaRepo->delete(
-                    array_map(static fn ($id) => ['id' => $id], $idBatch),
+                    array_map(static fn ($id): array => ['id' => $id], $idBatch),
                     $context
                 );
 

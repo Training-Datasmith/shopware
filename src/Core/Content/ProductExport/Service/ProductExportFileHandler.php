@@ -59,8 +59,10 @@ class ProductExportFileHandler implements ProductExportFileHandlerInterface
         if (!$this->fileSystem->fileExists($filePath)) {
             return false;
         }
-
-        return $productExport->isGenerateByCronjob() || !$this->isCacheExpired($behavior, $productExport);
+        if ($productExport->isGenerateByCronjob()) {
+            return true;
+        }
+        return !$this->isCacheExpired($behavior, $productExport);
     }
 
     public function finalizePartialProductExport(string $partialFilePath, string $finalFilePath, string $headerContent, string $footerContent): bool

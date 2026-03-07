@@ -18,12 +18,12 @@ class ProductMediaCollection extends EntityCollection
      */
     public function getProductIds(): array
     {
-        return $this->fmap(fn (ProductMediaEntity $productMedia) => $productMedia->getProductId());
+        return $this->fmap(fn (ProductMediaEntity $productMedia): string => $productMedia->getProductId());
     }
 
     public function filterByProductId(string $id): self
     {
-        return $this->filter(fn (ProductMediaEntity $productMedia) => $productMedia->getProductId() === $id);
+        return $this->filter(fn (ProductMediaEntity $productMedia): bool => $productMedia->getProductId() === $id);
     }
 
     /**
@@ -31,18 +31,18 @@ class ProductMediaCollection extends EntityCollection
      */
     public function getMediaIds(): array
     {
-        return $this->fmap(fn (ProductMediaEntity $productMedia) => $productMedia->getMediaId());
+        return $this->fmap(fn (ProductMediaEntity $productMedia): string => $productMedia->getMediaId());
     }
 
     public function filterByMediaId(string $id): self
     {
-        return $this->filter(fn (ProductMediaEntity $productMedia) => $productMedia->getMediaId() === $id);
+        return $this->filter(fn (ProductMediaEntity $productMedia): bool => $productMedia->getMediaId() === $id);
     }
 
     public function getMedia(): MediaCollection
     {
         return new MediaCollection(
-            $this->fmap(fn (ProductMediaEntity $productMedia) => $productMedia->getMedia())
+            $this->fmap(fn (ProductMediaEntity $productMedia): ?\Shopware\Core\Content\Media\MediaEntity => $productMedia->getMedia())
         );
     }
 
@@ -53,7 +53,7 @@ class ProductMediaCollection extends EntityCollection
 
     public function hasSpatialObjects(): bool
     {
-        return $this->firstWhere(fn (ProductMediaEntity $productMedia) => $productMedia->getMedia()?->getMediaType() instanceof SpatialObjectType) !== null;
+        return $this->firstWhere(fn (ProductMediaEntity $productMedia): bool => $productMedia->getMedia()?->getMediaType() instanceof SpatialObjectType) !== null;
     }
 
     protected function getExpectedClass(): string

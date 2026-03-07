@@ -40,7 +40,7 @@ class SitemapHandle implements SitemapHandleInterface
         private readonly SalesChannelContext $context,
         private readonly EventDispatcherInterface $eventDispatcher,
         ?string $domain = null,
-        private ?string $domainId = null,
+        private readonly ?string $domainId = null,
     ) {
         $this->setDomainName($domain);
 

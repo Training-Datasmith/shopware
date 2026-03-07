@@ -112,7 +112,7 @@ class ImitateCustomerTokenGenerator extends JWTGenerator
 
     private function encrypt(string $token): string
     {
-        $iv = openssl_random_pseudo_bytes((int) openssl_cipher_iv_length(self::OPENSSL_CIPHER_ALGORITHM));
+        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length(self::OPENSSL_CIPHER_ALGORITHM));
         $encrypted = openssl_encrypt($token, self::OPENSSL_CIPHER_ALGORITHM, $this->appSecret, 0, $iv);
 
         if ($encrypted === false) {

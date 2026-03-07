@@ -56,7 +56,7 @@ class DocumentGenerationResult extends Struct
         }
 
         return [
-            'data' => $this->success->map(fn (DocumentIdStruct $documentIdStruct) => [
+            'data' => $this->success->map(fn (DocumentIdStruct $documentIdStruct): array => [
                 'documentId' => $documentIdStruct->getId(),
                 'documentMediaId' => $documentIdStruct->getMediaId(),
                 'documentDeepLink' => $documentIdStruct->getDeepLinkCode(),

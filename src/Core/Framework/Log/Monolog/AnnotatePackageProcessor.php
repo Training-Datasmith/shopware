@@ -24,7 +24,7 @@ class AnnotatePackageProcessor implements ProcessorInterface
     /**
      * {@inheritdoc}
      */
-    public function __invoke(LogRecord $record)
+    public function __invoke(LogRecord $record): LogRecord
     {
         $packages = [];
 

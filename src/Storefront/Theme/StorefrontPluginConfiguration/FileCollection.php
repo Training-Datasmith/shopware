@@ -13,10 +13,8 @@ class FileCollection extends Collection
 {
     /**
      * @param array<string> $files
-     *
-     * @return self
      */
-    public static function createFromArray(array $files)
+    public static function createFromArray(array $files): self
     {
         $collection = new self();
         foreach ($files as $file) {
@@ -31,7 +29,7 @@ class FileCollection extends Collection
      */
     public function getFilepaths(): array
     {
-        return $this->map(fn (File $element) => $element->getFilepath());
+        return $this->map(fn (File $element): string => $element->getFilepath());
     }
 
     /**
@@ -39,7 +37,7 @@ class FileCollection extends Collection
      */
     public function getPublicPaths(string $prefix): array
     {
-        return array_values(array_filter($this->map(function (File $element) use ($prefix) {
+        return array_values(array_filter($this->map(function (File $element) use ($prefix): ?string {
             if ($element->assetName === null) {
                 return null;
             }

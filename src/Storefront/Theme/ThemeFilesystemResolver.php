@@ -46,7 +46,7 @@ class ThemeFilesystemResolver
         } catch (\InvalidArgumentException) {
             $bundles = $this->kernel->getPluginLoader()
                 ->getPluginInstances()
-                ->filter(fn (Plugin $plugin) => $plugin->getName() === $configuration->getTechnicalName())
+                ->filter(fn (Plugin $plugin): bool => $plugin->getName() === $configuration->getTechnicalName())
                 ->all();
 
             $bundle = array_values($bundles)[0];

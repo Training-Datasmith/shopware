@@ -64,7 +64,7 @@ class SnippetFileLoader implements SnippetFileLoaderInterface
             . '.*$#';
 
         $excludedPathsRegexp = array_map(
-            fn (string $path) => \sprintf($translationPathRegexpTemplate, self::SCOPE_PLUGINS, $path),
+            fn (string $path): string => \sprintf($translationPathRegexpTemplate, self::SCOPE_PLUGINS, $path),
             $exclude
         );
 
@@ -76,16 +76,22 @@ class SnippetFileLoader implements SnippetFileLoaderInterface
         $translationFiles = $this->translationReader
             ->listContents($localesBasePath, true)
             ->filter(fn (StorageAttributes $node) => $node->isFile())
-            ->filter(fn (StorageAttributes $node) => \str_ends_with($node->path(), '.json'))
-            ->filter(fn (StorageAttributes $node) => \preg_filter($excludedPathsRegexp, 'EXCLUDED', $node->path()) !== 'EXCLUDED');
+            ->filter(fn (StorageAttributes $node): bool => \str_ends_with($node->path(), '.json'))
+            ->filter(fn (StorageAttributes $node): bool => \preg_filter($excludedPathsRegexp, 'EXCLUDED', $node->path()) !== 'EXCLUDED');
 
         $isPluginPathCheckRegexp = \sprintf($translationPathRegexpTemplate, self::SCOPE_PLATFORM . '|' . self::SCOPE_PLUGINS, '');
         foreach ($translationFiles as $translationFile) {
-            \preg_match($isPluginPathCheckRegexp, $translationFile->path(), $pathComponents);
+            \preg_match($isPluginPathCheckRegexp, (string) $translationFile->path(), $pathComponents);
 
             // Check if the path matches the expected structure. If not, the directory was modified and the file should be skipped.
             $validityCheck = \array_intersect_key($pathComponents, array_fill_keys(['locale', 'component'], true));
-            if (\count($validityCheck) !== 2 || empty($pathComponents['locale']) || empty($pathComponents['component'])) {
+            if (\count($validityCheck) !== 2) {
+                continue;
+            }
+            if (empty($pathComponents['locale'])) {
+                continue;
+            }
+            if (empty($pathComponents['component'])) {
                 continue;
             }
 
@@ -145,10 +151,12 @@ class SnippetFileLoader implements SnippetFileLoaderInterface
 
         foreach ($this->kernel->getBundles() as $name => $bundle) {
             // skip Administration bundle because we are in the storefront scope
-            if (!$bundle instanceof Bundle || $name === self::ADMINISTRATION_BUNDLE_NAME) {
+            if (!$bundle instanceof Bundle) {
                 continue;
             }
-
+            if ($name === self::ADMINISTRATION_BUNDLE_NAME) {
+                continue;
+            }
             // skip plugin snippets that already exist via translation installation
             if ($bundle instanceof Plugin && $this->translationLoader->pluginTranslationExists($bundle)) {
                 continue;

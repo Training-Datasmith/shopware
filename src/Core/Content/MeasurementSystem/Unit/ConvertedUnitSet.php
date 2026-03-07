@@ -26,7 +26,7 @@ class ConvertedUnitSet extends Struct
     public function jsonSerialize(): array
     {
         return array_map(
-            static fn (ConvertedUnit $unit) => [
+            static fn (ConvertedUnit $unit): array => [
                 'value' => $unit->value,
                 'unit' => $unit->unit,
             ],

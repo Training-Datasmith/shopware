@@ -80,7 +80,7 @@ class OrderRoute extends AbstractOrderRoute
             $criteria->addAssociation('deliveries');
         }
 
-        $deepLinkFilter = \current(array_filter($criteria->getFilters(), static fn (Filter $filter) => \in_array('order.deepLinkCode', $filter->getFields(), true)
+        $deepLinkFilter = \current(array_filter($criteria->getFilters(), static fn (Filter $filter): bool => \in_array('order.deepLinkCode', $filter->getFields(), true)
             || \in_array('deepLinkCode', $filter->getFields(), true))) ?: null;
 
         if ($context->getCustomer()) {
@@ -227,7 +227,7 @@ class OrderRoute extends AbstractOrderRoute
         // Search with deepLinkCode needs updatedAt Filter
         $latestOrderDate = (new \DateTime())->setTimezone(new \DateTimeZone('UTC'))->modify(-abs(30) . ' Day');
 
-        return $orders->filter(fn (OrderEntity $order) => $order->getCreatedAt() > $latestOrderDate || $order->getUpdatedAt() > $latestOrderDate);
+        return $orders->filter(fn (OrderEntity $order): bool => $order->getCreatedAt() > $latestOrderDate || $order->getUpdatedAt() > $latestOrderDate);
     }
 
     /**

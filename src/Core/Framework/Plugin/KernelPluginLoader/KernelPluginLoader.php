@@ -261,7 +261,7 @@ abstract class KernelPluginLoader extends Bundle
     {
         // is relative path
         if (mb_strpos($pluginRootPath, '/') !== 0) {
-            $pluginRootPath = $projectDir . '/' . $pluginRootPath;
+            return $projectDir . '/' . $pluginRootPath;
         }
 
         return $pluginRootPath;

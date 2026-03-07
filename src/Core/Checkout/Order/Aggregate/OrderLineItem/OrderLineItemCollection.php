@@ -20,17 +20,17 @@ class OrderLineItemCollection extends EntityCollection
      */
     public function getOrderIds(): array
     {
-        return $this->fmap(fn (OrderLineItemEntity $orderLineItem) => $orderLineItem->getOrderId());
+        return $this->fmap(fn (OrderLineItemEntity $orderLineItem): string => $orderLineItem->getOrderId());
     }
 
     public function filterByOrderId(string $id): self
     {
-        return $this->filter(fn (OrderLineItemEntity $orderLineItem) => $orderLineItem->getOrderId() === $id);
+        return $this->filter(fn (OrderLineItemEntity $orderLineItem): bool => $orderLineItem->getOrderId() === $id);
     }
 
     public function sortByCreationDate(string $sortDirection = FieldSorting::ASCENDING): void
     {
-        $this->sort(function (OrderLineItemEntity $a, OrderLineItemEntity $b) use ($sortDirection) {
+        $this->sort(function (OrderLineItemEntity $a, OrderLineItemEntity $b) use ($sortDirection): int {
             if ($sortDirection === FieldSorting::ASCENDING) {
                 return $a->getCreatedAt() <=> $b->getCreatedAt();
             }
@@ -41,7 +41,7 @@ class OrderLineItemCollection extends EntityCollection
 
     public function sortByPosition(): void
     {
-        $this->sort(fn (OrderLineItemEntity $a, OrderLineItemEntity $b) => $a->getPosition() <=> $b->getPosition());
+        $this->sort(fn (OrderLineItemEntity $a, OrderLineItemEntity $b): int => $a->getPosition() <=> $b->getPosition());
     }
 
     /**
@@ -58,7 +58,7 @@ class OrderLineItemCollection extends EntityCollection
 
     public function filterByType(string $type): self
     {
-        return $this->filter(fn (OrderLineItemEntity $lineItem) => $lineItem->getType() === $type);
+        return $this->filter(fn (OrderLineItemEntity $lineItem): bool => $lineItem->getType() === $type);
     }
 
     /**
@@ -116,7 +116,7 @@ class OrderLineItemCollection extends EntityCollection
     public function getPrices(): PriceCollection
     {
         return new PriceCollection(
-            $this->fmap(static fn (OrderLineItemEntity $orderLineItem) => $orderLineItem->getPrice())
+            $this->fmap(static fn (OrderLineItemEntity $orderLineItem): ?\Shopware\Core\Checkout\Cart\Price\Struct\CalculatedPrice => $orderLineItem->getPrice())
         );
     }
 

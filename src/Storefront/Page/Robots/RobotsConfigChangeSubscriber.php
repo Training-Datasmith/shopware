@@ -50,7 +50,7 @@ class RobotsConfigChangeSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $scope = $salesChannelId === null ? 'Global' : $salesChannelId;
+        $scope = $salesChannelId ?? 'Global';
 
         foreach ($parsed->issues as $issue) {
             $message = \sprintf(

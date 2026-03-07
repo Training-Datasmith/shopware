@@ -18,13 +18,13 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageFactoryInterf
 #[Package('framework')]
 class SessionFactory implements SessionFactoryInterface
 {
-    private ?\Closure $usageReporter;
+    private readonly ?\Closure $usageReporter;
 
     private ?StatefulFlashBag $flashBag = null;
 
     public function __construct(
-        private RequestStack $requestStack,
-        private SessionStorageFactoryInterface $storageFactory,
+        private readonly RequestStack $requestStack,
+        private readonly SessionStorageFactoryInterface $storageFactory,
         ?callable $usageReporter = null,
     ) {
         $this->usageReporter = $usageReporter === null ? null : $usageReporter(...);

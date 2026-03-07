@@ -168,12 +168,10 @@ readonly class FlowDispatcher implements EventDispatcherInterface, ServiceSubscr
     {
         $flowLoader = $this->container->get(FlowLoader::class);
         $flows = $flowLoader->load();
-
-        $result = [];
         if (\array_key_exists($eventName, $flows)) {
-            $result = $flows[$eventName];
+            return $flows[$eventName];
         }
 
-        return $result;
+        return [];
     }
 }

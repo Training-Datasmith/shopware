@@ -111,7 +111,7 @@ class JsonApiEncodingResult implements \JsonSerializable
         ];
 
         if ($this->metaData !== []) {
-            $output = array_merge($output, $this->metaData);
+            return array_merge($output, $this->metaData);
         }
 
         return $output;

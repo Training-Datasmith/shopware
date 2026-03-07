@@ -43,9 +43,7 @@ class UnusedMediaSubscriber implements EventSubscriberInterface
         $mediaIds = [];
         foreach ($allThemeIds as $themeId) {
             if (!Feature::isActive('v6.8.0.0')) {
-                $config = Feature::silent('v6.8.0.0', function () use ($themeId, $context) {
-                    return $this->themeService->getThemeConfiguration($themeId, false, $context);
-                });
+                $config = Feature::silent('v6.8.0.0', fn() => $this->themeService->getThemeConfiguration($themeId, false, $context));
             } else {
                 $config = $this->themeService->getPlainThemeConfiguration($themeId, $context);
             }

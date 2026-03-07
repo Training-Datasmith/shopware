@@ -26,11 +26,7 @@ class CachedCompressedCriteriaDecoder extends CompressedCriteriaDecoder implemen
 
     public function decode(string $encodedCriteria): array
     {
-        if (isset($this->cache[$encodedCriteria])) {
-            return $this->cache[$encodedCriteria];
-        }
-
-        return $this->cache[$encodedCriteria] = $this->decorated->decode($encodedCriteria);
+        return $this->cache[$encodedCriteria] ?? $this->cache[$encodedCriteria] = $this->decorated->decode($encodedCriteria);
     }
 
     public function reset(): void

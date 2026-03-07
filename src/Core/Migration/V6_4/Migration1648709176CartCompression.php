@@ -42,13 +42,11 @@ class Migration1648709176CartCompression extends MigrationStep
         }
 
         do {
-            $affectedRows = RetryableQuery::retryable($connection, static function () use ($connection): int {
-                return (int) $connection->executeStatement(
-                    'UPDATE cart SET `payload` = `cart` WHERE `payload` IS NULL AND `cart` IS NOT NULL LIMIT :limit',
-                    ['limit' => self::UPDATE_LIMIT],
-                    ['limit' => ParameterType::INTEGER]
-                );
-            });
+            $affectedRows = RetryableQuery::retryable($connection, static fn(): int => (int) $connection->executeStatement(
+                'UPDATE cart SET `payload` = `cart` WHERE `payload` IS NULL AND `cart` IS NOT NULL LIMIT :limit',
+                ['limit' => self::UPDATE_LIMIT],
+                ['limit' => ParameterType::INTEGER]
+            ));
         } while ($affectedRows === self::UPDATE_LIMIT);
 
         $this->dropColumnIfExists($connection, 'cart', 'cart');

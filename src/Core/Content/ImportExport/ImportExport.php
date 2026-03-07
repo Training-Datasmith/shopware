@@ -400,12 +400,15 @@ class ImportExport
         $partFiles = [];
 
         foreach ($this->filesystem->listContents($dir) as $meta) {
-            if ($meta->type() !== 'file'
-                || $meta->path() === $target
-                || !str_starts_with($meta->path(), $partFilePrefix)) {
+            if ($meta->type() !== 'file') {
                 continue;
             }
-
+            if ($meta->path() === $target) {
+                continue;
+            }
+            if (!str_starts_with((string) $meta->path(), $partFilePrefix)) {
+                continue;
+            }
             $partFiles[] = $meta->path();
         }
 
@@ -502,7 +505,7 @@ class ImportExport
                     continue;
                 }
 
-                $mappedRecord[$key] = (string) $value;
+                $mappedRecord[$key] = $value;
             }
 
             if ($exportExceptions) {
@@ -514,7 +517,7 @@ class ImportExport
                 if ($exceptions) {
                     $originalRecord['_error'] = json_encode(
                         \array_map(
-                            fn ($exception) => \mb_convert_encoding($exception->getMessage(), 'UTF-8', 'UTF-8'),
+                            fn ($exception): string => \mb_convert_encoding($exception->getMessage(), 'UTF-8', 'UTF-8'),
                             $exceptions
                         )
                     );
@@ -689,7 +692,7 @@ class ImportExport
 
         $allowedMappings = array_filter(
             $config->getMapping()->getElements(),
-            function ($mapping) use ($definition, $source) {
+            function (\Shopware\Core\Content\ImportExport\Processing\Mapping\Mapping $mapping) use ($definition, $source): bool {
                 $fields = EntityDefinitionQueryHelper::getFieldsOfAccessor(
                     $definition,
                     $mapping->getKey()

@@ -26,7 +26,7 @@ class InAppPurchasesPayloadService
         $options = $this->helper->createRequestOptions($payload, $app, $context);
 
         $response = $this->client->post($url, $options->jsonSerialize());
-        $content = \json_decode($response->getBody()->getContents(), true, 512, \JSON_THROW_ON_ERROR);
+        $content = \json_decode((string) $response->getBody()->getContents(), true, 512, \JSON_THROW_ON_ERROR);
 
         if (\array_key_exists('purchases', $content) && \is_array($content['purchases'])) {
             $content['purchases'] = array_values(array_intersect($payload->purchases, $content['purchases']));

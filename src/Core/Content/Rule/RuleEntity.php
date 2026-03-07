@@ -86,10 +86,7 @@ class RuleEntity extends Entity
         $this->name = $name;
     }
 
-    /**
-     * @return Rule|string|null
-     */
-    public function getPayload()
+    public function getPayload(): string|\Shopware\Core\Framework\Rule\Rule|null
     {
         $this->checkIfPropertyAccessIsAllowed('payload');
 
@@ -98,10 +95,8 @@ class RuleEntity extends Entity
 
     /**
      * @internal
-     *
-     * @param Rule|string|null $payload
      */
-    public function setPayload($payload): void
+    public function setPayload(string|\Shopware\Core\Framework\Rule\Rule|null $payload): void
     {
         $this->payload = $payload;
     }

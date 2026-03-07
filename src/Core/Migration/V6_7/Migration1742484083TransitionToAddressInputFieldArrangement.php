@@ -40,7 +40,7 @@ class Migration1742484083TransitionToAddressInputFieldArrangement extends Migrat
             }
 
             $showZipcodeInFrontOfCity = (bool) \json_decode(
-                $oldValue['configuration_value'],
+                (string) $oldValue['configuration_value'],
                 true,
                 flags: \JSON_THROW_ON_ERROR,
             )['_value'];

@@ -55,9 +55,7 @@ class CookieRoute extends AbstractCookieRoute
         $hashData = [];
 
         $groups = array_values($cookieGroups->getElements());
-        usort($groups, static function (CookieGroup $a, CookieGroup $b): int {
-            return strcmp($a->getTechnicalName(), $b->getTechnicalName());
-        });
+        usort($groups, static fn(CookieGroup $a, CookieGroup $b): int => strcmp($a->getTechnicalName(), $b->getTechnicalName()));
 
         foreach ($groups as $cookieGroup) {
             $groupData = [
@@ -74,9 +72,7 @@ class CookieRoute extends AbstractCookieRoute
             $cookieEntries = $cookieGroup->getEntries();
             if ($cookieEntries !== null) {
                 $entries = array_values($cookieEntries->getElements());
-                usort($entries, static function (CookieEntry $a, CookieEntry $b): int {
-                    return strcmp($a->cookie, $b->cookie);
-                });
+                usort($entries, static fn(CookieEntry $a, CookieEntry $b): int => strcmp($a->cookie, $b->cookie));
 
                 $entriesData = [];
                 foreach ($entries as $cookieEntry) {

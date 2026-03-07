@@ -74,10 +74,7 @@ class EntityTemplateLoader implements LoaderInterface, EventSubscriberInterface,
         return $template['updatedAt'] === null || $template['updatedAt']->getTimestamp() < $time;
     }
 
-    /**
-     * @return bool
-     */
-    public function exists(string $name)
+    public function exists(string $name): bool
     {
         $template = $this->findDatabaseTemplate($name);
         if (!$template) {

@@ -44,7 +44,10 @@ class RulePayloadSubscriber implements EventSubscriberInterface
 
         foreach ($event->getEntities() as $entity) {
             $payload = $entity->getPayload();
-            if ($payload === null || !\is_string($payload)) {
+            if ($payload === null) {
+                continue;
+            }
+            if (!\is_string($payload)) {
                 continue;
             }
 

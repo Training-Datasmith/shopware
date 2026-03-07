@@ -120,7 +120,7 @@ class CustomerGroupSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->seoUrlRepository->delete(array_map(static fn (string $id) => ['id' => $id], $ids), $event->getContext());
+        $this->seoUrlRepository->delete(array_map(static fn (string $id): array => ['id' => $id], $ids), $event->getContext());
     }
 
     /**

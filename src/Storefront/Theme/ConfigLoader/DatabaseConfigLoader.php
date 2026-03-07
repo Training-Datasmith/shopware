@@ -94,7 +94,7 @@ class DatabaseConfigLoader extends AbstractConfigLoader
         $baseThemeConfig = [];
 
         if ($withBase) {
-            $baseTheme = $themes->filter(fn (ThemeEntity $themeEntry) => $themeEntry->getTechnicalName() === $this->baseTheme)->first();
+            $baseTheme = $themes->filter(fn (ThemeEntity $themeEntry): bool => $themeEntry->getTechnicalName() === $this->baseTheme)->first();
             \assert($baseTheme !== null);
 
             $baseThemeConfig = $this->mergeStaticConfig($baseTheme);
@@ -123,7 +123,7 @@ class DatabaseConfigLoader extends AbstractConfigLoader
     {
         // add configured parent themes
         foreach ($this->getConfigInheritance($mainTheme) as $parentThemeName) {
-            $parentTheme = $themes->filter(fn (ThemeEntity $themeEntry) => $themeEntry->getTechnicalName() === str_replace('@', '', $parentThemeName))->first();
+            $parentTheme = $themes->filter(fn (ThemeEntity $themeEntry): bool => $themeEntry->getTechnicalName() === str_replace('@', '', $parentThemeName))->first();
 
             if (!($parentTheme instanceof ThemeEntity)) {
                 continue;
@@ -144,7 +144,7 @@ class DatabaseConfigLoader extends AbstractConfigLoader
         }
 
         // add database defined parent theme
-        $parentTheme = $themes->filter(fn (ThemeEntity $themeEntry) => $themeEntry->getId() === $mainTheme->getParentThemeId())->first();
+        $parentTheme = $themes->filter(fn (ThemeEntity $themeEntry): bool => $themeEntry->getId() === $mainTheme->getParentThemeId())->first();
 
         if (!($parentTheme instanceof ThemeEntity)) {
             return $parentThemes;
@@ -156,7 +156,7 @@ class DatabaseConfigLoader extends AbstractConfigLoader
 
         $parentThemes[$parentTheme->getId()] = $parentTheme;
         if ($parentTheme->getParentThemeId()) {
-            $parentThemes = $this->getParentThemeIds($themes, $mainTheme, $parentThemes);
+            return $this->getParentThemeIds($themes, $mainTheme, $parentThemes);
         }
 
         return $parentThemes;
@@ -252,16 +252,24 @@ class DatabaseConfigLoader extends AbstractConfigLoader
 
         // Collect all ids
         foreach ($config['fields'] as $data) {
-            if (!isset($data['value'])
-                || $data['value'] === ''
-                || !\is_string($data['value'])
-                || (\array_key_exists('scss', $data) && $data['scss'] === false)
-                || (isset($data['type']) && $data['type'] !== 'media')
-                || !Uuid::isValid($data['value'])
-            ) {
+            if (!isset($data['value'])) {
                 continue;
             }
-
+            if ($data['value'] === '') {
+                continue;
+            }
+            if (!\is_string($data['value'])) {
+                continue;
+            }
+            if (\array_key_exists('scss', $data) && $data['scss'] === false) {
+                continue;
+            }
+            if (isset($data['type']) && $data['type'] !== 'media') {
+                continue;
+            }
+            if (!Uuid::isValid($data['value'])) {
+                continue;
+            }
             $ids[] = $data['value'];
         }
 
@@ -275,20 +283,27 @@ class DatabaseConfigLoader extends AbstractConfigLoader
 
         // Replace all ids with the actual url
         foreach ($config['fields'] as $key => $data) {
-            if (!isset($data['value']) || !\is_string($data['value'])) {
+            if (!isset($data['value'])) {
                 continue;
             }
-
-            if (
-                $data['value'] === ''
-                || (\array_key_exists('scss', $data) && $data['scss'] === false)
-                || (isset($data['type']) && $data['type'] !== 'media')
-                || !Uuid::isValid($data['value'])
-                || !$mediaResult->has($data['value'])
-            ) {
+            if (!\is_string($data['value'])) {
                 continue;
             }
-
+            if ($data['value'] === '') {
+                continue;
+            }
+            if (\array_key_exists('scss', $data) && $data['scss'] === false) {
+                continue;
+            }
+            if (isset($data['type']) && $data['type'] !== 'media') {
+                continue;
+            }
+            if (!Uuid::isValid($data['value'])) {
+                continue;
+            }
+            if (!$mediaResult->has($data['value'])) {
+                continue;
+            }
             $config['fields'][$key]['value'] = $mediaResult->get($data['value'])->getUrl();
         }
 

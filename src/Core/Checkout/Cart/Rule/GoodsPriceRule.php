@@ -48,7 +48,7 @@ class GoodsPriceRule extends FilterRule
         if ($filter !== null) {
             $context = $scope->getSalesChannelContext();
 
-            $goods = $goods->filter(static function (LineItem $lineItem) use ($filter, $context) {
+            $goods = $goods->filter(static function (LineItem $lineItem) use ($filter, $context): bool {
                 $scope = new LineItemScope($lineItem, $context);
 
                 return $filter->match($scope);

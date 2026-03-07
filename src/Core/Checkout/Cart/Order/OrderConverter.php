@@ -116,10 +116,15 @@ class OrderConverter
 
         if ($conversionContext->shouldIncludeDeliveries()) {
             foreach ($cart->getDeliveries() as $delivery) {
-                if ($delivery->hasExtensionOfType(self::ORIGINAL_ADDRESS_ID, IdStruct::class) || $delivery->getLocation()->getAddress() !== null || $delivery->hasExtensionOfType(self::ORIGINAL_ID, IdStruct::class)) {
+                if ($delivery->hasExtensionOfType(self::ORIGINAL_ADDRESS_ID, IdStruct::class)) {
                     continue;
                 }
-
+                if ($delivery->getLocation()->getAddress() !== null) {
+                    continue;
+                }
+                if ($delivery->hasExtensionOfType(self::ORIGINAL_ID, IdStruct::class)) {
+                    continue;
+                }
                 throw OrderException::deliveryWithoutAddress();
             }
         }
@@ -166,9 +171,7 @@ class OrderConverter
             if ((!$isRecalculation || !$cart->getBehavior()?->hasPermission(CheckoutPermissions::SKIP_PRIMARY_ORDER_IDS)) && $cart->getDeliveries()->count() > 0) {
                 usort(
                     $data['deliveries'],
-                    function (array $deliveryA, array $deliveryB) {
-                        return $deliveryB['shippingCosts']->getTotalPrice() <=> $deliveryA['shippingCosts']->getTotalPrice();
-                    }
+                    fn(array $deliveryA, array $deliveryB) => $deliveryB['shippingCosts']->getTotalPrice() <=> $deliveryA['shippingCosts']->getTotalPrice()
                 );
                 $data['deliveries'][0]['id'] ??= Uuid::randomHex();
                 $data['primaryOrderDeliveryId'] = $data['deliveries'][0]['id'];
@@ -476,11 +479,13 @@ class OrderConverter
 
                 $deliveryPositions->add($deliveryPosition);
             }
-
-            if ($orderDelivery->getShippingMethod() === null
-                || $orderDelivery->getShippingOrderAddress() === null
-                || $orderDelivery->getShippingOrderAddress()->getCountry() === null
-            ) {
+            if ($orderDelivery->getShippingMethod() === null) {
+                continue;
+            }
+            if ($orderDelivery->getShippingOrderAddress() === null) {
+                continue;
+            }
+            if ($orderDelivery->getShippingOrderAddress()->getCountry() === null) {
                 continue;
             }
 
@@ -490,8 +495,7 @@ class OrderConverter
                 $orderDelivery->getShippingMethod(),
                 new ShippingLocation(
                     $orderDelivery->getShippingOrderAddress()->getCountry(),
-                    $orderDelivery->getShippingOrderAddress()->getCountryState(),
-                    null
+                    $orderDelivery->getShippingOrderAddress()->getCountryState()
                 ),
                 $orderDelivery->getShippingCosts()
             );

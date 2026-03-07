@@ -75,8 +75,10 @@ class RuleAreasFlagNotAllowedRule implements Rule
             }
 
             $fieldClassName = $this->resolveClassName($node->var);
-
-            if (!$fieldClassName || !$this->reflectionProvider->hasClass($fieldClassName)) {
+            if (!$fieldClassName) {
+                continue;
+            }
+            if (!$this->reflectionProvider->hasClass($fieldClassName)) {
                 continue;
             }
 

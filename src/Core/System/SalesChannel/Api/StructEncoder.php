@@ -108,7 +108,7 @@ class StructEncoder implements ResetInterface
         }
 
         if ($struct instanceof ErrorCollection) {
-            return array_map(static fn (Error $error) => $error->jsonSerialize(), $struct->getElements());
+            return array_map(static fn (Error $error): array => $error->jsonSerialize(), $struct->getElements());
         }
 
         if ($struct instanceof Collection) {
@@ -208,9 +208,7 @@ class StructEncoder implements ResetInterface
             if ($blockedFields) {
                 $blockedFieldsLookup = \array_flip($blockedFields);
 
-                $data = \array_filter($data, static function ($key) use ($blockedFieldsLookup) {
-                    return !isset($blockedFieldsLookup[$key]);
-                }, \ARRAY_FILTER_USE_KEY);
+                $data = \array_filter($data, static fn($key) => !isset($blockedFieldsLookup[$key]), \ARRAY_FILTER_USE_KEY);
             }
         }
 

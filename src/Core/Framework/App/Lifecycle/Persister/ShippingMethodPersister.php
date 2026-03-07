@@ -116,9 +116,7 @@ class ShippingMethodPersister
         $criteria->addFilter(new EqualsFilter('appName', $appName));
         $criteria->addAssociation('shippingMethod');
 
-        return $context->scope(Context::SYSTEM_SCOPE, function (Context $context) use ($criteria) {
-            return $this->appShippingMethodRepository->search($criteria, $context)->getEntities();
-        });
+        return $context->scope(Context::SYSTEM_SCOPE, fn(Context $context) => $this->appShippingMethodRepository->search($criteria, $context)->getEntities());
     }
 
     private function deactivateOldShippingMethods(

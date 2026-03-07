@@ -81,7 +81,10 @@ class SortingListingProcessor extends AbstractListingProcessor
 
     private function hasQueriesOrTerm(Criteria $criteria): bool
     {
-        return $criteria->getQueries() !== [] || $criteria->getTerm();
+        if ($criteria->getQueries() !== []) {
+            return true;
+        }
+        return (bool) $criteria->getTerm();
     }
 
     private function getCurrentSorting(ProductSortingCollection $sortings, Request $request, string $salesChannelId): ?ProductSortingEntity
@@ -112,7 +115,7 @@ class SortingListingProcessor extends AbstractListingProcessor
             arsort($availableSortings, \SORT_DESC | \SORT_NUMERIC);
             $availableSortingsFilter = array_keys($availableSortings);
 
-            $availableSortingsById = array_filter($availableSortingsFilter, fn ($filter) => Uuid::isValid($filter));
+            $availableSortingsById = array_filter($availableSortingsFilter, Uuid::isValid(...));
 
             $filter = new EqualsAnyFilter('id', $availableSortingsById);
 

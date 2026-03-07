@@ -42,9 +42,7 @@ class ErrorResponseFactory
                 $errors[] = $error;
             }
 
-            $errors = $this->convert($errors);
-
-            return $errors;
+            return $this->convert($errors);
         }
 
         return [$this->convertExceptionToError($exception, $debug)];

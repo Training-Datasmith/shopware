@@ -14,18 +14,14 @@ class SsoUserNotFoundException extends SsoException
 {
     public const SSO_LOGIN_USER_NOT_FOUND = 'SSO_LOGIN__USER_NOT_FOUND';
 
-    private ?string $email;
-
     public function __construct(
-        ?string $email = null,
+        private readonly ?string $email = null,
     ) {
         parent::__construct(
             Response::HTTP_UNAUTHORIZED,
             self::SSO_LOGIN_USER_NOT_FOUND,
             'User not found',
         );
-
-        $this->email = $email;
     }
 
     public function getEmail(): ?string

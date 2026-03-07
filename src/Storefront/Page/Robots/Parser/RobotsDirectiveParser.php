@@ -36,9 +36,11 @@ class RobotsDirectiveParser
         foreach ($lines as $line) {
             ++$lineNumber;
             $line = trim($line);
-
             // Skip empty lines and comments
-            if ($line === '' || str_starts_with($line, '#')) {
+            if ($line === '') {
+                continue;
+            }
+            if (str_starts_with($line, '#')) {
                 continue;
             }
 

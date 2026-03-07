@@ -37,7 +37,7 @@ class SitemapLister implements SitemapListerInterface
                 continue;
             }
 
-            $filename = basename($file->path());
+            $filename = basename((string) $file->path());
 
             $exploded = explode('-', $filename);
 

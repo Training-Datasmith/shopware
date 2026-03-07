@@ -55,7 +55,10 @@ class PaymentDistinguishableNameGenerator
         $upsertablePayments = [];
         foreach ($payments as $payment) {
             $pluginOrAppEntity = $payment->getPlugin() ?? $payment->getAppPaymentMethod()?->getApp();
-            if ($pluginOrAppEntity === null || $payment->getTranslations() === null) {
+            if ($pluginOrAppEntity === null) {
+                continue;
+            }
+            if ($payment->getTranslations() === null) {
                 continue;
             }
 

@@ -200,7 +200,7 @@ class Privileges
     private function decodePrivileges(array $privileges): array
     {
         return array_map(
-            fn (?string $appPrivileges) => $appPrivileges
+            fn (?string $appPrivileges): mixed => $appPrivileges
                 ? json_decode($appPrivileges, true, \JSON_THROW_ON_ERROR)
                 : [],
             $privileges

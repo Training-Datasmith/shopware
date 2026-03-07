@@ -8,11 +8,6 @@ use Shopware\Core\Framework\ShopwareHttpException;
 #[Package('after-sales')]
 class GenerateDocumentActionException extends ShopwareHttpException
 {
-    public function __construct(string $message)
-    {
-        parent::__construct($message);
-    }
-
     public function getErrorCode(): string
     {
         return 'FLOW_BUILDER__DOCUMENT_GENERATION_ERROR';

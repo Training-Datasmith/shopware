@@ -16,12 +16,12 @@ class ProductManufacturerCollection extends EntityCollection
      */
     public function getMediaIds(): array
     {
-        return $this->fmap(fn (ProductManufacturerEntity $productManufacturer) => $productManufacturer->getMediaId());
+        return $this->fmap(fn (ProductManufacturerEntity $productManufacturer): ?string => $productManufacturer->getMediaId());
     }
 
     public function filterByMediaId(string $id): self
     {
-        return $this->filter(fn (ProductManufacturerEntity $productManufacturer) => $productManufacturer->getMediaId() === $id);
+        return $this->filter(fn (ProductManufacturerEntity $productManufacturer): bool => $productManufacturer->getMediaId() === $id);
     }
 
     public function getApiAlias(): string

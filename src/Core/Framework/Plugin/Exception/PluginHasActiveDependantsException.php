@@ -17,7 +17,7 @@ class PluginHasActiveDependantsException extends PluginException
         string $dependency,
         array $dependants
     ) {
-        $dependantNameList = array_map(static fn ($plugin) => \sprintf('"%s"', $plugin->getName()), $dependants);
+        $dependantNameList = array_map(static fn (\Shopware\Core\Framework\Plugin\PluginEntity $plugin): string => \sprintf('"%s"', $plugin->getName()), $dependants);
 
         parent::__construct(
             Response::HTTP_INTERNAL_SERVER_ERROR,

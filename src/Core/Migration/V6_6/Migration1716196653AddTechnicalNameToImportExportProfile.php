@@ -58,7 +58,7 @@ class Migration1716196653AddTechnicalNameToImportExportProfile extends Migration
      */
     private function generateTechnicalName(?string $name, array $technicalNames): string
     {
-        $name = $name ?? 'Unnamed profile';
+        $name ??= 'Unnamed profile';
 
         $technicalName = $this->getTechnicalName($name);
 

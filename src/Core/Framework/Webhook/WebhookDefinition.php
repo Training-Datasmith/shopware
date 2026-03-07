@@ -53,7 +53,7 @@ class WebhookDefinition extends EntityDefinition
 
     protected function defineFields(): FieldCollection
     {
-        $collection = new FieldCollection([
+        return new FieldCollection([
             (new IdField('id', 'id'))->addFlags(new PrimaryKey(), new Required()),
             (new StringField('name', 'name'))->addFlags(new Required()),
             (new StringField('event_name', 'eventName', 500))->addFlags(new Required()),
@@ -64,7 +64,5 @@ class WebhookDefinition extends EntityDefinition
             new FkField('app_id', 'appId', AppDefinition::class),
             new ManyToOneAssociationField('app', 'app_id', AppDefinition::class),
         ]);
-
-        return $collection;
     }
 }

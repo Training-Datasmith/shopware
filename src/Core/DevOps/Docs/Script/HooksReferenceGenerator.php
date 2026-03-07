@@ -52,7 +52,7 @@ class HooksReferenceGenerator implements ScriptReferenceGenerator
     /**
      * @var ServiceList
      */
-    private array $defaultServices;
+    private readonly array $defaultServices;
 
     public function __construct(
         private readonly ContainerInterface $container,
@@ -105,8 +105,10 @@ class HooksReferenceGenerator implements ScriptReferenceGenerator
                 // skip not autoloadable test classes
                 continue;
             }
-
-            if (is_subclass_of($class, FunctionHook::class) || is_subclass_of($class, TraceHook::class)) {
+            if (is_subclass_of($class, FunctionHook::class)) {
+                continue;
+            }
+            if (is_subclass_of($class, TraceHook::class)) {
                 continue;
             }
 

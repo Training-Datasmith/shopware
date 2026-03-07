@@ -30,7 +30,7 @@ class CachedSystemConfigLoader extends AbstractSystemConfigLoader
     {
         $key = 'system-config-' . $salesChannelId;
 
-        $value = $this->cache->get($key, function (ItemInterface $item) use ($salesChannelId) {
+        $value = $this->cache->get($key, function (ItemInterface $item) use ($salesChannelId): string {
             $config = $this->getDecorated()->load($salesChannelId);
 
             $item->tag([self::CACHE_TAG]);

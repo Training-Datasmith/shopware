@@ -106,7 +106,7 @@ class ConfigurationService
     {
         $config = [];
         if ($this->checkConfiguration($domain, $context)) {
-            $config = array_merge(
+            return array_merge(
                 $config,
                 $this->enrichValues(
                     $this->getConfiguration($domain, $context),

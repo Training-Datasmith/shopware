@@ -31,7 +31,7 @@ class Processor
 
     public function process(Cart $original, SalesChannelContext $context, CartBehavior $behavior): Cart
     {
-        return Profiler::trace('cart::process', function () use ($original, $context, $behavior) {
+        return Profiler::trace('cart::process', function () use ($original, $context, $behavior): \Shopware\Core\Checkout\Cart\Cart {
             $cart = new Cart($original->getToken());
             $cart->setCustomerComment($original->getCustomerComment());
             $cart->setAffiliateCode($original->getAffiliateCode());

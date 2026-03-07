@@ -139,7 +139,7 @@ class VersionManager
             $versionData['name'] = $name;
         }
 
-        $context->scope(Context::SYSTEM_SCOPE, function ($context) use ($versionData): void {
+        $context->scope(Context::SYSTEM_SCOPE, function (\Shopware\Core\Framework\DataAbstractionLayer\Write\WriteContext $context) use ($versionData): void {
             $this->entityWriter->upsert($this->versionDefinition, [$versionData], $context);
         });
 
@@ -182,9 +182,7 @@ class VersionManager
         $writes = $this->buildWrites($commits);
 
         $this->eventDispatcher->dispatch($event = new BeforeVersionMergeEvent($writes));
-        $writes = $event->filterWrites(static function ($operation) {
-            return !empty($operation);
-        });
+        $writes = $event->filterWrites(static fn($operation) => !empty($operation));
 
         // execute writes and get access to the write result to dispatch events later on
         $result = $this->executeWrites($writes, $liveContext);
@@ -307,8 +305,10 @@ class VersionManager
             $dataCursor = $data;
 
             $payloadCursor = &$payload;
-
-            if ($field instanceof VersionField || $field instanceof ReferenceVersionField) {
+            if ($field instanceof VersionField) {
+                continue;
+            }
+            if ($field instanceof ReferenceVersionField) {
                 continue;
             }
 
@@ -359,7 +359,10 @@ class VersionManager
             }
 
             $flag = $field->getFlag(CascadeDelete::class);
-            if (!$flag || !$flag->isCloneRelevant()) {
+            if (!$flag) {
+                continue;
+            }
+            if (!$flag->isCloneRelevant()) {
                 continue;
             }
 
@@ -530,7 +533,7 @@ class VersionManager
      */
     private function addVersionToPayload(array $payload, EntityDefinition $definition, string $versionId): array
     {
-        $fields = $definition->getFields()->filter(fn (Field $field) => $field instanceof VersionField || $field instanceof ReferenceVersionField);
+        $fields = $definition->getFields()->filter(fn (Field $field): bool => $field instanceof VersionField || $field instanceof ReferenceVersionField);
 
         foreach ($fields as $field) {
             $payload[$field->getPropertyName()] = $versionId;
@@ -577,10 +580,10 @@ class VersionManager
         int $childCounter = 1
     ): void {
         // add all cascade delete associations
-        $cascades = $definition->getFields()->filter(function (Field $field) {
+        $cascades = $definition->getFields()->filter(function (Field $field): bool {
             $flag = $field->getFlag(CascadeDelete::class);
 
-            return $flag ? $flag->isCloneRelevant() : false;
+            return $flag && $flag->isCloneRelevant();
         });
 
         foreach ($cascades as $cascade) {
@@ -708,7 +711,7 @@ class VersionManager
     private function getEntityForeignKeyName(string $parentEntity): string
     {
         $parentPropertyName = explode('_', $parentEntity);
-        $parentPropertyName = array_map('ucfirst', $parentPropertyName);
+        $parentPropertyName = array_map(ucfirst(...), $parentPropertyName);
 
         return lcfirst(implode('', $parentPropertyName)) . 'Id';
     }
@@ -815,7 +818,10 @@ class VersionManager
         foreach ($commits as $commit) {
             foreach ($commit->getData() as $data) {
                 // skip clone action, otherwise the payload would contain all data
-                if ($data->getAction() === 'clone' || $data->getPayload() === null) {
+                if ($data->getAction() === 'clone') {
+                    continue;
+                }
+                if ($data->getPayload() === null) {
                     continue;
                 }
                 $definition = $this->registry->getByEntityName($data->getEntityName());

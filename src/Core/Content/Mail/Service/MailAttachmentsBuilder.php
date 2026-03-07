@@ -50,10 +50,12 @@ class MailAttachmentsBuilder
         $attachments = [];
 
         foreach ($mailTemplate->getMedia() ?? [] as $mailTemplateMedia) {
-            if ($mailTemplateMedia->getMedia() === null || $mailTemplateMedia->getLanguageId() !== $context->getLanguageId()) {
+            if ($mailTemplateMedia->getMedia() === null) {
                 continue;
             }
-
+            if ($mailTemplateMedia->getLanguageId() !== $context->getLanguageId()) {
+                continue;
+            }
             $attachments[] = $this->mediaService->getAttachment(
                 $mailTemplateMedia->getMedia(),
                 $context

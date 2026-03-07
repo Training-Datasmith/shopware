@@ -36,13 +36,11 @@ abstract class EntityTranslationDefinition extends EntityDefinition
     {
         return $this->getFields()
                 ->filterByFlag(Required::class)
-                ->filter(function (Field $field) {
-                    return !(
-                        $field instanceof FkField
-                        || $field instanceof CreatedAtField
-                        || $field instanceof UpdatedAtField
-                    );
-                })
+                ->filter(fn(Field $field) => !(
+                    $field instanceof FkField
+                    || $field instanceof CreatedAtField
+                    || $field instanceof UpdatedAtField
+                ))
                 ->count()
             > 0;
     }
@@ -58,7 +56,7 @@ abstract class EntityTranslationDefinition extends EntityDefinition
         $entityName = $translatedDefinition->getEntityName();
 
         $propertyBaseName = explode('_', $entityName);
-        $propertyBaseName = array_map('ucfirst', $propertyBaseName);
+        $propertyBaseName = array_map(ucfirst(...), $propertyBaseName);
         $propertyBaseName = lcfirst(implode('', $propertyBaseName));
 
         $baseFields = [

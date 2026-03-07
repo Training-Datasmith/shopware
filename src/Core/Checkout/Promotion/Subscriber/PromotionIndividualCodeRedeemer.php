@@ -66,7 +66,7 @@ class PromotionIndividualCodeRedeemer implements EventSubscriberInterface
     {
         $update = [];
         $codes = \array_values(\array_filter(\array_map(
-            fn ($item) => $item->getPayload()['code'] ?? '',
+            fn (\Shopware\Core\Checkout\Order\Aggregate\OrderLineItem\OrderLineItemEntity $item) => $item->getPayload()['code'] ?? '',
             \iterator_to_array($lineItems)
         )));
 

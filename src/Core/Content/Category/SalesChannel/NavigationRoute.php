@@ -145,9 +145,7 @@ class NavigationRoute extends AbstractNavigationRoute
         $criteria->setLimit(null);
         $criteria->setTotalCountMode(Criteria::TOTAL_COUNT_MODE_NONE);
 
-        $levels = $this->categoryRepository->search($criteria, $context)->getEntities();
-
-        return $levels;
+        return $this->categoryRepository->search($criteria, $context)->getEntities();
     }
 
     /**

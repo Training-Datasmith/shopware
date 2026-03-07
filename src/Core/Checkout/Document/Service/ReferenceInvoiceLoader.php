@@ -63,7 +63,7 @@ final readonly class ReferenceInvoiceLoader
             return [];
         }
 
-        $results = array_filter($documents, static function (array $document) use ($deepLinkCodeRendererConfig) {
+        $results = array_filter($documents, static function (array $document) use ($deepLinkCodeRendererConfig): bool {
             if ($deepLinkCodeRendererConfig !== null && $deepLinkCodeRendererConfig !== '') {
                 return $document['orderVersionId'] === $document['versionId']
                     && $deepLinkCodeRendererConfig === $document['deepLinkCode'];

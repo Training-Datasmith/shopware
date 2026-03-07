@@ -189,13 +189,11 @@ class NewsletterAccountPageletLoader
 
         $responseStruct = $this->newsletterRecipientRoute
             ->load($event->getStoreApiRequest(), $context, $criteria, $customer);
-
-        $status = 'undefined';
         if ($responseStruct->getAccountNewsletterRecipient()->getStatus()) {
-            $status = $responseStruct->getAccountNewsletterRecipient()->getStatus();
+            return $responseStruct->getAccountNewsletterRecipient()->getStatus();
         }
 
-        return $status;
+        return 'undefined';
     }
 
     protected function getBasePagelet(CustomerEntity $customer, string $salesChannelId): NewsletterAccountPagelet

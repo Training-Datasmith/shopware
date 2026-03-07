@@ -416,7 +416,7 @@ class SystemConfigService implements ResetInterface
         $keysForDelete = array_fill_keys($configKeys, null);
 
         // Delete config keys for global scope
-        $this->setMultiple($keysForDelete, null);
+        $this->setMultiple($keysForDelete);
 
         // Delete overriden config keys for each sales channel
         foreach ($salesChannelIds as $salesChannelId) {
@@ -440,9 +440,7 @@ class SystemConfigService implements ResetInterface
             Feature::deprecatedMethodMessage(self::class, __METHOD__, 'v6.8.0.0')
         );
 
-        $result = $param();
-
-        return $result;
+        return $param();
     }
 
     /**

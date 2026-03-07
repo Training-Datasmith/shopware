@@ -166,7 +166,7 @@ class Migration1744203319MailTemplate extends MigrationStep
         );
 
         if (!$mailTemplateTypeId) {
-            $mailTemplateTypeId = Uuid::randomBytes();
+            return Uuid::randomBytes();
         }
 
         return $mailTemplateTypeId;
@@ -200,7 +200,7 @@ class Migration1744203319MailTemplate extends MigrationStep
         );
 
         if (!$mailTemplateId) {
-            $mailTemplateId = Uuid::randomBytes();
+            return Uuid::randomBytes();
         }
 
         return $mailTemplateId;

@@ -77,7 +77,7 @@ class MailService extends AbstractMailService
             return null;
         }
 
-        if (trim($mail->getBody()->toString()) === '') {
+        if (trim((string) $mail->getBody()->toString()) === '') {
             $this->mailError('Mail body is null', $context, $templateData);
 
             return null;

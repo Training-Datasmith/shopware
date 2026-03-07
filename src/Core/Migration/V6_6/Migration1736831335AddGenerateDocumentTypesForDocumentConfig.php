@@ -46,7 +46,7 @@ class Migration1736831335AddGenerateDocumentTypesForDocumentConfig extends Migra
 
             foreach ($documentConfig as $config) {
                 $id = $config['id'];
-                $config = json_decode($config['config'], true, 512, \JSON_THROW_ON_ERROR);
+                $config = json_decode((string) $config['config'], true, 512, \JSON_THROW_ON_ERROR);
 
                 if (!isset($config['fileTypes'])) {
                     $config['fileTypes'] = [HtmlRenderer::FILE_EXTENSION, PdfRenderer::FILE_EXTENSION];

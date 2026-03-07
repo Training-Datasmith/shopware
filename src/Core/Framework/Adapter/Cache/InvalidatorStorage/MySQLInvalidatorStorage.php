@@ -24,7 +24,7 @@ class MySQLInvalidatorStorage extends AbstractInvalidatorStorage
 
     public function __construct(private readonly Connection $connection, private readonly LoggerInterface $logger, ?\Closure $debug = null)
     {
-        $this->debug = $debug ?? (fn () => null)(...);
+        $this->debug = $debug ?? (fn (): null => null)(...);
     }
 
     public function store(array $tags): void
@@ -37,7 +37,7 @@ class MySQLInvalidatorStorage extends AbstractInvalidatorStorage
         $insertQueue->addInserts(
             self::TABLE_NAME,
             array_map(
-                fn (string $tag) => ['id' => Uuid::randomBytes(), 'tag' => $tag],
+                fn (string $tag): array => ['id' => Uuid::randomBytes(), 'tag' => $tag],
                 array_values($tags)
             )
         );

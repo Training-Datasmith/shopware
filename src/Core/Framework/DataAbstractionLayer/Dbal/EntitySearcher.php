@@ -45,7 +45,13 @@ class EntitySearcher implements EntitySearcherInterface
 
         $fields = [];
         foreach ($definition->getFields() as $field) {
-            if (!$field instanceof StorageAware || $field instanceof ReferenceVersionField || $field instanceof VersionField) {
+            if (!$field instanceof StorageAware) {
+                continue;
+            }
+            if ($field instanceof ReferenceVersionField) {
+                continue;
+            }
+            if ($field instanceof VersionField) {
                 continue;
             }
             if ($field instanceof NumberRangeField) {

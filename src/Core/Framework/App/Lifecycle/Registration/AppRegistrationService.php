@@ -58,7 +58,7 @@ class AppRegistrationService
             if ($e->hasResponse() && $e->getResponse() !== null) {
                 $response = $e->getResponse();
                 $responseBody = $response->getBody()->getContents();
-                $data = json_decode($responseBody, true);
+                $data = json_decode((string) $responseBody, true);
 
                 if (isset($data['error']) && \is_string($data['error'])) {
                     throw AppException::registrationFailed($appName, $data['error']);
@@ -129,7 +129,7 @@ class AppRegistrationService
         ResponseInterface $response
     ): array {
         try {
-            $data = json_decode($response->getBody()->getContents(), true, 512, \JSON_THROW_ON_ERROR);
+            $data = json_decode((string) $response->getBody()->getContents(), true, 512, \JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
             throw AppException::registrationFailed($appName, 'JSON response could not be decoded', $e);
         }

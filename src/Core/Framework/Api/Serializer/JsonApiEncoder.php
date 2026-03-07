@@ -165,8 +165,10 @@ class JsonApiEncoder
             }
 
             $flag = $field->getFlag(ApiAware::class);
-
-            if ($flag === null || !$flag->isBaseUrlAllowed($result->getBaseUrl())) {
+            if ($flag === null) {
+                continue;
+            }
+            if (!$flag->isBaseUrlAllowed($result->getBaseUrl())) {
                 continue;
             }
 

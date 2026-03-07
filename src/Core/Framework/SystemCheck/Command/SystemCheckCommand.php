@@ -100,7 +100,7 @@ class SystemCheckCommand extends Command
 
         $isJsonOutput = $format === 'json';
         $rows = array_map(
-            fn (Result $result) => [
+            fn (Result $result): array => [
                 'name' => $result->name,
                 'healthy' => $result->healthy,
                 'status' => $result->status->name,

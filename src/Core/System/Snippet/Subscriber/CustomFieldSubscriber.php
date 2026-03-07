@@ -41,10 +41,12 @@ class CustomFieldSubscriber implements EventSubscriberInterface
         $snippets = [];
         $snippetSets = null;
         foreach ($event->getWriteResults() as $writeResult) {
-            if (!isset($writeResult->getPayload()['config']['label']) || empty($writeResult->getPayload()['config']['label'])) {
+            if (!isset($writeResult->getPayload()['config']['label'])) {
                 continue;
             }
-
+            if (empty($writeResult->getPayload()['config']['label'])) {
+                continue;
+            }
             if ($writeResult->getOperation() === EntityWriteResult::OPERATION_INSERT) {
                 if ($snippetSets === null) {
                     $snippetSets = $this->connection->fetchAllAssociative('SELECT id, iso FROM snippet_set');

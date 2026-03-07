@@ -20,7 +20,7 @@ class ProductLineItemValidator implements CartValidatorInterface
             return;
         }
 
-        $productLineItems = array_filter($cart->getLineItems()->getFlat(), static fn (LineItem $lineItem) => $lineItem->getType() === LineItem::PRODUCT_LINE_ITEM_TYPE);
+        $productLineItems = array_filter($cart->getLineItems()->getFlat(), static fn (LineItem $lineItem): bool => $lineItem->getType() === LineItem::PRODUCT_LINE_ITEM_TYPE);
 
         $quantities = [];
         $refs = [];

@@ -27,26 +27,7 @@ class CustomEntityEnrichmentService
         // $customEntityXmlSchema = $this->enrichCmsAware($customEntityXmlSchema);
 
         if ($adminUiXmlSchema !== null) {
-            $customEntityXmlSchema = $this->enrichAdminUi($customEntityXmlSchema, $adminUiXmlSchema);
-        }
-
-        return $customEntityXmlSchema;
-    }
-
-    private function enrichCmsAware(CustomEntityXmlSchema $customEntityXmlSchema): CustomEntityXmlSchema
-    {
-        foreach ($customEntityXmlSchema->getEntities()?->getEntities() ?? [] as $entity) {
-            if ($entity->isCmsAware() !== true) {
-                continue;
-            }
-
-            $fields = $entity->getFields();
-            $fields = array_merge($fields, CmsAwareFields::getCmsAwareFields());
-            $entity->setFields($fields);
-
-            $flags = $entity->getFlags();
-            $flags = [...$flags, ...['cms-aware' => ['name' => $entity->getName()]]];
-            $entity->setFlags($flags);
+            return $this->enrichAdminUi($customEntityXmlSchema, $adminUiXmlSchema);
         }
 
         return $customEntityXmlSchema;

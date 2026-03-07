@@ -45,7 +45,7 @@ class ConnectionProfiler extends DataCollector implements LateDataCollectorInter
     {
         $profilingMiddleware = current(array_filter(
             $this->connection->getConfiguration()->getMiddlewares(),
-            fn (MiddlewareInterface $middleware) => $middleware instanceof ProfilingMiddleware
+            fn (MiddlewareInterface $middleware): bool => $middleware instanceof ProfilingMiddleware
         ));
 
         if ($profilingMiddleware === false) {
@@ -83,7 +83,7 @@ class ConnectionProfiler extends DataCollector implements LateDataCollectorInter
 
     public function getQueryCount(): int
     {
-        return array_sum(array_map('count', $this->data['queries']));
+        return array_sum(array_map(count(...), $this->data['queries']));
     }
 
     /**
@@ -172,7 +172,7 @@ class ConnectionProfiler extends DataCollector implements LateDataCollectorInter
     {
         return array_sum(
             array_map(
-                static fn (array $connectionGroupedQueries) => \count($connectionGroupedQueries),
+                \count(...),
                 $this->getGroupedQueries()
             )
         );
@@ -203,7 +203,7 @@ class ConnectionProfiler extends DataCollector implements LateDataCollectorInter
      */
     private function sanitizeQueries(array $queries): array
     {
-        return array_map(fn (array $query) => $this->sanitizeQuery($query), $queries);
+        return array_map($this->sanitizeQuery(...), $queries);
     }
 
     /**

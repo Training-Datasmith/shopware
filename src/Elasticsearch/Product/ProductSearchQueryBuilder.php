@@ -53,14 +53,12 @@ class ProductSearchQueryBuilder extends AbstractProductSearchQueryBuilder
             throw ElasticsearchException::emptyQuery();
         }
 
-        $configs = array_map(function (array $item): SearchFieldConfig {
-            return new SearchFieldConfig(
-                $item['field'],
-                $item['ranking'],
-                (bool) $item['tokenize'],
-                (bool) $item['and_logic'],
-            );
-        }, $searchConfig);
+        $configs = array_map(fn(array $item): SearchFieldConfig => new SearchFieldConfig(
+            $item['field'],
+            $item['ranking'],
+            (bool) $item['tokenize'],
+            (bool) $item['and_logic'],
+        ), $searchConfig);
 
         if (!$configs[0]->isAndLogic()) {
             $tokens = [$originalTerm];

@@ -56,7 +56,7 @@ class FirstRunWizardClient
             ]
         );
 
-        return json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        return json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -81,7 +81,7 @@ class FirstRunWizardClient
             ]
         );
 
-        return json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        return json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -111,7 +111,7 @@ class FirstRunWizardClient
             ['query' => $this->optionsProvider->getDefaultQueryParameters($context)]
         );
 
-        return json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        return json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -142,7 +142,7 @@ class FirstRunWizardClient
             ['query' => $query]
         );
 
-        return json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        return json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -162,7 +162,7 @@ class FirstRunWizardClient
             ]
         );
 
-        return json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        return json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
     }
 
     public function checkVerificationSecret(string $domain, Context $context, bool $testEnvironment): void
@@ -196,7 +196,7 @@ class FirstRunWizardClient
             ]
         );
 
-        return json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        return json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -210,6 +210,6 @@ class FirstRunWizardClient
             ['query' => $this->optionsProvider->getDefaultQueryParameters($context)]
         );
 
-        return json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        return json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
     }
 }

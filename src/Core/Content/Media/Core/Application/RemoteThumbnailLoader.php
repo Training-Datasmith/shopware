@@ -125,14 +125,19 @@ class RemoteThumbnailLoader implements ResetInterface
         $mapped = [];
 
         foreach ($entities as $entity) {
-            if (!$entity->has('path') || empty($entity->get('path'))) {
+            if (!$entity->has('path')) {
+                continue;
+            }
+            if (empty($entity->get('path'))) {
                 continue;
             }
             // don't generate private urls
-            if (!$entity->has('private') || $entity->get('private')) {
+            if (!$entity->has('private')) {
                 continue;
             }
-
+            if ($entity->get('private')) {
+                continue;
+            }
             $mapped[$entity->getUniqueIdentifier()] = UrlParams::fromMedia($entity);
         }
 

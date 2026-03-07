@@ -19,12 +19,12 @@ class ProductConfiguratorSettingCollection extends EntityCollection
      */
     public function getProductIds(): array
     {
-        return $this->fmap(fn (ProductConfiguratorSettingEntity $productConfigurator) => $productConfigurator->getProductId());
+        return $this->fmap(fn (ProductConfiguratorSettingEntity $productConfigurator): string => $productConfigurator->getProductId());
     }
 
     public function filterByProductId(string $id): self
     {
-        return $this->filter(fn (ProductConfiguratorSettingEntity $productConfigurator) => $productConfigurator->getProductId() === $id);
+        return $this->filter(fn (ProductConfiguratorSettingEntity $productConfigurator): bool => $productConfigurator->getProductId() === $id);
     }
 
     /**
@@ -32,18 +32,18 @@ class ProductConfiguratorSettingCollection extends EntityCollection
      */
     public function getOptionIds(): array
     {
-        return $this->fmap(fn (ProductConfiguratorSettingEntity $productConfigurator) => $productConfigurator->getOptionId());
+        return $this->fmap(fn (ProductConfiguratorSettingEntity $productConfigurator): string => $productConfigurator->getOptionId());
     }
 
     public function filterByOptionId(string $id): self
     {
-        return $this->filter(fn (ProductConfiguratorSettingEntity $productConfigurator) => $productConfigurator->getOptionId() === $id);
+        return $this->filter(fn (ProductConfiguratorSettingEntity $productConfigurator): bool => $productConfigurator->getOptionId() === $id);
     }
 
     public function getOptions(): PropertyGroupOptionCollection
     {
         return new PropertyGroupOptionCollection(
-            $this->fmap(fn (ProductConfiguratorSettingEntity $productConfigurator) => $productConfigurator->getOption())
+            $this->fmap(fn (ProductConfiguratorSettingEntity $productConfigurator): ?\Shopware\Core\Content\Property\Aggregate\PropertyGroupOption\PropertyGroupOptionEntity => $productConfigurator->getOption())
         );
     }
 

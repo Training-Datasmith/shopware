@@ -22,9 +22,7 @@ class RuleIdMatcher
      */
     public function filter(array $options, array $ruleIds): array
     {
-        return \array_values(\array_filter($options, function (IdAware&RuleIdAware $option) use ($ruleIds) {
-            return $option->getAvailabilityRuleId() === null || \in_array($option->getAvailabilityRuleId(), $ruleIds, true);
-        }));
+        return \array_values(\array_filter($options, fn(IdAware&RuleIdAware $option) => $option->getAvailabilityRuleId() === null || \in_array($option->getAvailabilityRuleId(), $ruleIds, true)));
     }
 
     /**
@@ -37,8 +35,6 @@ class RuleIdMatcher
      */
     public function filterCollection(Collection $options, array $ruleIds): Collection
     {
-        return $options->filter(function (IdAware&RuleIdAware $option) use ($ruleIds) {
-            return $option->getAvailabilityRuleId() === null || \in_array($option->getAvailabilityRuleId(), $ruleIds, true);
-        });
+        return $options->filter(fn(IdAware&RuleIdAware $option) => $option->getAvailabilityRuleId() === null || \in_array($option->getAvailabilityRuleId(), $ruleIds, true));
     }
 }

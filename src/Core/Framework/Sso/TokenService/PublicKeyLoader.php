@@ -15,14 +15,14 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * @internal
  */
 #[Package('framework')]
-final class PublicKeyLoader
+final readonly class PublicKeyLoader
 {
     private const CACHE_KEY = 'admin_sso_public_key_storage';
 
     public function __construct(
-        private readonly HttpClientInterface $client,
-        private readonly LoginConfigService $loginConfigService,
-        private readonly CacheInterface $cache
+        private HttpClientInterface $client,
+        private LoginConfigService $loginConfigService,
+        private CacheInterface $cache
     ) {
     }
 

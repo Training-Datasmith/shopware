@@ -92,7 +92,7 @@ class CacheWatchDelayedCommand extends Command
     private function render(Table $table, array $rows): void
     {
         $table->setHeaders(['Tags at: ' . date('Y-m-d H:i:s')]);
-        $table->setRows(array_map(fn ($tag) => [$tag], $rows));
+        $table->setRows(array_map(fn (string $tag): array => [$tag], $rows));
         $table->render();
     }
 }

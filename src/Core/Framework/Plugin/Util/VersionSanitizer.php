@@ -15,7 +15,7 @@ class VersionSanitizer
 
         return preg_replace_callback(
             $regex,
-            static function ($match) use (&$counter) {
+            static function ($match) use (&$counter): string {
                 // Third occurrence of a dot with following digits will be removed.
                 // This is the fourth number of the version string, which is returned by Composer
                 if ($counter === 3) {

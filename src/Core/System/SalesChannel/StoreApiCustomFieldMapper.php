@@ -90,7 +90,7 @@ WHERE custom_field.allow_customer_write = 1
     private function decodeArrayValues(mixed $value): mixed
     {
         if ($value instanceof ParameterBag) {
-            $value = $value->all();
+            return $value->all();
         }
 
         return $value;

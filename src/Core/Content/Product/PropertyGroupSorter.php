@@ -22,8 +22,10 @@ class PropertyGroupSorter extends AbstractPropertyGroupSorter
 
         foreach ($options as $option) {
             $origin = $option->get('group');
-
-            if ($origin === null || $origin->get('visibleOnProductDetailPage') === false) {
+            if ($origin === null) {
+                continue;
+            }
+            if ($origin->get('visibleOnProductDetailPage') === false) {
                 continue;
             }
 

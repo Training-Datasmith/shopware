@@ -62,9 +62,7 @@ class NotificationService
         $criteria->addSorting(new FieldSorting('createdAt', FieldSorting::ASCENDING));
         $criteria->setLimit($limit);
 
-        $notifications = $context->scope(Context::SYSTEM_SCOPE, function (Context $context) use ($criteria) {
-            return $this->notificationRepository->search($criteria, $context)->getEntities();
-        });
+        $notifications = $context->scope(Context::SYSTEM_SCOPE, fn(Context $context) => $this->notificationRepository->search($criteria, $context)->getEntities());
 
         if ($notifications->count() === 0) {
             return [

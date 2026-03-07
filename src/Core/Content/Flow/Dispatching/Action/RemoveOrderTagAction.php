@@ -63,7 +63,7 @@ class RemoveOrderTagAction extends FlowAction implements DelayableAction
             return;
         }
 
-        $tags = array_map(static fn ($tagId) => [
+        $tags = array_map(static fn ($tagId): array => [
             'orderId' => $orderId,
             'tagId' => $tagId,
         ], $tagIds);

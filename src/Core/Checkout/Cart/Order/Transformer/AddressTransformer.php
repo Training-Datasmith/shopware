@@ -70,9 +70,7 @@ class AddressTransformer
             'additionalAddressLine2' => $address->getAdditionalAddressLine2(),
             'countryId' => $address->getCountryId(),
             'countryStateId' => $address->getCountryStateId(),
-        ], static function (?string $value): bool {
-            return $value !== null && $value !== '';
-        });
+        ], static fn(?string $value): bool => $value !== null && $value !== '');
 
         $addressArray['id'] = Uuid::randomHex();
 

@@ -45,7 +45,7 @@ class SystemConfigValidator
 
             $allKeys = array_keys($inputValues);
 
-            $domains = array_map(fn (string $key) => implode('.', explode('.', $key, -1)), $allKeys);
+            $domains = array_map(fn (string $key): string => implode('.', explode('.', $key, -1)), $allKeys);
             $domains = array_unique($domains);
 
             $subDefinition = new DataValidationDefinition('systemConfig.update.' . $saleChannelId);
@@ -105,12 +105,12 @@ class SystemConfigValidator
     {
         /** @var array<string, callable(mixed): Constraint> $constraints */
         $constraints = [
-            'minLength' => fn (mixed $ruleValue) => new Assert\Length(min: $ruleValue === null ? null : max(0, (int) $ruleValue)),
-            'maxLength' => fn (mixed $ruleValue) => new Assert\Length(max: $ruleValue === null ? null : max(1, (int) $ruleValue)),
-            'min' => fn (mixed $ruleValue) => new Assert\Range(min: $ruleValue),
-            'max' => fn (mixed $ruleValue) => new Assert\Range(max: $ruleValue),
-            'dataType' => fn (mixed $ruleValue) => new Assert\Type($ruleValue),
-            'required' => fn (mixed $ruleValue) => new Assert\NotBlank(null, null, $allowNulls),
+            'minLength' => fn (mixed $ruleValue): \Symfony\Component\Validator\Constraints\Length => new Assert\Length(min: $ruleValue === null ? null : max(0, (int) $ruleValue)),
+            'maxLength' => fn (mixed $ruleValue): \Symfony\Component\Validator\Constraints\Length => new Assert\Length(max: $ruleValue === null ? null : max(1, (int) $ruleValue)),
+            'min' => fn (mixed $ruleValue): \Symfony\Component\Validator\Constraints\Range => new Assert\Range(min: $ruleValue),
+            'max' => fn (mixed $ruleValue): \Symfony\Component\Validator\Constraints\Range => new Assert\Range(max: $ruleValue),
+            'dataType' => fn (mixed $ruleValue): \Symfony\Component\Validator\Constraints\Type => new Assert\Type($ruleValue),
+            'required' => fn (mixed $ruleValue): \Symfony\Component\Validator\Constraints\NotBlank => new Assert\NotBlank(null, null, $allowNulls),
         ];
 
         $constraintsResult = [];

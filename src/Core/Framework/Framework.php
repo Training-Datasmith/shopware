@@ -144,8 +144,6 @@ class Framework extends Bundle
 
     public function boot(): void
     {
-        parent::boot();
-
         \assert($this->container instanceof ContainerInterface, 'Container is not set yet, please call setContainer() before calling boot(), see `src/Core/Kernel.php:186`.');
 
         /** @var FeatureFlagRegistry $featureFlagRegistry */

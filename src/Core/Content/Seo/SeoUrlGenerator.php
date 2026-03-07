@@ -117,8 +117,10 @@ class SeoUrlGenerator
             $copy->setPathInfo($pathInfo);
 
             $seoPathInfo = $this->getSeoPathInfo($mapping, $config, $templateName);
-
-            if ($seoPathInfo === null || $seoPathInfo === '') {
+            if ($seoPathInfo === null) {
+                continue;
+            }
+            if ($seoPathInfo === '') {
                 continue;
             }
 

@@ -31,7 +31,7 @@ class Migration1696262484AddDefaultSendMailOptions extends MigrationStep
         }
 
         /** @var array{_value: string} $config */
-        $config = json_decode($rawConfig['configuration_value'], true, 512, \JSON_THROW_ON_ERROR);
+        $config = json_decode((string) $rawConfig['configuration_value'], true, 512, \JSON_THROW_ON_ERROR);
 
         $configValue = $config['_value'] ?? '';
 

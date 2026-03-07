@@ -72,8 +72,10 @@ class LanguageValidator implements EventSubscriberInterface
 
         foreach ($commands as $command) {
             $violations = new ConstraintViolationList();
-
-            if ($command instanceof CascadeDeleteCommand || $command->getEntityName() !== LanguageDefinition::ENTITY_NAME) {
+            if ($command instanceof CascadeDeleteCommand) {
+                continue;
+            }
+            if ($command->getEntityName() !== LanguageDefinition::ENTITY_NAME) {
                 continue;
             }
 

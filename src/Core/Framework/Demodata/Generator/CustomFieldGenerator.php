@@ -65,10 +65,12 @@ class CustomFieldGenerator implements DemodataGeneratorInterface
         $console->comment('Set custom fields for entities: ' . $sum);
         $console->progressStart($sum);
         foreach ($relations as $relation => $count) {
-            if (!$count || $count < 1) {
+            if (!$count) {
                 continue;
             }
-
+            if ($count < 1) {
+                continue;
+            }
             $console->comment('\nSet custom fields for ' . $count . ' ' . $relation . ' entities');
 
             $rndSet = $this->getRandomSet();
@@ -183,7 +185,7 @@ class CustomFieldGenerator implements DemodataGeneratorInterface
     private function generateCustomFieldSet(array $options, DemodataContext $context): void
     {
         $relationNames = array_keys($options['relations']);
-        $relations = array_map(static fn ($rel) => ['id' => Uuid::randomHex(), 'entityName' => $rel], $relationNames);
+        $relations = array_map(static fn (int|string $rel): array => ['id' => Uuid::randomHex(), 'entityName' => $rel], $relationNames);
 
         $attributeCount = random_int(1, 5);
         $attributes = [];

@@ -12,9 +12,9 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
  */
 #[Package('framework')]
 #[AsMessageHandler]
-final class LogConsentToRegistryHandler
+final readonly class LogConsentToRegistryHandler
 {
-    public function __construct(private readonly PermissionLogger $logger)
+    public function __construct(private PermissionLogger $logger)
     {
     }
 

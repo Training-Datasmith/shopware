@@ -64,7 +64,7 @@ class ElasticsearchIndexingCommand extends Command
         $progressBar = new ProgressBar($input->getOption('no-progress') ? new NullOutput() : $output);
         $progressBar->start();
 
-        $entities = $input->getOption('only') ? explode(',', $input->getOption('only')) : [];
+        $entities = $input->getOption('only') ? explode(',', (string) $input->getOption('only')) : [];
         $offset = null;
         $messagesToDispatch = [];
 

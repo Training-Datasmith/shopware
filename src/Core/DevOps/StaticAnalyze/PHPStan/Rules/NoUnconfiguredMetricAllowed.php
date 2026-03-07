@@ -83,7 +83,7 @@ class NoUnconfiguredMetricAllowed implements Rule
             }
         }
 
-        $nameArgument = $nameArgument ?? ($node->args[0] ?? null);
+        $nameArgument ??= $node->args[0] ?? null;
         // metric name is dynamic, fetched from a property or a method or else, for simplicity, we'll only check for string literals.
         if (!$nameArgument instanceof Arg || !$nameArgument->value instanceof String_) {
             return [];

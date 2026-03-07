@@ -82,7 +82,7 @@ class CartOrderRoute extends AbstractCartOrderRoute
             throw CartException::hashMismatch($cart->getToken());
         }
 
-        return $this->cartLocker->locked($context, function () use ($cart, $context, $data) {
+        return $this->cartLocker->locked($context, function () use ($cart, $context, $data): \Shopware\Core\Checkout\Cart\SalesChannel\CartOrderRouteResponse {
             // we use this state in stock updater class, to prevent duplicate available stock updates
             $context->addState('checkout-order-route');
 
@@ -122,9 +122,7 @@ class CartOrderRoute extends AbstractCartOrderRoute
 
             $this->eventDispatcher->dispatch(new CheckoutOrderPlacedCriteriaEvent($criteria, $context));
 
-            $orderEntity = Profiler::trace('checkout-order::order-loading', function () use ($criteria, $context): ?OrderEntity {
-                return $this->orderRepository->search($criteria, $context->getContext())->getEntities()->first();
-            });
+            $orderEntity = Profiler::trace('checkout-order::order-loading', fn(): ?OrderEntity => $this->orderRepository->search($criteria, $context->getContext())->getEntities()->first());
 
             if (!$orderEntity) {
                 throw CartException::invalidPaymentOrderNotStored($orderId);
@@ -181,9 +179,9 @@ class CartOrderRoute extends AbstractCartOrderRoute
         $this->addCustomerComment($calculatedCart, $data);
         $this->addAffiliateTracking($calculatedCart, $data);
 
-        Profiler::trace('checkout-order::pre-payment', fn () => $this->paymentProcessor->validate($calculatedCart, $data, $context));
+        Profiler::trace('checkout-order::pre-payment', fn (): ?\Shopware\Core\Framework\Struct\Struct => $this->paymentProcessor->validate($calculatedCart, $data, $context));
 
-        $orderId = Profiler::trace('checkout-order::order-persist', fn () => $this->orderPersister->persist($calculatedCart, $context));
+        $orderId = Profiler::trace('checkout-order::order-persist', fn (): string => $this->orderPersister->persist($calculatedCart, $context));
 
         return new OrderPlaceResult($orderId);
     }

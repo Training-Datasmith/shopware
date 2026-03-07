@@ -146,7 +146,7 @@ class ProductCategoryDenormalizer
         $query->setParameter('version', Uuid::fromHexToBytes($context->getVersionId()));
         $query->setParameter('live', Uuid::fromHexToBytes(Defaults::LIVE_VERSION));
 
-        $bytes = array_map(fn (string $id) => Uuid::fromHexToBytes($id), $ids);
+        $bytes = array_map(Uuid::fromHexToBytes(...), $ids);
 
         $query->setParameter('ids', $bytes, ArrayParameterType::BINARY);
 
@@ -171,7 +171,7 @@ class ProductCategoryDenormalizer
             $categoryIds
         );
 
-        $categoryIds = array_map('strtolower', $categoryIds);
+        $categoryIds = array_map(strtolower(...), $categoryIds);
 
         return array_keys(array_flip(array_filter($categoryIds)));
     }

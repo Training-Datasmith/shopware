@@ -30,7 +30,7 @@ readonly class LintedTranslationFileStruct
     public function getDomainCollection(string $domain): TranslationFileCollection
     {
         return $this->translationFiles->filter(
-            fn (TranslationFile $file) => $this->getCollectionDomainName($file->domain) === self::getCollectionDomainName($domain)
+            fn (TranslationFile $file): bool => $this->getCollectionDomainName($file->domain) === self::getCollectionDomainName($domain)
         );
     }
 

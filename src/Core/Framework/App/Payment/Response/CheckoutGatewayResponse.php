@@ -34,15 +34,15 @@ class CheckoutGatewayResponse
     {
         $response = new self();
 
-        if (\array_key_exists('paymentMethods', $data) && \is_array($data['paymentMethods'])) {
+        if (\is_array($data['paymentMethods'])) {
             $response->paymentMethods = $data['paymentMethods'];
         }
 
-        if (\array_key_exists('shippingMethods', $data) && \is_array($data['shippingMethods'])) {
+        if (\is_array($data['shippingMethods'])) {
             $response->shippingMethods = $data['shippingMethods'];
         }
 
-        if (\array_key_exists('errors', $data) && \is_array($data['errors'])) {
+        if (\is_array($data['errors'])) {
             $response->errors = $data['errors'];
         }
 

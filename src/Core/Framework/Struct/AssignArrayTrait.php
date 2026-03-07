@@ -12,7 +12,7 @@ trait AssignArrayTrait
      *
      * @return $this
      */
-    public function assign(array $options)
+    public function assign(array $options): object|string
     {
         foreach ($options as $key => $value) {
             if ($key === 'id' && method_exists($this, 'setId')) {

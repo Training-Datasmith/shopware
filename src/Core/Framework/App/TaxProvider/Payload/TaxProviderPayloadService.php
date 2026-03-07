@@ -35,7 +35,7 @@ class TaxProviderPayloadService
             $response = $this->client->post($url, $optionRequest->jsonSerialize());
             $content = $response->getBody()->getContents();
 
-            return TaxProviderResponse::create(\json_decode($content, true, 512, \JSON_THROW_ON_ERROR));
+            return TaxProviderResponse::create(\json_decode((string) $content, true, 512, \JSON_THROW_ON_ERROR));
         } catch (GuzzleException) {
             return null;
         }

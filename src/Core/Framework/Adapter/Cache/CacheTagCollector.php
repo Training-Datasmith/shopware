@@ -31,7 +31,7 @@ class CacheTagCollector
 
     public function __invoke(AddCacheTagEvent $event): void
     {
-        $hash = $this->uri($this->stack->getCurrentRequest());
+        $hash = static::uri($this->stack->getCurrentRequest());
 
         foreach ($event->tags as $tag) {
             $this->tags[$hash][$tag] = true;

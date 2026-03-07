@@ -45,8 +45,10 @@ class CustomFieldSearchableSubscriber implements EventSubscriberInterface
         $customFieldIds = [];
         foreach ($customFieldWrittenEvent->getWriteResults() as $writeResult) {
             $payload = $writeResult->getPayload();
-
-            if (!\array_key_exists('includeInSearch', $payload) || $payload['includeInSearch'] !== false) {
+            if (!\array_key_exists('includeInSearch', $payload)) {
+                continue;
+            }
+            if ($payload['includeInSearch'] !== false) {
                 continue;
             }
 

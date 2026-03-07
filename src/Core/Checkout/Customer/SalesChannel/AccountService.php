@@ -162,7 +162,10 @@ class AccountService
 
     private function isCustomerConfirmed(CustomerEntity $customer): bool
     {
-        return !$customer->getDoubleOptInRegistration() || $customer->getDoubleOptInConfirmDate();
+        if (!$customer->getDoubleOptInRegistration()) {
+            return true;
+        }
+        return (bool) $customer->getDoubleOptInConfirmDate();
     }
 
     private function loginByCustomer(CustomerEntity $customer, SalesChannelContext $context): string
@@ -223,7 +226,7 @@ class AccountService
         // for guest accounts, real customer accounts should only occur once, otherwise the
         // wrong password will be validated
         if ($result->count() > 1) {
-            $result->sort(fn (CustomerEntity $a, CustomerEntity $b) => ($a->getCreatedAt() <=> $b->getCreatedAt()) * -1);
+            $result->sort(fn (CustomerEntity $a, CustomerEntity $b): int => ($a->getCreatedAt() <=> $b->getCreatedAt()) * -1);
         }
 
         return $result->first();

@@ -18,17 +18,13 @@ class PaymentTokenRegistered extends Constraint
         self::PAYMENT_TOKEN_NOT_REGISTERED => 'PAYMENT_TOKEN_NOT_REGISTERED',
     ];
 
-    protected string $message;
-
     /**
      * @internal
      */
     #[HasNamedArguments]
     public function __construct(
-        string $message = 'The payment token with id {{ id }} is not registered.'
+        protected string $message = 'The payment token with id {{ id }} is not registered.'
     ) {
-        $this->message = $message;
-
         parent::__construct();
     }
 

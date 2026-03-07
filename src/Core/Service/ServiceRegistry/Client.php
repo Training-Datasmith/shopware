@@ -91,7 +91,7 @@ class Client implements ResetInterface
         } while ($page <= ($response['pagination']['pages'] ?? 1));
 
         $this->services = array_map(
-            static fn (array $service) => new ServiceEntry(
+            static fn (array $service): \Shopware\Core\Service\ServiceRegistry\ServiceEntry => new ServiceEntry(
                 $service['name'],
                 $service['label'],
                 $service['host'],
@@ -185,7 +185,7 @@ class Client implements ResetInterface
             }
 
             return $content;
-        } catch (ExceptionInterface $e) {
+        } catch (ExceptionInterface) {
             return null;
         }
     }

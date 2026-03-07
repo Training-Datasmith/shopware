@@ -38,8 +38,8 @@ class ProductDetailReadinessCheck extends BaseCheck
     public function run(): Result
     {
         return $this->util->runAsSalesChannelRequest(
-            fn () => $this->util->runWhileTrustingAllHosts(
-                fn () => $this->doRun()
+            fn (): \Shopware\Core\Framework\SystemCheck\Check\Result => $this->util->runWhileTrustingAllHosts(
+                fn (): \Shopware\Core\Framework\SystemCheck\Check\Result => $this->doRun()
             )
         );
     }

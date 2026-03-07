@@ -19,7 +19,7 @@ class StoreApiException extends StoreException
         $data = [];
 
         try {
-            $data = json_decode($exception->getResponse()->getBody()->getContents(), true, 512, \JSON_THROW_ON_ERROR);
+            $data = json_decode((string) $exception->getResponse()->getBody()->getContents(), true, 512, \JSON_THROW_ON_ERROR);
         } catch (\JsonException) {
         }
 

@@ -81,7 +81,7 @@ class IndexingController extends AbstractController
 
         $skips = array_filter(explode(',', (string) $request->headers->get(PlatformRequest::HEADER_INDEXING_SKIP, '')));
 
-        $message = new ProductIndexingMessage($ids, null);
+        $message = new ProductIndexingMessage($ids);
         $message->setIndexer('product.indexer');
         $message->addSkip(...$skips);
 

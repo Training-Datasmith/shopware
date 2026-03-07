@@ -194,7 +194,7 @@ class Criteria extends Struct implements \Stringable
      */
     public function hasEqualsFilter($field): bool
     {
-        return array_filter($this->filters, static fn (Filter $filter) /* EqualsFilter $filter */ => $filter instanceof EqualsFilter && $filter->getField() === $field) !== [];
+        return array_filter($this->filters, static fn (Filter $filter): bool /* EqualsFilter $filter */ => $filter instanceof EqualsFilter && $filter->getField() === $field) !== [];
     }
 
     /**
@@ -546,7 +546,7 @@ class Criteria extends Struct implements \Stringable
      *
      * @return array<string, list<string>>|null
      */
-    public function getIncludes()
+    public function getIncludes(): ?array
     {
         return $this->includes;
     }

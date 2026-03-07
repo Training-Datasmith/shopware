@@ -71,7 +71,7 @@ class DomainRuleStruct extends Struct
     {
         $allDirectives = array_merge(
             $parsed->orphanedPathDirectives,
-            ...array_map(fn (RobotsUserAgentBlock $block) => $block->getPathDirectives(), $parsed->userAgentBlocks)
+            ...array_map(fn (RobotsUserAgentBlock $block): array => $block->getPathDirectives(), $parsed->userAgentBlocks)
         );
 
         foreach ($allDirectives as $directive) {

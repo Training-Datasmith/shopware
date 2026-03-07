@@ -96,13 +96,13 @@ class SCSSValidator
              * Therefore the compiler does not crash, and the parsed value is valid, but the original color is invalid.
              * This could lead to compiler crashes at a later stage, for example, when using the color in a mixin.
              */
-            if ((str_starts_with($value, 'hsl') && !self::isHSL($value))
-                || (str_starts_with($value, 'rgb') && !self::isRGB($value))) {
+            if ((str_starts_with((string) $value, 'hsl') && !self::isHSL($value))
+                || (str_starts_with((string) $value, 'rgb') && !self::isRGB($value))) {
                 throw ThemeException::InvalidScssValue($value, $type, $name);
             }
 
             return $value;
-        } catch (\Throwable $exception) {
+        } catch (\Throwable) {
             /**
              * If the color could not be compiled at all, throw an exception.
              */
@@ -139,7 +139,7 @@ class SCSSValidator
             }
 
             return 'inherit';
-        } catch (\Throwable $exception) {
+        } catch (\Throwable) {
             if ($sanitize !== true) {
                 throw ThemeException::InvalidScssValue($value, $type, $name);
             }
@@ -161,9 +161,9 @@ class SCSSValidator
             );
 
             return $value;
-        } catch (\Throwable $exception) {
+        } catch (\Throwable) {
             if ($sanitize !== true) {
-                throw ThemeException::InvalidScssValue(addslashes($value), $type, $name);
+                throw ThemeException::InvalidScssValue(addslashes((string) $value), $type, $name);
             }
 
             return 'inherit';
@@ -172,10 +172,10 @@ class SCSSValidator
 
     private static function isValidColorName(mixed $value): bool
     {
-        return (str_starts_with($value, '#') && self::isHex(substr($value, 1)))
-            || (str_starts_with($value, 'hsl') && self::isHSL($value))
-            || (str_starts_with($value, 'rgb') && self::isRGB($value))
-            || (!str_starts_with($value, '#') && Colors::colorNameToRGBa($value) !== null);
+        return (str_starts_with((string) $value, '#') && self::isHex(substr((string) $value, 1)))
+            || (str_starts_with((string) $value, 'hsl') && self::isHSL($value))
+            || (str_starts_with((string) $value, 'rgb') && self::isRGB($value))
+            || (!str_starts_with((string) $value, '#') && Colors::colorNameToRGBa($value) !== null);
     }
 
     private static function initVariables(string $value, string $varVal): string

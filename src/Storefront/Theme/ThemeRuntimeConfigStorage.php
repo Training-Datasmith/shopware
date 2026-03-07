@@ -142,7 +142,7 @@ class ThemeRuntimeConfigStorage
                 <<<'SQL'
                     SELECT LOWER(HEX(id)) as id FROM theme WHERE parent_theme_id IN (:parentIds)
                 SQL,
-                ['parentIds' => array_map(fn ($id) => Uuid::fromHexToBytes($id), $pendingParentIds)],
+                ['parentIds' => array_map(Uuid::fromHexToBytes(...), $pendingParentIds)],
                 [
                     'parentIds' => ArrayParameterType::STRING,
                 ]
@@ -203,10 +203,10 @@ class ThemeRuntimeConfigStorage
         return ThemeRuntimeConfig::fromArray([
             'themeId' => Uuid::fromBytesToHex($record['theme_id']),
             'technicalName' => (string) $record['technical_name'],
-            'resolvedConfig' => json_decode($record['resolved_config'], true, 512, \JSON_THROW_ON_ERROR),
-            'viewInheritance' => json_decode($record['view_inheritance'], true, 512, \JSON_THROW_ON_ERROR),
-            'scriptFiles' => json_decode($record['script_files'], true, 512, \JSON_THROW_ON_ERROR),
-            'iconSets' => json_decode($record['icon_sets'], true, 512, \JSON_THROW_ON_ERROR),
+            'resolvedConfig' => json_decode((string) $record['resolved_config'], true, 512, \JSON_THROW_ON_ERROR),
+            'viewInheritance' => json_decode((string) $record['view_inheritance'], true, 512, \JSON_THROW_ON_ERROR),
+            'scriptFiles' => json_decode((string) $record['script_files'], true, 512, \JSON_THROW_ON_ERROR),
+            'iconSets' => json_decode((string) $record['icon_sets'], true, 512, \JSON_THROW_ON_ERROR),
             'updatedAt' => \DateTime::createFromFormat(Defaults::STORAGE_DATE_TIME_FORMAT, $record['updated_at']) ?: null,
         ]);
     }

@@ -59,7 +59,10 @@ class TranslationValidator implements EventSubscriberInterface
         $violations = new ConstraintViolationList();
 
         foreach ($writeCommands as $writeCommand) {
-            if (!$writeCommand instanceof DeleteCommand || $writeCommand instanceof CascadeDeleteCommand) {
+            if (!$writeCommand instanceof DeleteCommand) {
+                continue;
+            }
+            if ($writeCommand instanceof CascadeDeleteCommand) {
                 continue;
             }
             $pk = $writeCommand->getPrimaryKey();

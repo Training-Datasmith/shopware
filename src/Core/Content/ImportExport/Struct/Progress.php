@@ -16,20 +16,10 @@ class Progress extends Struct
 
     protected ?string $invalidRecordsLogId = null;
 
-    protected int $offset = 0;
-
-    protected ?int $total = null;
-
     protected int $processedRecords = 0;
 
-    public function __construct(
-        protected string $logId,
-        protected string $state,
-        int $offset = 0,
-        ?int $total = null
-    ) {
-        $this->offset = $offset;
-        $this->total = $total;
+    public function __construct(protected string $logId, protected string $state, protected int $offset = 0, protected ?int $total = null)
+    {
     }
 
     public function addProcessedRecords(int $processedRecords): void
@@ -89,8 +79,12 @@ class Progress extends Struct
 
     public function isFinished(): bool
     {
-        return $this->getState() === self::STATE_SUCCEEDED
-            || $this->getState() === self::STATE_FAILED
-            || $this->getState() === self::STATE_ABORTED;
+        if ($this->getState() === self::STATE_SUCCEEDED) {
+            return true;
+        }
+        if ($this->getState() === self::STATE_FAILED) {
+            return true;
+        }
+        return $this->getState() === self::STATE_ABORTED;
     }
 }

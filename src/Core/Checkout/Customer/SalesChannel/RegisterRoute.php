@@ -281,12 +281,10 @@ class RegisterRoute extends AbstractRegisterRoute
         }
 
         if ($customer->getGuest()) {
-            $event = new DoubleOptInGuestOrderEvent($customer, $context, $url);
-        } else {
-            $event = new CustomerDoubleOptInRegistrationEvent($customer, $context, $url);
+            return new DoubleOptInGuestOrderEvent($customer, $context, $url);
         }
 
-        return $event;
+        return new CustomerDoubleOptInRegistrationEvent($customer, $context, $url);
     }
 
     /**
@@ -413,7 +411,7 @@ class RegisterRoute extends AbstractRegisterRoute
         $salesChannelDomainCollection = $context->getSalesChannel()->getDomains();
         \assert($salesChannelDomainCollection instanceof SalesChannelDomainCollection);
 
-        return array_values(array_map(static fn (SalesChannelDomainEntity $domainEntity) => rtrim($domainEntity->getUrl(), '/'), $salesChannelDomainCollection->getElements()));
+        return array_values(array_map(static fn (SalesChannelDomainEntity $domainEntity): string => rtrim($domainEntity->getUrl(), '/'), $salesChannelDomainCollection->getElements()));
     }
 
     private function getBirthday(DataBag $data): ?\DateTimeInterface

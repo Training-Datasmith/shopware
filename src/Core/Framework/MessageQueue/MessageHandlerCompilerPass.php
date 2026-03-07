@@ -20,8 +20,10 @@ class MessageHandlerCompilerPass implements CompilerPassInterface
             $tags = $definition->getTags();
 
             $class = $definition->getClass() ?? $id;
-
-            if (empty($class) || !class_exists($class)) {
+            if (empty($class)) {
+                continue;
+            }
+            if (!class_exists($class)) {
                 continue;
             }
 

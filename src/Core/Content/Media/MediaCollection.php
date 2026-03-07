@@ -16,12 +16,12 @@ class MediaCollection extends EntityCollection
      */
     public function getUserIds(): array
     {
-        return $this->fmap(fn (MediaEntity $media) => $media->getUserId());
+        return $this->fmap(fn (MediaEntity $media): ?string => $media->getUserId());
     }
 
     public function filterByUserId(string $id): self
     {
-        return $this->filter(fn (MediaEntity $media) => $media->getUserId() === $id);
+        return $this->filter(fn (MediaEntity $media): bool => $media->getUserId() === $id);
     }
 
     public function getApiAlias(): string

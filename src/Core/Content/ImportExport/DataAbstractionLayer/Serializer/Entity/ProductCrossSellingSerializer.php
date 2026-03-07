@@ -59,7 +59,10 @@ class ProductCrossSellingSerializer extends EntitySerializer
         yield 'assignedProducts' => $result;
     }
 
-    public function deserialize(Config $config, EntityDefinition $definition, $entity)
+    /**
+     * @return mixed[]
+     */
+    public function deserialize(Config $config, EntityDefinition $definition, $entity): array
     {
         $entity = \is_array($entity) ? $entity : iterator_to_array($entity);
 

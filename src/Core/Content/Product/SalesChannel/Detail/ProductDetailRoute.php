@@ -80,7 +80,7 @@ class ProductDetailRoute extends AbstractProductDetailRoute
     )]
     public function load(string $productId, Request $request, SalesChannelContext $context, Criteria $criteria): ProductDetailRouteResponse
     {
-        return Profiler::trace('product-detail-route', function () use ($productId, $request, $context, $criteria) {
+        return Profiler::trace('product-detail-route', function () use ($productId, $request, $context, $criteria): \Shopware\Core\Content\Product\SalesChannel\Detail\ProductDetailRouteResponse {
             $mainVariantId = $this->checkVariantListingConfig($productId, $context);
 
             $resolveVariantIdEvent = new ResolveVariantIdEvent(

@@ -65,7 +65,10 @@ class SeoUrlUpdater
         foreach ($templates as $config) {
             $template = $config['template'];
             $salesChannel = $salesChannels->get($config['salesChannelId']);
-            if ($template === '' || !$salesChannel) {
+            if ($template === '') {
+                continue;
+            }
+            if (!$salesChannel) {
                 continue;
             }
 

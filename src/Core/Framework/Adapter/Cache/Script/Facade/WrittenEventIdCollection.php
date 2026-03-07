@@ -63,7 +63,7 @@ class WrittenEventIdCollection implements \IteratorAggregate
      */
     public function getIterator(): \ArrayIterator
     {
-        $primaryKeys = array_values(\array_map(static fn (EntityWriteResult $result) => $result->getPrimaryKey(), $this->writeResults));
+        $primaryKeys = array_values(\array_map(static fn (EntityWriteResult $result): string|array => $result->getPrimaryKey(), $this->writeResults));
 
         return new \ArrayIterator($primaryKeys);
     }

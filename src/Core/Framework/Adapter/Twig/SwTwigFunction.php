@@ -57,8 +57,8 @@ class SwTwigFunction
                     return $object->$item(...$arguments);
                 }
 
-                $getter = 'get' . (string) $item;
-                $isGetter = 'is' . (string) $item;
+                $getter = 'get' . $item;
+                $isGetter = 'is' . $item;
 
                 if (method_exists($object, $getter)) { // @phpstan-ignore-next-line
                     return $object->$getter();

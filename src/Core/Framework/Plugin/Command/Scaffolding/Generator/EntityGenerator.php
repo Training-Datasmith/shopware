@@ -197,8 +197,6 @@ class EntityGenerator implements ScaffoldingGenerator
 
         $entities = explode(',', $entities);
 
-        return array_filter(array_map(function (string $entity) {
-            return ucfirst(trim($entity));
-        }, $entities));
+        return array_filter(array_map(fn(string $entity) => ucfirst(trim($entity)), $entities));
     }
 }

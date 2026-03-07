@@ -94,7 +94,7 @@ class MemoryFilesystemAdapter implements FilesystemAdapter
         $prefix = rtrim($prefix, '/') . '/';
 
         foreach (array_keys($this->files) as $path) {
-            if (str_starts_with($path, $prefix)) {
+            if (str_starts_with((string) $path, $prefix)) {
                 unset($this->files[$path]);
             }
         }
@@ -112,7 +112,7 @@ class MemoryFilesystemAdapter implements FilesystemAdapter
         $prefix = rtrim($prefix, '/') . '/';
 
         foreach (array_keys($this->files) as $file) {
-            if (str_starts_with($file, $prefix)) {
+            if (str_starts_with((string) $file, $prefix)) {
                 return true;
             }
         }
@@ -188,8 +188,8 @@ class MemoryFilesystemAdapter implements FilesystemAdapter
         $listedDirectories = [];
 
         foreach ($this->files as $filePath => $file) {
-            if (str_starts_with($filePath, $prefix)) {
-                $subPath = substr($filePath, $prefixLength);
+            if (str_starts_with((string) $filePath, $prefix)) {
+                $subPath = substr((string) $filePath, $prefixLength);
                 $dirname = \dirname($subPath);
 
                 if ($dirname !== '.') {
@@ -211,12 +211,12 @@ class MemoryFilesystemAdapter implements FilesystemAdapter
                 }
 
                 $dummyFilename = self::DUMMY_FILE_FOR_FORCED_LISTING_IN_FLYSYSTEM_TEST;
-                if (str_ends_with($filePath, $dummyFilename)) {
+                if (str_ends_with((string) $filePath, $dummyFilename)) {
                     continue;
                 }
 
                 if ($deep === true || !str_contains($subPath, '/')) {
-                    yield new FileAttributes(ltrim($filePath, '/'), $file->fileSize(), $file->visibility(), $file->lastModified(), $file->mimeType());
+                    yield new FileAttributes(ltrim((string) $filePath, '/'), $file->fileSize(), $file->visibility(), $file->lastModified(), $file->mimeType());
                 }
             }
         }
@@ -244,8 +244,8 @@ class MemoryFilesystemAdapter implements FilesystemAdapter
         }
 
         foreach ($this->files as $path => $file) {
-            if (str_starts_with($path, $source)) {
-                $newPath = $destination . substr($path, $sourceLength);
+            if (str_starts_with((string) $path, $source)) {
+                $newPath = $destination . substr((string) $path, $sourceLength);
                 $this->files[$newPath] = $file;
                 unset($this->files[$path]);
             }

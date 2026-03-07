@@ -98,7 +98,7 @@ final class ProductAdminSearchIndexer extends AbstractAdminIndexer
             }
         }
 
-        return array_values(array_unique(array_filter($productIds, '\is_string')));
+        return array_values(array_unique(array_filter($productIds, \is_string(...))));
     }
 
     public function getName(): string
@@ -562,16 +562,12 @@ SQL,
                     'id' => $manufacturerId,
                     'name' => $this->decodeTranslatedValues($translatedManufacturerNamesEncoded),
                 ] : null,
-                'categories' => array_map(static function (string $categoryId): array {
-                    return [
-                        'id' => $categoryId,
-                        'versionId' => Defaults::LIVE_VERSION,
-                        '_count' => 1,
-                    ];
-                }, $categoryIds),
-                'visibilities' => array_map(static function (array $visibility): array {
-                    return array_merge(['_count' => 1], $visibility);
-                }, $visibilities),
+                'categories' => array_map(static fn(string $categoryId): array => [
+                    'id' => $categoryId,
+                    'versionId' => Defaults::LIVE_VERSION,
+                    '_count' => 1,
+                ], $categoryIds),
+                'visibilities' => array_map(static fn(array $visibility): array => array_merge(['_count' => 1], $visibility), $visibilities),
                 'media' => \is_string($row['mediaId'] ?? null) ? [['id' => $row['mediaId'], '_count' => 1]] : [],
                 'tags' => $parsedTagIds,
                 'createdAt' => $this->formatDateTime($row, 'createdAt'),
@@ -606,7 +602,10 @@ SQL,
         $indexed = [];
         foreach ($rows as $row) {
             $id = \is_string($row['id'] ?? null) ? $row['id'] : null;
-            if ($id === null || !Uuid::isValid($id)) {
+            if ($id === null) {
+                continue;
+            }
+            if (!Uuid::isValid($id)) {
                 continue;
             }
             $indexed[$id] = $row;
@@ -636,10 +635,12 @@ SQL,
 
         $result = [];
         foreach ($prices as $key => $priceData) {
-            if (!\is_array($priceData) || !isset($priceData['gross'])) {
+            if (!\is_array($priceData)) {
                 continue;
             }
-
+            if (!isset($priceData['gross'])) {
+                continue;
+            }
             $currencyId = \is_string($key) && str_starts_with($key, 'c') ? substr($key, 1) : $key;
 
             $result['c_' . $currencyId] = [

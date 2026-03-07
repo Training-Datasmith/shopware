@@ -370,7 +370,7 @@ class OpenApiPathBuilder
 
     private function convertToHumanReadable(string $name): string
     {
-        $nameParts = array_map('ucfirst', explode('_', $name));
+        $nameParts = array_map(ucfirst(...), explode('_', $name));
 
         return implode(' ', $nameParts);
     }

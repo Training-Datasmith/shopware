@@ -59,7 +59,7 @@ class FinishController extends InstallerController
 
             $body = $loginResponse->getBody()->getContents();
 
-            $data = json_decode($body, true, 512, \JSON_THROW_ON_ERROR);
+            $data = json_decode((string) $body, true, 512, \JSON_THROW_ON_ERROR);
             $loginTokenData = [
                 'access' => $data['access_token'], 'refresh' => $data['refresh_token'], 'expiry' => $data['expires_in'],
             ];

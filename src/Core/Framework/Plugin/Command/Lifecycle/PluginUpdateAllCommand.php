@@ -62,10 +62,12 @@ class PluginUpdateAllCommand extends Command
         $plugins = $this->pluginRepository->search(new Criteria(), $context)->getEntities();
 
         foreach ($plugins as $plugin) {
-            if ($plugin->getUpgradeVersion() === null || $plugin->getActive() === false) {
+            if ($plugin->getUpgradeVersion() === null) {
                 continue;
             }
-
+            if ($plugin->getActive() === false) {
+                continue;
+            }
             $currentVersion = $plugin->getVersion();
             $this->pluginLifecycleService->updatePlugin($plugin, $context);
             $output->writeln(\sprintf('Updated plugin %s from version %s to version %s', $plugin->getName(), $currentVersion, $plugin->getVersion()));

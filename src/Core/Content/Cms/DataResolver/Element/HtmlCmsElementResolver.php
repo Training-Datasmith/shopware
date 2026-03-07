@@ -12,13 +12,6 @@ use Shopware\Core\Framework\Log\Package;
 #[Package('discovery')]
 class HtmlCmsElementResolver extends AbstractCmsElementResolver
 {
-    /**
-     * @internal
-     */
-    public function __construct()
-    {
-    }
-
     public function getType(): string
     {
         return 'html';

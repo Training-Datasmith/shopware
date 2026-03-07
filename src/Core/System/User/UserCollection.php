@@ -16,12 +16,12 @@ class UserCollection extends EntityCollection
      */
     public function getLocaleIds(): array
     {
-        return $this->fmap(fn (UserEntity $user) => $user->getLocaleId());
+        return $this->fmap(fn (UserEntity $user): string => $user->getLocaleId());
     }
 
     public function filterByLocaleId(string $id): self
     {
-        return $this->filter(fn (UserEntity $user) => $user->getLocaleId() === $id);
+        return $this->filter(fn (UserEntity $user): bool => $user->getLocaleId() === $id);
     }
 
     public function getApiAlias(): string

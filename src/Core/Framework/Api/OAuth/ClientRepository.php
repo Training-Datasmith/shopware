@@ -34,7 +34,7 @@ class ClientRepository implements ClientRepositoryInterface
                 return false;
             }
 
-            if (!password_verify($clientSecret, (string) $values['secret_access_key'])) {
+            if (!password_verify($clientSecret, $values['secret_access_key'])) {
                 return false;
             }
 

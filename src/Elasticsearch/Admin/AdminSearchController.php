@@ -38,7 +38,7 @@ final readonly class AdminSearchController
             throw ElasticsearchAdminException::esNotEnabled();
         }
 
-        $term = trim($request->request->getString('term'));
+        $term = trim((string) $request->request->getString('term'));
         $entities = $request->request->all('entities');
 
         if ($term === '') {

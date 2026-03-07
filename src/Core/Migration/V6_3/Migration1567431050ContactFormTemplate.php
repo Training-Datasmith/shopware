@@ -86,15 +86,13 @@ FROM `event_action`
 WHERE `event_action`.`event_name` = :event_name AND `event_action`.`action_name` = :action_name
 SQL;
 
-        $contactEventConfig = (string) $connection->executeQuery(
+        return (string) $connection->executeQuery(
             $sql,
             [
                 'event_name' => ContactFormEvent::EVENT_NAME,
                 'action_name' => SendMailAction::ACTION_NAME,
             ]
         )->fetchOne();
-
-        return $contactEventConfig;
     }
 
     private function getContactMailTemplateId(Connection $connection): ?string

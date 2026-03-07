@@ -340,10 +340,12 @@ class DefinitionValidator
         $functionViolations = [];
 
         foreach ($fields as $field) {
-            if ($field instanceof VersionField || $field instanceof ReferenceVersionField) {
+            if ($field instanceof VersionField) {
                 continue;
             }
-
+            if ($field instanceof ReferenceVersionField) {
+                continue;
+            }
             if ($field->is(Extension::class)) {
                 continue;
             }
@@ -477,8 +479,10 @@ class DefinitionValidator
 
         foreach ($translatedFields as $translatedField) {
             $translationField = $translationDefinition->getField($translatedField->getPropertyName());
-
-            if ($translationField === null || !method_exists($translationField, 'getStorageName')) {
+            if ($translationField === null) {
+                continue;
+            }
+            if (!method_exists($translationField, 'getStorageName')) {
                 continue;
             }
 
@@ -537,13 +541,15 @@ class DefinitionValidator
         }
 
         foreach ($reflectionMethods as $method) {
-            if (!str_starts_with($method->getName(), 'get')
-                || $method->getDeclaringClass()->getName() !== $translationDefinition->getEntityClass()
-                || mb_strpos($method->getName(), 'Id') === mb_strlen($method->getName()) - 2
-            ) {
+            if (!str_starts_with($method->getName(), 'get')) {
                 continue;
             }
-
+            if ($method->getDeclaringClass()->getName() !== $translationDefinition->getEntityClass()) {
+                continue;
+            }
+            if (mb_strpos($method->getName(), 'Id') === mb_strlen($method->getName()) - 2) {
+                continue;
+            }
             // Is not a getter
             if ($method->getName() === 'getApiAlias') {
                 continue;
@@ -561,10 +567,10 @@ class DefinitionValidator
             }
 
             $returnType = $method->getReturnType();
-
-            if (!$returnType instanceof \ReflectionNamedType
-                || $returnType->getName() === $translationDefinition->getParentDefinition()->getEntityClass()
-            ) {
+            if (!$returnType instanceof \ReflectionNamedType) {
+                continue;
+            }
+            if ($returnType->getName() === $translationDefinition->getParentDefinition()->getEntityClass()) {
                 continue;
             }
 
@@ -588,7 +594,7 @@ class DefinitionValidator
 
         $parentDefinition = $translationDefinition->getParentDefinition();
         $translationsAssociationFields = $parentDefinition->getFields()
-            ->filter(fn (Field $f) => $f instanceof TranslationsAssociationField && $f->getReferenceDefinition() === $translationDefinition)
+            ->filter(fn (Field $f): bool => $f instanceof TranslationsAssociationField && $f->getReferenceDefinition() === $translationDefinition)
             ->getElements();
 
         $parentDefinitionClass = $parentDefinition->getClass();
@@ -612,7 +618,7 @@ class DefinitionValidator
     {
         $translatedFieldsInParent = array_keys($parentDefinition->getFields()->filterInstance(TranslatedField::class)->getElements());
 
-        $translatedFields = array_keys($translationDefinition->getFields()->filter(fn (Field $f) => !$f->is(PrimaryKey::class)
+        $translatedFields = array_keys($translationDefinition->getFields()->filter(fn (Field $f): bool => !$f->is(PrimaryKey::class)
             && !$f instanceof AssociationField
             && !\in_array($f->getPropertyName(), ['createdAt', 'updatedAt'], true))->getElements());
 
@@ -655,7 +661,7 @@ class DefinitionValidator
         $associationViolations = [];
 
         $reverseSide = $reference->getFields()->filter(
-            function (Field $field) use ($association, $definition) {
+            function (Field $field) use ($association, $definition): bool {
                 if (!$field instanceof OneToOneAssociationField) {
                     return false;
                 }
@@ -711,7 +717,7 @@ class DefinitionValidator
         $associationViolations = [];
 
         $reverseSide = $reference->getFields()->filter(
-            function (Field $field) use ($association, $definition) {
+            function (Field $field) use ($association, $definition): bool {
                 if (!$field instanceof OneToManyAssociationField) {
                     return false;
                 }
@@ -758,7 +764,7 @@ class DefinitionValidator
         $associationViolations = $this->validateSetterIsNotNull($definition, $association, $associationViolations);
 
         $reference->getFields()->filter(
-            function (Field $field) use ($association, $definition) {
+            function (Field $field) use ($association, $definition): bool {
                 if (!$field instanceof ManyToOneAssociationField) {
                     return false;
                 }
@@ -848,7 +854,7 @@ class DefinitionValidator
 
         if ($definition->isVersionAware() && $reference->isVersionAware()) {
             $versionField = $mapping->getFields()
-                ->filter(fn (Field $field) => $field instanceof ReferenceVersionField && $field->getVersionReferenceDefinition() === $definition)->first();
+                ->filter(fn (Field $field): bool => $field instanceof ReferenceVersionField && $field->getVersionReferenceDefinition() === $definition)->first();
 
             if (!$versionField) {
                 $violations[$mapping->getClass()][] = \sprintf(
@@ -859,7 +865,7 @@ class DefinitionValidator
             }
 
             $referenceVersionField = $mapping->getFields()
-                ->filter(fn (Field $field) => $field instanceof ReferenceVersionField && $field->getVersionReferenceDefinition() === $reference)->first();
+                ->filter(fn (Field $field): bool => $field instanceof ReferenceVersionField && $field->getVersionReferenceDefinition() === $reference)->first();
 
             if (!$referenceVersionField) {
                 $violations[$mapping->getClass()][] = \sprintf(
@@ -872,7 +878,7 @@ class DefinitionValidator
 
         $violations = $this->validateForeignKeyOnDeleteBehaviour($definition, $association, $reference, $violations, $schema);
 
-        $reverse = $reference->getFields()->filter(fn (Field $field) => $field instanceof ManyToManyAssociationField
+        $reverse = $reference->getFields()->filter(fn (Field $field): bool => $field instanceof ManyToManyAssociationField
             && $field->getToManyReferenceDefinition() === $definition
             && $field->getMappingDefinition() === $association->getMappingDefinition())->first();
 
@@ -1061,12 +1067,16 @@ class DefinitionValidator
             if (!$field instanceof StorageAware) {
                 continue;
             }
-
-            if ($field instanceof ManyToManyAssociationField
-                || $field instanceof ManyToOneAssociationField
-                || $field instanceof OneToOneAssociationField
-                || $field instanceof OneToManyAssociationField
-            ) {
+            if ($field instanceof ManyToManyAssociationField) {
+                continue;
+            }
+            if ($field instanceof ManyToOneAssociationField) {
+                continue;
+            }
+            if ($field instanceof OneToOneAssociationField) {
+                continue;
+            }
+            if ($field instanceof OneToManyAssociationField) {
                 continue;
             }
 
@@ -1134,7 +1144,7 @@ class DefinitionValidator
 
         // GetEntityName returns same Value as ENTITY_NAME
         if (\constant($definitionClass . '::ENTITY_NAME') !== $definition->getEntityName()) {
-            $violations = array_merge_recursive(
+            return array_merge_recursive(
                 $violations,
                 [$definitionClass => [\sprintf('ENTITY_NAME constant differs from getEntityName in %s', $definitionClass)]]
             );
@@ -1190,12 +1200,12 @@ class DefinitionValidator
         $fks = $schema->getTable($reference->getEntityName())->getForeignKeys();
 
         foreach ($fks as $fk) {
-            if ($fk->getReferencedTableName()->toString() !== $definition->getEntityName()
-                || !\in_array($association->getReferenceField(), $fk->getReferencingColumnNames(), true)
-            ) {
+            if ($fk->getReferencedTableName()->toString() !== $definition->getEntityName()) {
                 continue;
             }
-
+            if (!\in_array($association->getReferenceField(), $fk->getReferencingColumnNames(), true)) {
+                continue;
+            }
             $deleteFlag = $association->getFlag(CascadeDelete::class)
                 ?? $association->getFlag(RestrictDelete::class)
                 ?? $association->getFlag(SetNullOnDelete::class);

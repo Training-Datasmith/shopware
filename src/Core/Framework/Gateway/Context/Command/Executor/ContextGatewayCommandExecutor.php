@@ -63,12 +63,10 @@ class ContextGatewayCommandExecutor
             $this->registry->get($command::getDefaultKeyName())->handle($command, $context, $parameters);
         }
 
-        $response = new ContextTokenResponse($context->getToken());
-
         if ($parameters !== []) {
-            $response = $this->contextSwitchRoute->switchContext(new RequestDataBag($parameters), $context);
+            return $this->contextSwitchRoute->switchContext(new RequestDataBag($parameters), $context);
         }
 
-        return $response;
+        return new ContextTokenResponse($context->getToken());
     }
 }

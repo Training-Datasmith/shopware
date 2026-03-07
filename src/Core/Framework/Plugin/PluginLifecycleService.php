@@ -75,7 +75,7 @@ class PluginLifecycleService
      * deactivation, the kernel is rebooted and the dispatcher replaced with the new one,
      * but the KernelEvents are triggered on the original event dispatcher.
      */
-    private EventDispatcherInterface $originalEventDispatcher;
+    private readonly EventDispatcherInterface $originalEventDispatcher;
 
     /**
      * @param EntityRepository<PluginCollection> $pluginRepo

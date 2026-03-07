@@ -62,7 +62,7 @@ class Migration1697112043AddPaymentAndShippingTechnicalName extends MigrationSte
                 AND (`app_payment_method`.`identifier` IS NOT NULL OR `payment_method`.`handler_identifier` IN (:handlers))
             ',
             ['handlers' => [
-                'Shopware\\Core\\Checkout\\Payment\\Cart\\PaymentHandler\\DebitPayment',
+                \Shopware\Core\Checkout\Payment\Cart\PaymentHandler\DebitPayment::class,
                 InvoicePayment::class,
                 CashPayment::class,
                 PrePayment::class,

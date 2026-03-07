@@ -67,7 +67,7 @@ final class SalesChannelAdminSearchIndexer extends AbstractAdminIndexer
             }
         }
 
-        return array_values(array_unique(array_filter($ids, '\is_string')));
+        return array_values(array_unique(array_filter($ids, \is_string(...))));
     }
 
     public function globalData(array $result, Context $context): array

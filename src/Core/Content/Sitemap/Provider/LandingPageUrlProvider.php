@@ -152,7 +152,7 @@ class LandingPageUrlProvider extends AbstractUrlProvider
             return [];
         }
 
-        $excludedUrls = array_filter($excludedUrls, static function (array $excludedUrl) use ($salesChannelId) {
+        $excludedUrls = array_filter($excludedUrls, static function (array $excludedUrl) use ($salesChannelId): bool {
             if ($excludedUrl['resource'] !== LandingPageEntity::class) {
                 return false;
             }

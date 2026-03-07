@@ -188,7 +188,7 @@ class CmsController extends StorefrontController
         $elementId = $request->query->get('elementId');
 
         /** @var string[]|null $options */
-        $options = json_decode($request->query->get('options', ''), true);
+        $options = json_decode((string) $request->query->get('options', ''), true);
 
         $variantRequestData = [
             'switchedGroup' => $request->query->get('switched'),

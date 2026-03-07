@@ -12,7 +12,7 @@ use Shopware\Core\System\SalesChannel\StoreApiResponse;
 #[Package('after-sales')]
 class RevocationRequestRouteResponse extends StoreApiResponse
 {
-    public function __construct(private string $individualSuccessMessage)
+    public function __construct(private readonly string $individualSuccessMessage)
     {
         parent::__construct(
             new ArrayStruct(['individualSuccessMessage' => $individualSuccessMessage])

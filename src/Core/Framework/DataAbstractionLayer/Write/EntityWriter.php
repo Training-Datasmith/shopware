@@ -114,9 +114,7 @@ class EntityWriter implements EntityWriterInterface
 
         $result = $this->factory->addParentResults($result, $writes);
 
-        $result = $this->factory->addDeleteResults($result, $notFound, $deletes);
-
-        return $result;
+        return $this->factory->addDeleteResults($result, $notFound, $deletes);
     }
 
     public function upsert(EntityDefinition $definition, array $rawData, WriteContext $writeContext): array
@@ -307,7 +305,7 @@ class EntityWriter implements EntityWriterInterface
 
             /** @var AssociationField $associationField */
             $associationField = $setNullFields
-                ->filter(fn (Field $setNullField) => $setNullField instanceof AssociationField && $setNullField->getReferenceField() === $field)
+                ->filter(fn (Field $setNullField): bool => $setNullField instanceof AssociationField && $setNullField->getReferenceField() === $field)
                 ->first();
 
             $flag = $associationField->getFlag(SetNullOnDelete::class);
@@ -441,8 +439,10 @@ class EntityWriter implements EntityWriterInterface
             $stripped = [];
             foreach ($primaryKey as $key => $value) {
                 $field = $definition->getFields()->get($key);
-
-                if ($field instanceof VersionField || $field instanceof ReferenceVersionField) {
+                if ($field instanceof VersionField) {
+                    continue;
+                }
+                if ($field instanceof ReferenceVersionField) {
                     continue;
                 }
                 $stripped[$key] = $value;

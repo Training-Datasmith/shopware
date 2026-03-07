@@ -154,7 +154,7 @@ class ThemeLifecycleService
 
         $this->removeOldMedia($technicalName, $context);
         $this->runtimeConfigService->deleteByTechnicalName($technicalName);
-        $this->themeRepository->delete(array_map(fn (string $id) => ['id' => $id], $ids), $context);
+        $this->themeRepository->delete(array_map(fn (string $id): array => ['id' => $id], $ids), $context);
     }
 
     private function getThemeByTechnicalName(string $technicalName, Context $context): ?ThemeEntity
@@ -246,7 +246,7 @@ class ThemeLifecycleService
         }
 
         if (\array_key_exists('fields', $config)) {
-            $translations = array_merge_recursive($translations, $this->extractLabels('fields', $config['fields']));
+            return array_merge_recursive($translations, $this->extractLabels('fields', $config['fields']));
         }
 
         return $translations;
@@ -285,7 +285,7 @@ class ThemeLifecycleService
         $translations = [];
 
         if (\array_key_exists('fields', $config)) {
-            $translations = array_merge_recursive($translations, $this->extractHelpTexts('fields', $config['fields']));
+            return array_merge_recursive($translations, $this->extractHelpTexts('fields', $config['fields']));
         }
 
         return $translations;
@@ -438,12 +438,12 @@ class ThemeLifecycleService
                     if ($currentThemeMedia !== null
                         && $currentMediaIds !== []
                         && isset($currentMediaIds[$key])
-                        && $currentThemeMedia->get($currentMediaIds[$key])?->getFileNameIncludingExtension() === basename($path)) {
+                        && $currentThemeMedia->get($currentMediaIds[$key])?->getFileNameIncludingExtension() === basename((string) $path)) {
                         continue;
                     }
 
                     $criteriaMedia = new Criteria();
-                    $criteriaMedia->addFilter(new EqualsFilter('fileName', basename($path)));
+                    $criteriaMedia->addFilter(new EqualsFilter('fileName', basename((string) $path)));
                     if ($this->mediaRepository->searchIds($criteriaMedia, $context)->getTotal() > 0) {
                         continue;
                     }
@@ -566,10 +566,10 @@ class ThemeLifecycleService
     {
         $lastNotSameTheme = null;
         foreach (array_reverse($configuration->getConfigInheritance()) as $themeName) {
-            if (
-                $themeName === '@' . StorefrontPluginRegistry::BASE_THEME_NAME
-                || $themeName === '@' . $themeData['technicalName']
-            ) {
+            if ($themeName === '@' . StorefrontPluginRegistry::BASE_THEME_NAME) {
+                continue;
+            }
+            if ($themeName === '@' . $themeData['technicalName']) {
                 continue;
             }
             $lastNotSameTheme = str_replace('@', '', $themeName);
@@ -599,16 +599,16 @@ class ThemeLifecycleService
         $allThemes = $this->getAllThemesPlain();
 
         $parentThemeConfigs = $allThemeConfigs->filter(
-            fn (StorefrontPluginConfiguration $parentConfig) => $this->isDependentTheme($parentConfig, $config)
+            fn (StorefrontPluginConfiguration $parentConfig): bool => $this->isDependentTheme($parentConfig, $config)
         );
 
         $technicalNames = $parentThemeConfigs->map(
-            fn (StorefrontPluginConfiguration $theme) => $theme->getTechnicalName()
+            fn (StorefrontPluginConfiguration $theme): string => $theme->getTechnicalName()
         );
 
         $parentThemes = array_filter(
             $allThemes,
-            fn (array $theme) => \in_array($theme['technicalName'], $technicalNames, true)
+            fn (array $theme): bool => \in_array($theme['technicalName'], $technicalNames, true)
         );
 
         $updateParents = [];

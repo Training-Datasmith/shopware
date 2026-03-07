@@ -123,7 +123,10 @@ class StateMachineGraphvizDumper
         foreach ($transitions as $transition) {
             $fromStateMachineState = $transition->getFromStateMachineState();
             $toStateMachineState = $transition->getToStateMachineState();
-            if ($fromStateMachineState === null || $toStateMachineState === null) {
+            if ($fromStateMachineState === null) {
+                continue;
+            }
+            if ($toStateMachineState === null) {
                 continue;
             }
             $edges[$fromStateMachineState->getName()][] = [

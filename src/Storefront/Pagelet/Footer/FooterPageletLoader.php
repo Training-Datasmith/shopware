@@ -67,7 +67,7 @@ class FooterPageletLoader implements FooterPageletLoaderInterface
 
         $navigation = $this->navigationLoader->load($serviceId, $context, $serviceId, 1);
 
-        return new CategoryCollection(array_map(static fn (TreeItem $treeItem) => $treeItem->getCategory(), $navigation->getTree()));
+        return new CategoryCollection(array_map(static fn (TreeItem $treeItem): \Shopware\Core\Content\Category\CategoryEntity => $treeItem->getCategory(), $navigation->getTree()));
     }
 
     private function loadPaymentMethods(Request $request, SalesChannelContext $salesChannelContext): PaymentMethodCollection

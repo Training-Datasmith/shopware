@@ -58,7 +58,7 @@ class AddOrderTagAction extends FlowAction implements DelayableAction
 
         $tagIds = array_keys($config['tagIds']);
 
-        $tags = array_map(static fn ($tagId) => ['id' => $tagId], $tagIds);
+        $tags = array_map(static fn ($tagId): array => ['id' => $tagId], $tagIds);
 
         $this->orderRepository->update([
             [

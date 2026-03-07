@@ -84,7 +84,7 @@ abstract class StorefrontController extends AbstractController
             IconCacheTwigFilter::enable();
         }
 
-        $response = Profiler::trace('twig-rendering', fn () => $this->render($view, $event->getParameters(), new Response()));
+        $response = Profiler::trace('twig-rendering', fn (): \Symfony\Component\HttpFoundation\Response => $this->render($view, $event->getParameters(), new Response()));
 
         if ($iconCacheEnabled) {
             IconCacheTwigFilter::disable();
@@ -195,7 +195,7 @@ abstract class StorefrontController extends AbstractController
         }
 
         if (empty($params) || \is_numeric($params)) {
-            $params = [];
+            return [];
         }
 
         return $params;

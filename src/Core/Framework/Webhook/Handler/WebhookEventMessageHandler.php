@@ -100,7 +100,7 @@ final readonly class WebhookEventMessageHandler
                     'processingTime' => time() - $timestamp,
                     'responseContent' => [
                         'headers' => $response->getHeaders(),
-                        'body' => \json_decode($response->getBody()->getContents(), true),
+                        'body' => \json_decode((string) $response->getBody()->getContents(), true),
                     ],
                     'responseStatusCode' => $response->getStatusCode(),
                     'responseReasonPhrase' => $response->getReasonPhrase(),
@@ -154,7 +154,7 @@ final readonly class WebhookEventMessageHandler
     {
         try {
             $this->webhookEventLogRepository->update([$payload], $context);
-        } catch (WriteTypeIntendException $e) {
+        } catch (WriteTypeIntendException) {
             // ignore, as that indicates the log entry was already deleted, in that case we don't need to update it
         }
     }

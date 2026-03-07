@@ -81,7 +81,7 @@ final class CategoryAdminSearchIndexer extends AbstractAdminIndexer
             }
         }
 
-        return array_values(array_unique(array_filter($categoryIds, '\is_string')));
+        return array_values(array_unique(array_filter($categoryIds, \is_string(...))));
     }
 
     public function mapping(array $mapping): array

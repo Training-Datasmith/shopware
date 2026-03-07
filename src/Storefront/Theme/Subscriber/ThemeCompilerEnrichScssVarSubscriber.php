@@ -65,10 +65,12 @@ class ThemeCompilerEnrichScssVarSubscriber implements EventSubscriberInterface
         }
 
         foreach ($allConfigs as $card) {
-            if (!isset($card['elements']) || !\is_array($card['elements'])) {
+            if (!isset($card['elements'])) {
                 continue;
             }
-
+            if (!\is_array($card['elements'])) {
+                continue;
+            }
             foreach ($card['elements'] as $element) {
                 if (!$this->hasCssValue($element)) {
                     continue;

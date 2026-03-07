@@ -62,7 +62,7 @@ class DeleteUnusedGuestCustomerService
             ->setLimit(self::DELETE_CUSTOMERS_BATCH_SIZE);
 
         $ids = $this->customerRepository->searchIds($criteria, $context)->getIds();
-        $ids = \array_values(\array_map(static fn (string $id) => ['id' => $id], $ids));
+        $ids = \array_values(\array_map(static fn (string $id): array => ['id' => $id], $ids));
 
         $this->customerRepository->delete($ids, $context);
 
@@ -71,7 +71,7 @@ class DeleteUnusedGuestCustomerService
 
     private function getUnusedCustomerCriteria(\DateTime $maxLifeTime): Criteria
     {
-        $criteria = (new Criteria())
+        return (new Criteria())
             ->addAssociation('orderCustomers')
             ->addFilter(new AndFilter([
                 new EqualsFilter('guest', true),
@@ -82,8 +82,6 @@ class DeleteUnusedGuestCustomerService
                         RangeFilter::LTE => $maxLifeTime->format(Defaults::STORAGE_DATE_TIME_FORMAT),
                     ]
                 )]));
-
-        return $criteria;
     }
 
     private function getUnusedGuestCustomerLifeTime(): ?\DateTime

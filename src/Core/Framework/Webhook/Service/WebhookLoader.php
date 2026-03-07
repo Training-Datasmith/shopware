@@ -78,7 +78,7 @@ class WebhookLoader
         $webhooks = $this->connection->fetchAllAssociative($sql);
 
         return array_map(
-            fn (array $webhook) => new Webhook(
+            fn (array $webhook): \Shopware\Core\Framework\Webhook\Webhook => new Webhook(
                 $webhook['webhookId'],
                 $webhook['webhookName'],
                 $webhook['eventName'],

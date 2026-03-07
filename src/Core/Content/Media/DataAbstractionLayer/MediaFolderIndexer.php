@@ -185,7 +185,7 @@ class MediaFolderIndexer extends EntityIndexer
         $childIds = array_column($childIds, 'id');
 
         if ($childIds !== []) {
-            $childIds = array_merge($childIds, $this->fetchChildren($childIds));
+            return array_merge($childIds, $this->fetchChildren($childIds));
         }
 
         return $childIds;

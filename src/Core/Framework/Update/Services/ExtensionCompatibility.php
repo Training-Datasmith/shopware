@@ -66,7 +66,7 @@ class ExtensionCompatibility
 
         $storeInfoValues = array_column($storeInfo, 'name');
 
-        $compatibilities = array_map(static function (ExtensionStruct $entity) use ($storeInfoValues, $storeInfo) {
+        $compatibilities = array_map(static function (ExtensionStruct $entity) use ($storeInfoValues, $storeInfo): array {
             $index = array_search($entity->getName(), $storeInfoValues, true);
 
             if ($index === false) {

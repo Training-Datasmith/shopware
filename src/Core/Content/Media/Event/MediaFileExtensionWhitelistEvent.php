@@ -18,7 +18,7 @@ class MediaFileExtensionWhitelistEvent extends Event
     /**
      * @return array<string>
      */
-    public function getWhitelist()
+    public function getWhitelist(): array
     {
         return $this->whitelist;
     }

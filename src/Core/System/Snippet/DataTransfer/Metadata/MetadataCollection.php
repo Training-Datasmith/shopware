@@ -42,7 +42,7 @@ class MetadataCollection extends Collection
 
     public function jsonSerialize(): array
     {
-        return $this->map(static function (MetadataEntry $entry) {
+        return $this->map(static function (MetadataEntry $entry): array {
             $serialized = $entry->jsonSerialize();
             unset($serialized['isUpdateRequired']);
 
@@ -55,7 +55,7 @@ class MetadataCollection extends Collection
      */
     public function getLocalesRequiringUpdate(): array
     {
-        return $this->filter(fn (MetadataEntry $entry) => $entry->isUpdateRequired)->getKeys();
+        return $this->filter(fn (MetadataEntry $entry): bool => $entry->isUpdateRequired)->getKeys();
     }
 
     protected function getExpectedClass(): string

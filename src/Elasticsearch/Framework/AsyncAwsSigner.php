@@ -70,15 +70,15 @@ class AsyncAwsSigner
 
         // Amazon ES/OS listens on standard ports (443 for HTTPS, 80 for HTTP).
         // Consequently, the port should be stripped from the host header.
-        $parsedUrl = parse_url($request['headers'][$hostKey][0]);
+        $parsedUrl = parse_url((string) $request['headers'][$hostKey][0]);
 
         if (isset($parsedUrl['host'])) {
             $request['headers'][$hostKey][0] = $parsedUrl['host'];
         }
 
         parse_str($request['query_string'] ?? '', $query);
-        $query = array_filter($query, 'is_string');
-        $query = array_combine(array_map('strval', array_keys($query)), $query);
+        $query = array_filter($query, is_string(...));
+        $query = array_combine(array_map(strval(...), array_keys($query)), $query);
 
         $headers = [];
         foreach ($request['headers'] as $key => $value) {

@@ -16,12 +16,12 @@ class ShippingMethodPriceCollection extends EntityCollection
      */
     public function getShippingMethodIds(): array
     {
-        return $this->fmap(fn (ShippingMethodPriceEntity $shippingMethodPrice) => $shippingMethodPrice->getShippingMethodId());
+        return $this->fmap(fn (ShippingMethodPriceEntity $shippingMethodPrice): string => $shippingMethodPrice->getShippingMethodId());
     }
 
     public function filterByShippingMethodId(string $id): self
     {
-        return $this->filter(fn (ShippingMethodPriceEntity $shippingMethodPrice) => $shippingMethodPrice->getShippingMethodId() === $id);
+        return $this->filter(fn (ShippingMethodPriceEntity $shippingMethodPrice): bool => $shippingMethodPrice->getShippingMethodId() === $id);
     }
 
     public function getApiAlias(): string

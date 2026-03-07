@@ -61,7 +61,7 @@ class Migration1717573310ImportExportTechnicalNameRequired extends MigrationStep
      */
     private function generateTechnicalName(?string $name, array $existingTechnicalNames): string
     {
-        $name = $name ?? 'Unnamed profile';
+        $name ??= 'Unnamed profile';
 
         if (trim($name) === '') {
             $name = 'Unnamed profile';

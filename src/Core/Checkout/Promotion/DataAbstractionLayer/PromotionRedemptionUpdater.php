@@ -147,7 +147,7 @@ class PromotionRedemptionUpdater implements EventSubscriberInterface
         foreach ($promotionsGrouped as $id => $totals) {
             $update->execute([
                 'id' => Uuid::fromHexToBytes($id),
-                'count' => (int) array_sum($totals),
+                'count' => array_sum($totals),
                 'customerCount' => $totals !== [] ? json_encode($totals, \JSON_THROW_ON_ERROR) : null,
             ]);
         }

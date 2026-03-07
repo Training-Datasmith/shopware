@@ -45,7 +45,7 @@ class CustomerNumberRule extends Rule
             throw CustomerException::unsupportedValue(\gettype($this->numbers), self::class);
         }
 
-        return RuleComparison::stringArray($customer->getCustomerNumber(), array_map('strtolower', $this->numbers), $this->operator);
+        return RuleComparison::stringArray($customer->getCustomerNumber(), array_map(strtolower(...), $this->numbers), $this->operator);
     }
 
     public function getConstraints(): array

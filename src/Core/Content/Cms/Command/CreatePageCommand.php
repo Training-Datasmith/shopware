@@ -121,7 +121,7 @@ class CreatePageCommand extends Command
             return;
         }
 
-        $keys = array_map(static fn ($id) => ['id' => $id], $pages->getIds());
+        $keys = array_map(static fn (string $id): array => ['id' => $id], $pages->getIds());
 
         $this->cmsPageRepository->delete($keys, $context);
     }

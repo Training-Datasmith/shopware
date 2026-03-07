@@ -23,9 +23,7 @@ abstract class RemoveEventListener
 
         $definition->clearTag('kernel.event_listener');
 
-        $map = \array_map(function (array $item) {
-            return \implode('::', $item);
-        }, $remove);
+        $map = \array_map(fn(array $item) => \implode('::', $item), $remove);
 
         foreach ($listeners as $listener) {
             $key = $listener['event'] . '::' . $listener['method'];

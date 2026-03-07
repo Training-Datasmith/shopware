@@ -256,11 +256,14 @@ class ThemeService implements ResetInterface
         foreach ($config as $name => &$field) {
             // Lookup the field in the original theme config to get the field type.
             $fieldConfig = $themeConfig['fields'][$name] ?? null;
-
             // Skip fields that are not editable or excluded from SCSS compilation.
-            if (!$fieldConfig
-                || $fieldConfig['editable'] === false
-                || $fieldConfig['scss'] === false) {
+            if (!$fieldConfig) {
+                continue;
+            }
+            if ($fieldConfig['editable'] === false) {
+                continue;
+            }
+            if ($fieldConfig['scss'] === false) {
                 continue;
             }
 

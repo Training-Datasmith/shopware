@@ -96,7 +96,7 @@ class RedisIncrementer extends AbstractIncrementer
         $keysToDelete = $this->getKeys($cluster);
 
         if ($keys !== []) {
-            $keysToDelete = array_map(fn (string $keySuffix) => $this->getKey($cluster, $keySuffix), $keys);
+            $keysToDelete = array_map(fn (string $keySuffix): string => $this->getKey($cluster, $keySuffix), $keys);
         }
 
         if ($keysToDelete === []) {
@@ -130,7 +130,7 @@ class RedisIncrementer extends AbstractIncrementer
         $prefix = $this->redis->getOption(\Redis::OPT_PREFIX);
         if (\is_string($prefix)) {
             $prefixLength = \strlen($prefix);
-            $keys = \array_map(fn ($key) => \str_starts_with($key, $prefix) ? \substr($key, $prefixLength) : $key, $keys);
+            $keys = \array_map(fn ($key) => \str_starts_with((string) $key, $prefix) ? \substr((string) $key, $prefixLength) : $key, $keys);
         }
 
         return $keys;

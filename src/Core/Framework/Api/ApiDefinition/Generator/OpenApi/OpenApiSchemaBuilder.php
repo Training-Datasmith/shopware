@@ -109,7 +109,7 @@ EOF,
      */
     private function getDefaultSchemas(): array
     {
-        $defaults = [
+        return [
             'success' => new Schema([
                 'schema' => 'success',
                 'type' => 'object',
@@ -371,8 +371,6 @@ EOF,
                 'additionalProperties' => false,
             ]),
         ];
-
-        return $defaults;
     }
 
     /**

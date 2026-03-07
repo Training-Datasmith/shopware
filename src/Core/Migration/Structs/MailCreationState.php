@@ -18,9 +18,9 @@ class MailCreationState
 
     protected bool $mailTemplateExists = true;
 
-    protected ?string $enLanguageByteId;
+    protected ?string $enLanguageByteId = null;
 
-    protected ?string $deLanguageByteId;
+    protected ?string $deLanguageByteId = null;
 
     public function getMailTemplateTypeByteId(): ?string
     {

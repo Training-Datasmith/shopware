@@ -86,14 +86,12 @@ class UserListCommand extends Command
      */
     private function mapUsersToJson(UserCollection $users): array
     {
-        return array_values($users->map(function (UserEntity $user) {
-            return [
-                ...$this->mapUser($user),
-                'active' => $user->getActive(),
-                'roles' => $this->roles($user),
-                'created' => $user->getCreatedAt()?->format(Defaults::STORAGE_DATE_TIME_FORMAT) ?? '',
-            ];
-        }));
+        return array_values($users->map(fn(UserEntity $user) => [
+            ...$this->mapUser($user),
+            'active' => $user->getActive(),
+            'roles' => $this->roles($user),
+            'created' => $user->getCreatedAt()?->format(Defaults::STORAGE_DATE_TIME_FORMAT) ?? '',
+        ]));
     }
 
     /**
@@ -109,14 +107,12 @@ class UserListCommand extends Command
      */
     private function mapUsersToConsole(UserCollection $users): array
     {
-        return array_values($users->map(function (UserEntity $user) {
-            return [
-                ...$this->mapUser($user),
-                'active' => $user->getActive(),
-                'roles' => implode(', ', $this->roles($user)),
-                'created' => $user->getCreatedAt()?->format('M j, Y, H:i') ?? '',
-            ];
-        }));
+        return array_values($users->map(fn(UserEntity $user) => [
+            ...$this->mapUser($user),
+            'active' => $user->getActive(),
+            'roles' => implode(', ', $this->roles($user)),
+            'created' => $user->getCreatedAt()?->format('M j, Y, H:i') ?? '',
+        ]));
     }
 
     /**
@@ -150,6 +146,6 @@ class UserListCommand extends Command
             throw MaintenanceException::aclRolesNotLoaded($user->getId(), $user->getUsername());
         }
 
-        return array_values($aclRoles->map(fn (AclRoleEntity $role) => $role->getName()));
+        return array_values($aclRoles->map(fn (AclRoleEntity $role): string => $role->getName()));
     }
 }

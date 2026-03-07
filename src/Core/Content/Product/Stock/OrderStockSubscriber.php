@@ -107,7 +107,7 @@ final readonly class OrderStockSubscriber implements EventSubscriberInterface
         if ($event->getFromPlace()->getTechnicalName() === OrderStates::STATE_CANCELLED) {
             $this->stockStorage->alter(
                 array_map(
-                    fn (array $item) => $this->changeset($item['id'], $item['product_id'], 0, (int) $item['quantity']),
+                    fn (array $item): \Shopware\Core\Content\Product\Stock\StockAlteration => $this->changeset($item['id'], $item['product_id'], 0, (int) $item['quantity']),
                     $this->fetchOrderLineItemsForOrder($event->getEntityId())
                 ),
                 $event->getContext()
@@ -119,7 +119,7 @@ final readonly class OrderStockSubscriber implements EventSubscriberInterface
         if ($event->getToPlace()->getTechnicalName() === OrderStates::STATE_CANCELLED) {
             $this->stockStorage->alter(
                 array_map(
-                    fn (array $item) => $this->changeset($item['id'], $item['product_id'], (int) $item['quantity'], 0),
+                    fn (array $item): \Shopware\Core\Content\Product\Stock\StockAlteration => $this->changeset($item['id'], $item['product_id'], (int) $item['quantity'], 0),
                     $this->fetchOrderLineItemsForOrder($event->getEntityId())
                 ),
                 $event->getContext()
@@ -168,7 +168,7 @@ final readonly class OrderStockSubscriber implements EventSubscriberInterface
     {
         return array_map(
             static fn (WriteCommand $command) => $command->getPrimaryKey()['id'],
-            array_filter($event->getCommandsForEntity(OrderLineItemDefinition::ENTITY_NAME), static function (WriteCommand $command) {
+            array_filter($event->getCommandsForEntity(OrderLineItemDefinition::ENTITY_NAME), static function (WriteCommand $command): bool {
                 if ($command instanceof DeleteCommand || $command instanceof InsertCommand) {
                     return true;
                 }

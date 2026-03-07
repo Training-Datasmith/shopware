@@ -168,7 +168,7 @@ class CustomFieldsUnusedMediaSubscriber implements EventSubscriberInterface
 
             $event->markAsUsed(
                 array_merge(
-                    ...array_map(fn (string $ids) => json_decode($ids, true, \JSON_THROW_ON_ERROR), $usedMediaIds)
+                    ...array_map(fn (string $ids): mixed => json_decode($ids, true, \JSON_THROW_ON_ERROR), $usedMediaIds)
                 )
             );
         }
@@ -183,7 +183,7 @@ class CustomFieldsUnusedMediaSubscriber implements EventSubscriberInterface
         $table = $definition->getEntityName();
 
         if ($customFields instanceof TranslatedField) {
-            $table = $definition->getTranslationDefinition()?->getEntityName() ?? $table;
+            return $definition->getTranslationDefinition()?->getEntityName() ?? $table;
         }
 
         return $table;

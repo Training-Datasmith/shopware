@@ -13,10 +13,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Package('framework')]
 class StartController extends InstallerController
 {
-    public function __construct()
-    {
-    }
-
     #[Route(path: '/installer', name: 'installer.start', methods: ['GET'])]
     public function start(Request $request): Response
     {

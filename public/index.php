@@ -16,7 +16,7 @@ if (!\is_file(__DIR__ . '/../.env') && !\is_file(__DIR__ . '/../.env.dist') && !
 
 $_SERVER['APP_RUNTIME_OPTIONS']['prod_envs'] = ['prod', 'e2e'];
 
-return function (array $context) {
+return function (array $context): \Shopware\Core\Installer\InstallerKernel|\Symfony\Component\HttpKernel\HttpKernelInterface {
     $classLoader = require __DIR__ . '/../vendor/autoload.php';
 
     $skipWebInstaller = EnvironmentHelper::getVariable('SHOPWARE_SKIP_WEBINSTALLER', false);
@@ -25,7 +25,7 @@ return function (array $context) {
         $baseURL = str_replace(basename(__FILE__), '', $_SERVER['SCRIPT_NAME']);
         $baseURL = rtrim($baseURL, '/');
 
-        if (!str_contains($_SERVER['REQUEST_URI'], '/installer')) {
+        if (!str_contains((string) $_SERVER['REQUEST_URI'], '/installer')) {
             $sanitizer = new InstallerRedirectHelper($_SERVER);
 
             header('Location: ' . $baseURL . '/installer' . $sanitizer->buildQueryString());
@@ -56,7 +56,7 @@ return function (array $context) {
     $pluginLoader = null;
 
     if (EnvironmentHelper::getVariable('COMPOSER_PLUGIN_LOADER', false)) {
-        $pluginLoader = new ComposerPluginLoader($classLoader, null);
+        $pluginLoader = new ComposerPluginLoader($classLoader);
     }
 
     return KernelFactory::create(

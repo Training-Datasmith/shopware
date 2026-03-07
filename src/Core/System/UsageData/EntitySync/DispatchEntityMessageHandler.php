@@ -91,7 +91,7 @@ final readonly class DispatchEntityMessageHandler
             if ($field instanceof BlobField) {
                 $serialized = $field->getSerializer()->decode($field, $entity[$field->getStorageName()]);
 
-                $encoded[$field->getPropertyName()] = base64_encode($serialized);
+                $encoded[$field->getPropertyName()] = base64_encode((string) $serialized);
 
                 continue;
             }
@@ -132,7 +132,7 @@ final readonly class DispatchEntityMessageHandler
 
         $entityIds = [];
         foreach ($queryResult as $row) {
-            $entityIds[] = json_decode($row['entity_ids'], true, flags: \JSON_THROW_ON_ERROR);
+            $entityIds[] = json_decode((string) $row['entity_ids'], true, flags: \JSON_THROW_ON_ERROR);
         }
 
         $this->entityDispatcher->dispatch(

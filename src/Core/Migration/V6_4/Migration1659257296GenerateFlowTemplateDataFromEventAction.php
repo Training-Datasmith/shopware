@@ -117,7 +117,7 @@ class Migration1659257296GenerateFlowTemplateDataFromEventAction extends Migrati
     {
         $config = [];
         foreach ($mailTemplateData as $key => $value) {
-            $key = lcfirst(implode('', array_map('ucfirst', explode('_', $key))));
+            $key = lcfirst(implode('', array_map(ucfirst(...), explode('_', $key))));
             $config[$key] = $value;
         }
 

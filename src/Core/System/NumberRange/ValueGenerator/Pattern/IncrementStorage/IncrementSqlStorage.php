@@ -59,12 +59,10 @@ class IncrementSqlStorage extends AbstractIncrementStorage
         $start = $config['start'] ?? 1;
 
         if (!$lastNumber || (int) $lastNumber < $start) {
-            $nextNumber = $start;
-        } else {
-            $nextNumber = $lastNumber + 1;
+            return $start;
         }
 
-        return $nextNumber;
+        return $lastNumber + 1;
     }
 
     public function list(): array
@@ -75,7 +73,7 @@ class IncrementSqlStorage extends AbstractIncrementStorage
             FROM `number_range_state`
         ');
 
-        return array_map(fn ($state) => (int) $state, $states);
+        return array_map(fn (string $state): int => (int) $state, $states);
     }
 
     public function set(string $configurationId, int $value): void

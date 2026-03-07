@@ -78,7 +78,7 @@ class ConstraintViolationException extends ShopwareHttpException
                 'title' => 'Constraint violation error',
                 'detail' => $violation->getMessage(),
                 'source' => [
-                    'pointer' => '/' . ltrim($violation->getPropertyPath(), '/'),
+                    'pointer' => '/' . ltrim((string) $violation->getPropertyPath(), '/'),
                 ],
                 'meta' => [
                     'parameters' => $violation->getParameters(),

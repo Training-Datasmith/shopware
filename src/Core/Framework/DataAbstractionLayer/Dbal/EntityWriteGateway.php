@@ -489,10 +489,12 @@ class EntityWriteGateway implements EntityWriteGatewayInterface
         $primaryKeys = [];
 
         foreach ($commands as $command) {
-            if (!$command instanceof ChangeSetAware || !$command instanceof WriteCommand) {
+            if (!$command instanceof ChangeSetAware) {
                 continue;
             }
-
+            if (!$command instanceof WriteCommand) {
+                continue;
+            }
             if (!$command->requiresChangeSet()) {
                 continue;
             }
@@ -519,10 +521,12 @@ class EntityWriteGateway implements EntityWriteGatewayInterface
         }
 
         foreach ($commands as $command) {
-            if (!$command instanceof ChangeSetAware || !$command instanceof WriteCommand) {
+            if (!$command instanceof ChangeSetAware) {
                 continue;
             }
-
+            if (!$command instanceof WriteCommand) {
+                continue;
+            }
             if (!$command->requiresChangeSet()) {
                 continue;
             }
@@ -718,7 +722,7 @@ class EntityWriteGateway implements EntityWriteGatewayInterface
 
         $exists = $query->executeQuery()->fetchAssociative();
         if (!$exists) {
-            $exists = [];
+            return [];
         }
 
         return $exists;

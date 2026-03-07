@@ -74,7 +74,7 @@ class SalesChannelMaintenanceEnableCommand extends Command
             return self::SUCCESS;
         }
 
-        $update = array_map(fn (string $id) => [
+        $update = array_map(fn (string $id): array => [
             'id' => $id,
             'maintenance' => $this->setMaintenanceMode,
         ], $salesChannelIds);

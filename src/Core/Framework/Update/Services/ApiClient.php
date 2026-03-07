@@ -83,9 +83,7 @@ class ApiClient
         /** @var non-empty-array<string> $versions */
         $versions = $this->client->request('GET', 'https://releases.shopware.com/changelog/index.json')->toArray();
 
-        usort($versions, function ($a, $b) {
-            return version_compare($b, $a);
-        });
+        usort($versions, fn($a, $b) => version_compare($b, $a));
 
         // Index them by major version
         $mappedVersions = [];
@@ -115,10 +113,6 @@ class ApiClient
         $second = (int) substr($this->shopwareVersion, 2, 1);
         ++$second;
 
-        if (isset($mappedVersions[$first . '.' . $second])) {
-            $latestVersion = $mappedVersions[$first . '.' . $second];
-        }
-
-        return $latestVersion;
+        return $mappedVersions[$first . '.' . $second] ?? $latestVersion;
     }
 }

@@ -132,8 +132,10 @@ class NoDropStatementInUpdateRule implements Rule
             }
 
             $errors = $this->inspectMethodCall($statement, $name, $node, $errors);
-
-            if (!$statement->var instanceof Variable || $statement->var->name !== 'this') {
+            if (!$statement->var instanceof Variable) {
+                continue;
+            }
+            if ($statement->var->name !== 'this') {
                 continue;
             }
 

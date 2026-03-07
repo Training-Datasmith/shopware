@@ -41,7 +41,7 @@ class MaxUsage
         // this is only allowed if we have an original package count of 1
         // otherwise the count is always limited to 1 item per package
         if ($originalPackageCount === 1) {
-            $maxItemUsages = (int) $maxUsageKey;
+            return (int) $maxUsageKey;
         }
 
         return $maxItemUsages;

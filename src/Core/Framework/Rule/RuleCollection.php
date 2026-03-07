@@ -49,7 +49,7 @@ class RuleCollection extends Collection
         return new static(
             array_filter(
                 $this->flat,
-                fn (Rule $rule) => $rule instanceof $class
+                fn (Rule $rule): bool => $rule instanceof $class
             )
         );
     }

@@ -83,7 +83,7 @@ final class MediaAdminSearchIndexer extends AbstractAdminIndexer
             }
         }
 
-        return array_values(array_unique(array_filter($mediaIds, '\is_string')));
+        return array_values(array_unique(array_filter($mediaIds, \is_string(...))));
     }
 
     public function mapping(array $mapping): array

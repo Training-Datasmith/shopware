@@ -82,10 +82,12 @@ class LanguageLocaleCodeProvider implements ResetInterface
     private function resolveParentLanguages(array $languages): array
     {
         foreach ($languages as &$language) {
-            if ($language['code'] !== null || $language['parentId'] === null) {
+            if ($language['code'] !== null) {
                 continue;
             }
-
+            if ($language['parentId'] === null) {
+                continue;
+            }
             $language['code'] = $languages[$language['parentId']]['code'] ?? null;
         }
 

@@ -75,8 +75,10 @@ class GrantDownloadAccessAction extends FlowAction implements DelayableAction
                 ? $lineItem->getPayloadValue(LineItem::PAYLOAD_PRODUCT_TYPE) === ProductDefinition::TYPE_DIGITAL
                 : (\in_array(State::IS_DOWNLOAD, $lineItem->getStates(), true)
                     || $lineItem->getPayloadValue(LineItem::PAYLOAD_PRODUCT_TYPE) === ProductDefinition::TYPE_DIGITAL);
-
-            if (!$lineItem->getDownloads() || !$isDigital) {
+            if (!$lineItem->getDownloads()) {
+                continue;
+            }
+            if (!$isDigital) {
                 continue;
             }
 

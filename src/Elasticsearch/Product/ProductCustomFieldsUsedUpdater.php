@@ -177,12 +177,10 @@ class ProductCustomFieldsUsedUpdater implements EventSubscriberInterface
             return [];
         }
 
-        $result = $this->connection->fetchAllKeyValue(
+        return $this->connection->fetchAllKeyValue(
             'SELECT name, type FROM custom_field WHERE name IN (:names)',
             ['names' => $fieldNames],
             ['names' => ArrayParameterType::STRING]
         );
-
-        return $result;
     }
 }

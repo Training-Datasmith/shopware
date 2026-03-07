@@ -211,12 +211,12 @@ class QueryStringParser
             ],
             $query instanceof NotFilter => [
                 'type' => 'not',
-                'queries' => array_map(static fn (Filter $nested) => self::toArray($nested), $query->getQueries()),
+                'queries' => array_map(self::toArray(...), $query->getQueries()),
                 'operator' => $query->getOperator(),
             ],
             $query instanceof MultiFilter => [
                 'type' => 'multi',
-                'queries' => array_map(static fn (Filter $nested) => self::toArray($nested), $query->getQueries()),
+                'queries' => array_map(self::toArray(...), $query->getQueries()),
                 'operator' => $query->getOperator(),
             ],
             $query instanceof ContainsFilter => [

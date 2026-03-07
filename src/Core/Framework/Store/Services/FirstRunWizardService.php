@@ -174,15 +174,23 @@ class FirstRunWizardService
             foreach ($region['categories'] as $category) {
                 $categoryName = $category['name'] ?? '';
                 $categoryLabel = $category['label'] ?? '';
-
-                if ($categoryName === '' || $categoryLabel === '') {
+                if ($categoryName === '') {
+                    continue;
+                }
+                if ($categoryLabel === '') {
                     continue;
                 }
                 $categories[] = new PluginCategoryStruct($categoryName, $categoryLabel);
             }
             $regionName = $region['name'] ?? '';
             $regionLabel = $region['label'] ?? '';
-            if ($regionName === '' || $regionLabel === '' || $categories === []) {
+            if ($regionName === '') {
+                continue;
+            }
+            if ($regionLabel === '') {
+                continue;
+            }
+            if ($categories === []) {
                 continue;
             }
             $regions->add(new PluginRegionStruct($regionName, $regionLabel, $categories));
@@ -212,7 +220,7 @@ class FirstRunWizardService
         $currentLicenseDomain = $this->configService->getString(StoreService::CONFIG_KEY_STORE_LICENSE_DOMAIN);
         $currentLicenseDomain = $currentLicenseDomain ? idn_to_utf8($currentLicenseDomain) : null;
 
-        $domains = array_map(static function ($data) use ($currentLicenseDomain) {
+        $domains = array_map(static function (array $data) use ($currentLicenseDomain) {
             $domain = idn_to_utf8($data['domain']);
 
             return (new LicenseDomainStruct())->assign([
@@ -285,7 +293,10 @@ class FirstRunWizardService
         foreach ($extensions as $extension) {
             $extensionName = $extension['name'] ?? '';
             $label = $extension['localizedInfo']['name'] ?? '';
-            if ($extensionName === '' || $label === '') {
+            if ($extensionName === '') {
+                continue;
+            }
+            if ($label === '') {
                 continue;
             }
 
@@ -312,8 +323,8 @@ class FirstRunWizardService
             /** @var PluginEntity|null $plugin */
             $plugin = $pluginCollection->filterByProperty('name', $storeExtension->getName())->first();
             $storeExtension->assign([
-                'active' => $plugin ? $plugin->getActive() : false,
-                'installed' => $plugin ? ((bool) $plugin->getInstalledAt()) : false,
+                'active' => $plugin && $plugin->getActive(),
+                'installed' => $plugin && (bool) $plugin->getInstalledAt(),
             ]);
         }
 
@@ -368,7 +379,7 @@ class FirstRunWizardService
         $frwUserToken = $accessToken->getShopUserToken()->getToken();
         $id = $this->getFrwUserTokenConfigId($context);
 
-        $context->scope(Context::SYSTEM_SCOPE, function ($context) use ($userId, $frwUserToken, $id): void {
+        $context->scope(Context::SYSTEM_SCOPE, function (\Shopware\Core\Framework\Context $context) use ($userId, $frwUserToken, $id): void {
             $this->userConfigRepository->upsert(
                 [
                     [
@@ -393,7 +404,7 @@ class FirstRunWizardService
         $id = $this->getFrwUserTokenConfigId($context);
 
         if ($id) {
-            $context->scope(Context::SYSTEM_SCOPE, function ($context) use ($id): void {
+            $context->scope(Context::SYSTEM_SCOPE, function (\Shopware\Core\Framework\Context $context) use ($id): void {
                 $this->userConfigRepository->delete([['id' => $id]], $context);
             });
         }

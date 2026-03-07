@@ -53,7 +53,7 @@ class DemodataService
 
             $console->section(\sprintf('Generating %d items for %s', $numberOfItems, $definition->getEntityName()));
 
-            $validGenerators = array_filter(iterator_to_array($this->generators), static fn (DemodataGeneratorInterface $generator) => $generator->getDefinition() === $definitionClass);
+            $validGenerators = array_filter(iterator_to_array($this->generators), static fn (DemodataGeneratorInterface $generator): bool => $generator->getDefinition() === $definitionClass);
 
             if ($validGenerators === []) {
                 throw DemodataException::noGeneratorFound($definitionClass);

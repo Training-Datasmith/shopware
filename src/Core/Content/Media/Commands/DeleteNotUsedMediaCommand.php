@@ -153,7 +153,7 @@ class DeleteNotUsedMediaCommand extends Command
             $input->getOption('folder-entity'),
         );
 
-        $output->write(implode(',', array_map(fn ($col) => \sprintf('"%s"', $col), ['Filename', 'Title', 'Uploaded At', 'File Size'])));
+        $output->write(implode(',', array_map(fn (string $col): string => \sprintf('"%s"', $col), ['Filename', 'Title', 'Uploaded At', 'File Size'])));
         foreach ($mediaBatches as $mediaBatch) {
             foreach ($mediaBatch as $media) {
                 $row = [
@@ -163,7 +163,7 @@ class DeleteNotUsedMediaCommand extends Command
                     MemorySizeCalculator::formatToBytes($media->getFileSize() ?? 0),
                 ];
 
-                $output->write(\sprintf("\n%s", implode(',', array_map(static fn ($col) => \sprintf('"%s"', (string) $col), $row))));
+                $output->write(\sprintf("\n%s", implode(',', array_map(static fn (?string $col): string => \sprintf('"%s"', (string) $col), $row))));
             }
         }
 
@@ -184,7 +184,7 @@ class DeleteNotUsedMediaCommand extends Command
         );
 
         $totalCount = 0;
-        $finished = $this->consumeGeneratorInBatches($mediaBatches, 20, function ($batchNum, array $medias) use ($io, $cursor, &$totalCount, $input) {
+        $finished = $this->consumeGeneratorInBatches($mediaBatches, 20, function ($batchNum, array $medias) use ($io, $cursor, &$totalCount, $input): bool {
             if ($batchNum === 0 && $medias === []) {
                 return true;
             }
@@ -210,7 +210,7 @@ class DeleteNotUsedMediaCommand extends Command
             $io->table(
                 ['Filename', 'Title', 'Uploaded At', 'File Size'],
                 array_map(
-                    fn (MediaEntity $media) => [
+                    fn (MediaEntity $media): array => [
                         $media->getFileNameIncludingExtension(),
                         $media->getTitle(),
                         $media->getUploadedAt()?->format('F jS, Y'),

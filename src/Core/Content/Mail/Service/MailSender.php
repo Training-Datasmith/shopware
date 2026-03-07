@@ -75,7 +75,7 @@ class MailSender extends AbstractMailSender
             $email->addBcc($deliveryAddress);
         }
 
-        if ($this->maxContentLength > 0 && \strlen($email->getBody()->toString()) > $this->maxContentLength) {
+        if ($this->maxContentLength > 0 && \strlen((string) $email->getBody()->toString()) > $this->maxContentLength) {
             throw MailException::mailBodyTooLong($this->maxContentLength);
         }
 

@@ -172,7 +172,7 @@ class PriceFieldSerializer extends AbstractFieldSerializer
 
     protected function getConstraints(Field $field): array
     {
-        $constraints = [
+        return [
             new Collection(
                 fields: [
                     'currencyId' => [new NotBlank(), new Uuid()],
@@ -210,8 +210,6 @@ class PriceFieldSerializer extends AbstractFieldSerializer
                 allowMissingFields: false
             ),
         ];
-
-        return $constraints;
     }
 
     /**

@@ -61,16 +61,14 @@ class Feature
         try {
             self::$registeredFeatures = [];
             foreach ($_SERVER as $key => $value) {
-                if (str_starts_with($key, 'v6.') || str_starts_with($key, 'FEATURE_') || str_starts_with($key, 'V6_')) {
+                if (str_starts_with((string) $key, 'v6.') || str_starts_with((string) $key, 'FEATURE_') || str_starts_with((string) $key, 'V6_')) {
                     // set to false so that $_ENV is not checked
                     $_SERVER[$key] = false;
                 }
             }
 
-            if ($features) {
-                foreach ($features as $feature) {
-                    $_SERVER[Feature::normalizeName($feature)] = true;
-                }
+            foreach ($features as $feature) {
+                $_SERVER[Feature::normalizeName($feature)] = true;
             }
 
             $result = $closure();
@@ -269,7 +267,7 @@ class Feature
         );
 
         if ($replacement) {
-            $message = \sprintf('%s Use "%s" instead.', $message, $replacement);
+            return \sprintf('%s Use "%s" instead.', $message, $replacement);
         }
 
         return $message;
@@ -284,7 +282,7 @@ class Feature
         );
 
         if ($replacement) {
-            $message = \sprintf('%s Use "%s" instead.', $message, $replacement);
+            return \sprintf('%s Use "%s" instead.', $message, $replacement);
         }
 
         return $message;
@@ -404,7 +402,10 @@ class Feature
 
     private static function featureInEnv(string $feature): bool
     {
-        return EnvironmentHelper::hasVariable($feature) || EnvironmentHelper::hasVariable(\strtolower($feature));
+        if (EnvironmentHelper::hasVariable($feature)) {
+            return true;
+        }
+        return EnvironmentHelper::hasVariable(\strtolower($feature));
     }
 
     private static function getFeatureInEnv(string $feature): bool

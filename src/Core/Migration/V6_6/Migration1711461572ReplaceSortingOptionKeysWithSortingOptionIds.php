@@ -41,7 +41,7 @@ class Migration1711461572ReplaceSortingOptionKeysWithSortingOptionIds extends Mi
         );
 
         foreach ($categoryEntries as $entry) {
-            $oldConfig = $slotConfig = json_decode($entry['slot_config'], true);
+            $oldConfig = $slotConfig = json_decode((string) $entry['slot_config'], true);
 
             if ($slotConfig === null) {
                 continue;

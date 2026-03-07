@@ -16,12 +16,12 @@ class ShippingMethodTranslationCollection extends EntityCollection
      */
     public function getShippingMethodIds(): array
     {
-        return $this->fmap(fn (ShippingMethodTranslationEntity $shippingMethodTranslation) => $shippingMethodTranslation->getShippingMethodId());
+        return $this->fmap(fn (ShippingMethodTranslationEntity $shippingMethodTranslation): string => $shippingMethodTranslation->getShippingMethodId());
     }
 
     public function filterByShippingMethodId(string $id): self
     {
-        return $this->filter(fn (ShippingMethodTranslationEntity $shippingMethodTranslation) => $shippingMethodTranslation->getShippingMethodId() === $id);
+        return $this->filter(fn (ShippingMethodTranslationEntity $shippingMethodTranslation): bool => $shippingMethodTranslation->getShippingMethodId() === $id);
     }
 
     /**
@@ -29,12 +29,12 @@ class ShippingMethodTranslationCollection extends EntityCollection
      */
     public function getLanguageIds(): array
     {
-        return $this->fmap(fn (ShippingMethodTranslationEntity $shippingMethodTranslation) => $shippingMethodTranslation->getLanguageId());
+        return $this->fmap(fn (ShippingMethodTranslationEntity $shippingMethodTranslation): string => $shippingMethodTranslation->getLanguageId());
     }
 
     public function filterByLanguageId(string $id): self
     {
-        return $this->filter(fn (ShippingMethodTranslationEntity $shippingMethodTranslation) => $shippingMethodTranslation->getLanguageId() === $id);
+        return $this->filter(fn (ShippingMethodTranslationEntity $shippingMethodTranslation): bool => $shippingMethodTranslation->getLanguageId() === $id);
     }
 
     public function getApiAlias(): string

@@ -17,12 +17,12 @@ class CountryStateCollection extends EntityCollection
      */
     public function getCountryIds(): array
     {
-        return $this->fmap(fn (CountryStateEntity $countryState) => $countryState->getCountryId());
+        return $this->fmap(fn (CountryStateEntity $countryState): string => $countryState->getCountryId());
     }
 
     public function filterByCountryId(string $id): self
     {
-        return $this->filter(fn (CountryStateEntity $countryState) => $countryState->getCountryId() === $id);
+        return $this->filter(fn (CountryStateEntity $countryState): bool => $countryState->getCountryId() === $id);
     }
 
     /**
@@ -32,7 +32,7 @@ class CountryStateCollection extends EntityCollection
     {
         Feature::triggerDeprecationOrThrow('v6.8.0.0', 'Use sorting via SQL instead of this method.');
 
-        uasort($this->elements, static function (CountryStateEntity $a, CountryStateEntity $b) {
+        uasort($this->elements, static function (CountryStateEntity $a, CountryStateEntity $b): int {
             $aPosition = $a->getPosition();
             $bPosition = $b->getPosition();
 

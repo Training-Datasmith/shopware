@@ -99,7 +99,7 @@ class LineItemCollection extends Collection
     public function filterType(string $type): LineItemCollection
     {
         return $this->filter(
-            fn (LineItem $lineItem) => $lineItem->getType() === $type
+            fn (LineItem $lineItem): bool => $lineItem->getType() === $type
         );
     }
 
@@ -138,13 +138,13 @@ class LineItemCollection extends Collection
      */
     public function getPayload(): array
     {
-        return $this->map(fn (LineItem $lineItem) => $lineItem->getPayload());
+        return $this->map(fn (LineItem $lineItem): array => $lineItem->getPayload());
     }
 
     public function getPrices(): PriceCollection
     {
         return new PriceCollection(
-            $this->fmap(static fn (LineItem $lineItem) => $lineItem->getPrice())
+            $this->fmap(static fn (LineItem $lineItem): ?\Shopware\Core\Checkout\Cart\Price\Struct\CalculatedPrice => $lineItem->getPrice())
         );
     }
 
@@ -186,7 +186,7 @@ class LineItemCollection extends Collection
     public function filterGoods(): self
     {
         return $this->filter(
-            fn (LineItem $lineItem) => $lineItem->isGood()
+            fn (LineItem $lineItem): bool => $lineItem->isGood()
         );
     }
 
@@ -213,7 +213,7 @@ class LineItemCollection extends Collection
     public function getTypes(): array
     {
         return $this->fmap(
-            fn (LineItem $lineItem) => $lineItem->getType()
+            fn (LineItem $lineItem): string => $lineItem->getType()
         );
     }
 
@@ -223,7 +223,7 @@ class LineItemCollection extends Collection
     public function getReferenceIds(): array
     {
         return $this->fmap(
-            fn (LineItem $lineItem) => $lineItem->getReferencedId()
+            fn (LineItem $lineItem): ?string => $lineItem->getReferencedId()
         );
     }
 
@@ -234,7 +234,7 @@ class LineItemCollection extends Collection
 
     public function getTotalQuantity(): int
     {
-        return $this->reduce(fn (int $result, LineItem $item) => $result + $item->getQuantity(), 0);
+        return $this->reduce(fn (int $result, LineItem $item): int => $result + $item->getQuantity(), 0);
     }
 
     protected function getKey(LineItem $element): string

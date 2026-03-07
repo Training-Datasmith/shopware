@@ -55,12 +55,8 @@ class TableHelper
             $dbalTable = self::getSchemaManager($connection)->introspectTableByUnquotedName($tableName);
 
             return new Table(
-                columns: array_map(static function (DbalColumn $dbalColumn): Column {
-                    return Column::createFromDbalColumn($dbalColumn);
-                }, $dbalTable->getColumns()),
-                indexes: array_values(array_map(static function (DbalIndex $dbalIndex): Index {
-                    return Index::createFromDbalIndex($dbalIndex);
-                }, $dbalTable->getIndexes()))
+                columns: array_map(static fn(DbalColumn $dbalColumn): Column => Column::createFromDbalColumn($dbalColumn), $dbalTable->getColumns()),
+                indexes: array_values(array_map(static fn(DbalIndex $dbalIndex): Index => Index::createFromDbalIndex($dbalIndex), $dbalTable->getIndexes()))
             );
         } catch (TableHelperException $e) {
             throw $e;
@@ -235,13 +231,9 @@ class TableHelper
             $dbalForeignKey = self::getSchemaManager($connection)->introspectTableByUnquotedName($table)->getForeignKey($foreignKeyName);
 
             return new ForeignKey(
-                referencingColumnNames: array_map(static function (UnqualifiedName $columnName): string {
-                    return $columnName->getIdentifier()->getValue();
-                }, $dbalForeignKey->getReferencingColumnNames()),
+                referencingColumnNames: array_map(static fn(UnqualifiedName $columnName): string => $columnName->getIdentifier()->getValue(), $dbalForeignKey->getReferencingColumnNames()),
                 referencedTableName: $dbalForeignKey->getReferencedTableName()->getUnqualifiedName()->getValue(),
-                referencedColumnNames: array_map(static function (UnqualifiedName $columnName): string {
-                    return $columnName->getIdentifier()->getValue();
-                }, $dbalForeignKey->getReferencedColumnNames()),
+                referencedColumnNames: array_map(static fn(UnqualifiedName $columnName): string => $columnName->getIdentifier()->getValue(), $dbalForeignKey->getReferencedColumnNames()),
                 onDeleteAction: $dbalForeignKey->getOnDeleteAction()->value,
             );
         } catch (TableHelperException $e) {

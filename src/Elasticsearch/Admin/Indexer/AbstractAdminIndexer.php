@@ -115,8 +115,16 @@ abstract class AbstractAdminIndexer
 
             $languageId = $entry['languageId'] ?? null;
             $value = $entry[$field] ?? null;
-
-            if (!\is_string($languageId) || $languageId === '' || !\is_string($value) || $value === '') {
+            if (!\is_string($languageId)) {
+                continue;
+            }
+            if ($languageId === '') {
+                continue;
+            }
+            if (!\is_string($value)) {
+                continue;
+            }
+            if ($value === '') {
                 continue;
             }
 
@@ -137,7 +145,7 @@ abstract class AbstractAdminIndexer
             return [];
         }
 
-        return array_map(static fn (string $tagId) => [
+        return array_map(static fn (string $tagId): array => [
             'id' => $tagId,
             '_count' => 1,
         ], explode(' ', (string) $row[$key]));
@@ -165,10 +173,12 @@ abstract class AbstractAdminIndexer
         $supportedFields = [];
 
         foreach ($properties as $field => $definition) {
-            if (!\is_string($field) || $field === '_count') {
+            if (!\is_string($field)) {
                 continue;
             }
-
+            if ($field === '_count') {
+                continue;
+            }
             $fieldName = $prefix === '' ? $field : $prefix . '.' . $field;
 
             $subProperties = $definition['properties'] ?? [];
@@ -199,10 +209,12 @@ abstract class AbstractAdminIndexer
     private function isTranslationMapping(array $properties): bool
     {
         foreach ($properties as $property => $_definition) {
-            if (!\is_string($property) || $property === '_count') {
+            if (!\is_string($property)) {
                 continue;
             }
-
+            if ($property === '_count') {
+                continue;
+            }
             if (Uuid::isValid($property)) {
                 return true;
             }

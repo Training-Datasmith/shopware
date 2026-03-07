@@ -64,7 +64,7 @@ class MemorySizeCalculator
         }
 
         /** @var non-empty-array{0?: int<1, max>, 1?: int<1, max>, 2?: int<1, max>} $limits */
-        $limits = array_filter($values, static fn (int $value) => $value > 0);
+        $limits = array_filter($values, static fn (int $value): bool => $value > 0);
 
         return min($limits);
     }

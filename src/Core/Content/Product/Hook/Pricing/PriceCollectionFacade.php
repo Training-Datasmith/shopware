@@ -92,9 +92,7 @@ class PriceCollectionFacade implements \IteratorAggregate, \Countable
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator(
-            $this->prices->map(function (CalculatedPrice $price) {
-                return new PriceFacade($this->product, $price, $this->priceStubs, $this->context);
-            })
+            $this->prices->map(fn(CalculatedPrice $price) => new PriceFacade($this->product, $price, $this->priceStubs, $this->context))
         );
     }
 

@@ -156,7 +156,7 @@ class SalesChannelContextFactory extends AbstractSalesChannelContextFactory
                 continue;
             }
 
-            $taxRules = $taxRules->filter(function (TaxRuleEntity $taxRule) use ($customer, $shippingLocation) {
+            $taxRules = $taxRules->filter(function (TaxRuleEntity $taxRule) use ($customer, $shippingLocation): bool {
                 foreach ($this->taxRuleTypeFilter as $ruleTypeFilter) {
                     if ($ruleTypeFilter->match($taxRule, $customer, $shippingLocation)) {
                         return true;

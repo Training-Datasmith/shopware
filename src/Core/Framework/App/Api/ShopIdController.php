@@ -85,9 +85,7 @@ class ShopIdController extends AbstractController
         $apps = $this->appRepository
             ->search($criteria, $context)
             ->getEntities()
-            ->map(function (AppEntity $app) {
-                return $app->getTranslation('label');
-            });
+            ->map(fn(AppEntity $app) => $app->getTranslation('label'));
 
         return array_values($apps);
     }

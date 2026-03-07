@@ -85,7 +85,7 @@ class ProductController extends StorefrontController
         $switchedGroup = $request->query->has('switched') ? (string) $request->query->get('switched') : null;
 
         try {
-            $options = json_decode($request->query->get('options', '[]'), true, 512, \JSON_THROW_ON_ERROR);
+            $options = json_decode((string) $request->query->get('options', '[]'), true, 512, \JSON_THROW_ON_ERROR);
         } catch (\JsonException) {
             $options = [];
         }

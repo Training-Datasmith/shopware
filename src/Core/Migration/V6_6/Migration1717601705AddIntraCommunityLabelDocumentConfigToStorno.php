@@ -33,7 +33,7 @@ class Migration1717601705AddIntraCommunityLabelDocumentConfigToStorno extends Mi
                 return;
             }
 
-            $config = json_decode($stornoConfig['config'], true, 512, \JSON_THROW_ON_ERROR);
+            $config = json_decode((string) $stornoConfig['config'], true, 512, \JSON_THROW_ON_ERROR);
 
             if (!isset($config['displayAdditionalNoteDelivery'])) {
                 $config['displayAdditionalNoteDelivery'] = false;

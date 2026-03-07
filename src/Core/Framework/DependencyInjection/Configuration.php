@@ -340,7 +340,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('enable_url_upload_feature')->end()
                 ->booleanNode('enable_url_validation')->end()
                 ->scalarNode('url_upload_max_size')->defaultValue(0)
-                    ->validate()->always()->then(fn ($value) => abs(MemorySizeCalculator::convertToBytes((string) $value)))->end()
+                    ->validate()->always()->then(fn ($value): int => abs(MemorySizeCalculator::convertToBytes((string) $value)))->end()
             ->end();
 
         return $rootNode;
@@ -968,7 +968,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                     ->validate()
-                        ->ifTrue(function ($areas) {
+                        ->ifTrue(function ($areas): bool {
                             $allowedAreas = ['storefront', 'store_api'];
                             $providedAreas = array_keys($areas);
 
@@ -1041,7 +1041,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
             ->validate()
-                ->ifTrue(function (array $config) {
+                ->ifTrue(function (array $config): bool {
                     $policies = array_keys($config['policies'] ?? []);
 
                     // Check default_policies references

@@ -127,9 +127,7 @@ class PaymentMethodPersister
             new EqualsFilter('appPaymentMethod.appId', $appId),
         ]));
 
-        return $context->scope(Context::SYSTEM_SCOPE, function (Context $context) use ($criteria) {
-            return $this->paymentMethodRepository->search($criteria, $context)->getEntities();
-        });
+        return $context->scope(Context::SYSTEM_SCOPE, fn(Context $context) => $this->paymentMethodRepository->search($criteria, $context)->getEntities());
     }
 
     private function getMediaId(Manifest $manifest, PaymentMethod $paymentMethod, Context $context, ?AppPaymentMethodEntity $existing): ?string

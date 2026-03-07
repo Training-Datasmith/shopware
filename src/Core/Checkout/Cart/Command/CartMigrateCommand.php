@@ -123,7 +123,7 @@ class CartMigrateCommand extends Command
 
         foreach ($keys as $index => $key) {
             if (\method_exists($this->redis, '_prefix')) {
-                $key = \substr((string) $key, \strlen($this->redis->_prefix('')));
+                $key = \substr((string) $key, \strlen((string) $this->redis->_prefix('')));
             }
 
             $value = $this->redis->get($key);
@@ -139,7 +139,7 @@ class CartMigrateCommand extends Command
             [$newCompression, $newCart] = $this->cartCompressor->serialize($content['cart']);
 
             $migratedCart = [];
-            $migratedCart['token'] = substr($key, \strlen(RedisCartPersister::PREFIX));
+            $migratedCart['token'] = substr((string) $key, \strlen(RedisCartPersister::PREFIX));
             $migratedCart['payload'] = $newCart;
             $migratedCart['compressed'] = $newCompression;
             $migratedCart['rule_ids'] = \json_encode($content['rule_ids'], \JSON_THROW_ON_ERROR);

@@ -84,10 +84,10 @@ class SalesChannelListCommand extends Command
                 $salesChannel->getActive() ? 'active' : 'inactive',
                 $salesChannel->isMaintenance() ? 'on' : 'off',
                 $language?->getName() ?? 'n/a',
-                $languages->map(fn (LanguageEntity $language) => $language->getName()),
+                $languages->map(fn (LanguageEntity $language): string => $language->getName()),
                 $currency?->getName() ?? 'n/a',
-                $currencies->map(fn (CurrencyEntity $currency) => (string) $currency->getName()),
-                $domains->map(fn (SalesChannelDomainEntity $domain) => $domain->getUrl()),
+                $currencies->map(fn (CurrencyEntity $currency): string => (string) $currency->getName()),
+                $domains->map(fn (SalesChannelDomainEntity $domain): string => $domain->getUrl()),
             ];
         }
 

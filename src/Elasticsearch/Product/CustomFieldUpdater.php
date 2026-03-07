@@ -183,12 +183,18 @@ class CustomFieldUpdater implements EventSubscriberInterface
             }
 
             $existence = $writeResult->getExistence();
-            if (!$existence || !$existence->exists()) {
+            if (!$existence) {
+                continue;
+            }
+            if (!$existence->exists()) {
                 continue;
             }
 
             $payload = $writeResult->getPayload();
-            if (!\array_key_exists('includeInSearch', $payload) || !(bool) $payload['includeInSearch']) {
+            if (!\array_key_exists('includeInSearch', $payload)) {
+                continue;
+            }
+            if (!(bool) $payload['includeInSearch']) {
                 continue;
             }
 

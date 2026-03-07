@@ -81,7 +81,7 @@ class StoreClient
             ]
         );
 
-        $data = \json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        $data = \json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
 
         $userToken = new ShopUserTokenStruct(
             $data['shopUserToken']['token'],
@@ -121,7 +121,7 @@ class StoreClient
             ]
         );
 
-        return \json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        return \json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -139,7 +139,7 @@ class StoreClient
             ];
         }
 
-        return $this->cache->get(self::EXTENSION_LIST_CACHE, function (ItemInterface $item) use ($extensionList, $context) {
+        return $this->cache->get(self::EXTENSION_LIST_CACHE, function (ItemInterface $item) use ($extensionList, $context): array {
             $item->expiresAfter(self::EXTENSION_LIST_TTL);
 
             return $this->getUpdateListFromStore($extensionList, $context);
@@ -204,7 +204,7 @@ class StoreClient
             ]
         );
 
-        $data = \json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        $data = \json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
 
         return $this->getViolations($data['notices']);
     }
@@ -220,7 +220,7 @@ class StoreClient
             ]
         );
 
-        $data = \json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        $data = \json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
         $dataStruct = new PluginDownloadDataStruct();
         $dataStruct->assign($data);
 
@@ -254,7 +254,7 @@ class StoreClient
             ]
         );
 
-        return json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        return json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -284,7 +284,7 @@ class StoreClient
             ]
         );
 
-        return json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        return json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
     }
 
     public function isShopUpgradeable(): bool
@@ -300,7 +300,7 @@ class StoreClient
             ]
         );
 
-        return \json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR)['updateAllowed'];
+        return \json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR)['updateAllowed'];
     }
 
     public function signPayloadWithAppSecret(string $payload, string $appName): string
@@ -327,7 +327,7 @@ class StoreClient
     public function listMyExtensions(ExtensionCollection $extensions, Context $context): ExtensionCollection
     {
         try {
-            $payload = ['plugins' => array_map(fn (ExtensionStruct $e) => [
+            $payload = ['plugins' => array_map(fn (ExtensionStruct $e): array => [
                 'name' => $e->getName(),
                 'version' => $e->getVersion(),
             ], $extensions->getElements())];
@@ -337,7 +337,7 @@ class StoreClient
             throw StoreException::storeError($e);
         }
 
-        $body = \json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        $body = \json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
 
         $myExtensions = new ExtensionCollection();
 
@@ -508,7 +508,7 @@ class StoreClient
             return [];
         }
 
-        $data = \json_decode($response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
+        $data = \json_decode((string) $response->getBody()->getContents(), true, flags: \JSON_THROW_ON_ERROR);
 
         if (!\array_key_exists('data', $data) || !\is_array($data['data'])) {
             return [];

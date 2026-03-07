@@ -21,7 +21,7 @@ use Symfony\Component\Clock\ClockInterface;
  * @internal
  */
 #[Package('framework')]
-final class IdTokenParser
+final readonly class IdTokenParser
 {
     private Parser $parser;
 
@@ -30,9 +30,9 @@ final class IdTokenParser
     private Sha256 $algorithm;
 
     public function __construct(
-        private readonly PublicKeyLoader $publicKeyLoader,
-        private readonly LoginConfigService $loginConfigService,
-        private readonly ClockInterface $clock,
+        private PublicKeyLoader $publicKeyLoader,
+        private LoginConfigService $loginConfigService,
+        private ClockInterface $clock,
     ) {
         $this->parser = new Parser(new JoseEncoder());
         $this->validator = new Validator();

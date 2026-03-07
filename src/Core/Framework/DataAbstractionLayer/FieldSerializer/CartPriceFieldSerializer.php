@@ -46,7 +46,7 @@ class CartPriceFieldSerializer extends JsonFieldSerializer
         }
 
         $taxRules = array_map(
-            fn (array $tax) => new TaxRule(
+            fn (array $tax): \Shopware\Core\Checkout\Cart\Tax\Struct\TaxRule => new TaxRule(
                 (float) $tax['taxRate'],
                 (float) $tax['percentage']
             ),
@@ -54,7 +54,7 @@ class CartPriceFieldSerializer extends JsonFieldSerializer
         );
 
         $calculatedTaxes = array_map(
-            fn (array $tax) => new CalculatedTax(
+            fn (array $tax): \Shopware\Core\Checkout\Cart\Tax\Struct\CalculatedTax => new CalculatedTax(
                 (float) $tax['tax'],
                 (float) $tax['taxRate'],
                 (float) $tax['price'],

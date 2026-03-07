@@ -23,7 +23,7 @@ class ContextGatewayCommandCollection extends Collection
      */
     public function getTokenCommands(): self
     {
-        return $this->filter(static fn (AbstractContextGatewayCommand $command) => $command instanceof LoginCustomerCommand || $command instanceof RegisterCustomerCommand);
+        return $this->filter(static fn (AbstractContextGatewayCommand $command): bool => $command instanceof LoginCustomerCommand || $command instanceof RegisterCustomerCommand);
     }
 
     /**
@@ -31,6 +31,6 @@ class ContextGatewayCommandCollection extends Collection
      */
     public function getCommandTypes(): array
     {
-        return $this->map(static fn (AbstractContextGatewayCommand $command) => $command::getDefaultKeyName());
+        return $this->map(static fn (AbstractContextGatewayCommand $command): string => $command::getDefaultKeyName());
     }
 }

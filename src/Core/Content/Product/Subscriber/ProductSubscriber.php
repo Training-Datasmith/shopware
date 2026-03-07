@@ -141,10 +141,12 @@ class ProductSubscriber implements EventSubscriberInterface
             $payload = $command->getPayload();
 
             foreach (ProductMeasurementEnum::DIMENSIONS_MAPPING as $dimension => $type) {
-                if (!$command->hasField($dimension) || !\is_float($payload[$dimension] ?? null)) {
+                if (!$command->hasField($dimension)) {
                     continue;
                 }
-
+                if (!\is_float($payload[$dimension] ?? null)) {
+                    continue;
+                }
                 $fromUnit = $type === MeasurementUnitTypeEnum::WEIGHT
                     ? $weightUnitHeader
                     : $lengthUnitHeader;

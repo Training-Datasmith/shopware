@@ -51,7 +51,7 @@ class CacheStore implements StoreInterface
         private readonly MaintenanceModeResolver $maintenanceResolver,
         array $sessionOptions,
         private readonly CacheTagCollector $collector,
-        private bool $softPurge,
+        private readonly bool $softPurge,
         private readonly MessageBusInterface $bus,
     ) {
         $this->sessionName = $sessionOptions['name'] ?? PlatformRequest::FALLBACK_SESSION_NAME;
@@ -113,9 +113,7 @@ class CacheStore implements StoreInterface
         }
 
         if (!Feature::isActive('v6.8.0.0') && !Feature::isActive('PERFORMANCE_TWEAKS') && !Feature::isActive('CACHE_REWORK')) {
-            $isValid = Feature::silent('v6.8.0.0', function () use ($request, $response): bool {
-                return $this->stateValidator->isValid($request, $response);
-            });
+            $isValid = Feature::silent('v6.8.0.0', fn(): bool => $this->stateValidator->isValid($request, $response));
             if (!$isValid) {
                 return null;
             }
@@ -142,9 +140,7 @@ class CacheStore implements StoreInterface
         }
 
         if (!Feature::isActive('v6.8.0.0') && !Feature::isActive('PERFORMANCE_TWEAKS') && !Feature::isActive('CACHE_REWORK')) {
-            $isValid = Feature::silent('v6.8.0.0', function () use ($request, $response): bool {
-                return $this->stateValidator->isValid($request, $response);
-            });
+            $isValid = Feature::silent('v6.8.0.0', fn(): bool => $this->stateValidator->isValid($request, $response));
             if (!$isValid) {
                 return $key->key;
             }

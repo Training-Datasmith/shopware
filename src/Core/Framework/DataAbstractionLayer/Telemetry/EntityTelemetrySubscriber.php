@@ -43,7 +43,7 @@ class EntityTelemetrySubscriber implements EventSubscriberInterface
     {
         return array_reduce(
             $criteria->getAssociations(),
-            fn (int $carry, Criteria $association) => $carry + 1 + $this->getAssociationsCountFromCriteria($association),
+            fn (int $carry, Criteria $association): int => $carry + 1 + $this->getAssociationsCountFromCriteria($association),
             0
         );
     }

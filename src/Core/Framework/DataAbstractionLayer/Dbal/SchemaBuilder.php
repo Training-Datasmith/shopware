@@ -268,7 +268,7 @@ class SchemaBuilder
     private function addForeignKeys(Table $table, EntityDefinition $definition): void
     {
         $fields = $definition->getFields()->filter(
-            function (Field $field) {
+            function (Field $field): bool {
                 if ($field instanceof ManyToOneAssociationField
                     || ($field instanceof OneToOneAssociationField && $field->getStorageName() !== 'id')) {
                     return true;
@@ -287,7 +287,7 @@ class SchemaBuilder
 
             $reference = $field->getReferenceDefinition();
 
-            $hasOneToMany = $definition->getFields()->filter(function (Field $field) use ($reference) {
+            $hasOneToMany = $definition->getFields()->filter(function (Field $field) use ($reference): bool {
                 if (!$field instanceof OneToManyAssociationField) {
                     return false;
                 }

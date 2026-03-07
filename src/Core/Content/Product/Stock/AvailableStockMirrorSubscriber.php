@@ -34,7 +34,7 @@ class AvailableStockMirrorSubscriber
      */
     private function getAffected(EntityWriteEvent $event): array
     {
-        return array_filter($event->getCommandsForEntity(ProductDefinition::ENTITY_NAME), static function (WriteCommand $command) {
+        return array_filter($event->getCommandsForEntity(ProductDefinition::ENTITY_NAME), static function (WriteCommand $command): bool {
             if ($command instanceof DeleteCommand) {
                 return false;
             }

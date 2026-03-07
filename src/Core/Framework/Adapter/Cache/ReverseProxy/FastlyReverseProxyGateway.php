@@ -154,6 +154,6 @@ class FastlyReverseProxyGateway extends AbstractReverseProxyGateway
 
         $prefix = $this->tagPrefix;
 
-        return \array_map(static fn (string $tag) => $prefix . $tag, $tags);
+        return \array_map(static fn (string $tag): string => $prefix . $tag, $tags);
     }
 }

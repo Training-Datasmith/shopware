@@ -173,12 +173,11 @@ class RuleValidator implements EventSubscriberInterface
      */
     private function getConditionType(?RuleConditionEntity $condition, array $payload): ?string
     {
-        $type = $condition?->getType();
         if (\array_key_exists('type', $payload)) {
-            $type = $payload['type'];
+            return $payload['type'];
         }
 
-        return $type;
+        return $condition?->getType();
     }
 
     /**
@@ -248,7 +247,7 @@ class RuleValidator implements EventSubscriberInterface
      */
     private function getSavedConditions(array $commandQueue, Context $context): RuleConditionCollection
     {
-        $ids = array_map(function ($command) {
+        $ids = array_map(function (\Shopware\Core\Framework\DataAbstractionLayer\Write\Command\UpdateCommand $command): string {
             $uuidBytes = $command->getPrimaryKey()['id'];
 
             return Uuid::fromBytesToHex($uuidBytes);

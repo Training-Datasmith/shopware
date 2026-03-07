@@ -123,7 +123,7 @@ class MediaGenerator implements DemodataGeneratorInterface
 
             if (!empty($chosenTags)) {
                 $tagAssignments = array_values(array_map(
-                    fn (string $id) => ['id' => $id],
+                    fn (string $id): array => ['id' => $id],
                     $chosenTags
                 ));
             }

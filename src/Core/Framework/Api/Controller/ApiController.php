@@ -489,7 +489,7 @@ class ApiController extends AbstractController
         if ($association instanceof ManyToManyAssociationField) {
             // fetch inverse association definition for filter
             $reverse = $definition->getFields()->firstWhere(
-                fn (Field $field) => $field instanceof ManyToManyAssociationField && $association->getMappingDefinition() === $field->getMappingDefinition()
+                fn (Field $field): bool => $field instanceof ManyToManyAssociationField && $association->getMappingDefinition() === $field->getMappingDefinition()
             );
 
             // contains now the inverse side association: category.products
@@ -546,11 +546,9 @@ class ApiController extends AbstractController
 
             // get inverse association to filter to parent value
             $reverse = $definition->getFields()->firstWhere(
-                function (Field $field) use ($parentDefinition, $association) {
-                    return $field instanceof OneToManyAssociationField
-                        && $parentDefinition === $field->getReferenceDefinition()
-                        && $association->getStorageName() === $field->getReferenceField();
-                }
+                fn(Field $field) => $field instanceof OneToManyAssociationField
+                    && $parentDefinition === $field->getReferenceDefinition()
+                    && $association->getStorageName() === $field->getReferenceField()
             );
             if ($reverse === null) {
                 throw ApiException::missingReverseAssociation($definition->getEntityName(), $parentDefinition->getEntityName());
@@ -572,11 +570,9 @@ class ApiController extends AbstractController
 
             // get inverse association to filter to parent value
             $reverse = $definition->getFields()->firstWhere(
-                function (Field $field) use ($parentDefinition, $association) {
-                    return $field instanceof OneToOneAssociationField
-                        && $parentDefinition === $field->getReferenceDefinition()
-                        && $association->getStorageName() === $field->getReferenceField();
-                }
+                fn(Field $field) => $field instanceof OneToOneAssociationField
+                    && $parentDefinition === $field->getReferenceDefinition()
+                    && $association->getStorageName() === $field->getReferenceField()
             );
             if ($reverse === null) {
                 throw ApiException::missingReverseAssociation($definition->getEntityName(), $parentDefinition->getEntityName());
@@ -635,8 +631,6 @@ class ApiController extends AbstractController
     {
         $payload = $this->getRequestBody($request);
         $noContent = !$request->query->has('_response');
-        // safari bug prevents us from using the location header
-        $appendLocationHeader = false;
 
         if ($this->isCollection($payload)) {
             throw ApiException::badRequest('Only single write operations are supported. Please send the entities one by one or use the /sync api endpoint.');
@@ -947,7 +941,7 @@ class ApiController extends AbstractController
     private function urlToCamelCase(string $name): string
     {
         $parts = explode('-', $name);
-        $parts = array_map('ucfirst', $parts);
+        $parts = array_map(ucfirst(...), $parts);
 
         return lcfirst(implode('', $parts));
     }
@@ -960,10 +954,10 @@ class ApiController extends AbstractController
     private function getRequestBody(Request $request): array
     {
         $contentType = $request->headers->get('CONTENT_TYPE', '');
-        $semicolonPosition = mb_strpos($contentType, ';');
+        $semicolonPosition = mb_strpos((string) $contentType, ';');
 
         if ($semicolonPosition !== false) {
-            $contentType = mb_substr($contentType, 0, $semicolonPosition);
+            $contentType = mb_substr((string) $contentType, 0, $semicolonPosition);
         }
 
         try {
@@ -1044,12 +1038,10 @@ class ApiController extends AbstractController
      */
     private function getDefinitionForPathSegment(array $segment): EntityDefinition
     {
-        $definition = $segment['definition'];
-
         if ($segment['field'] instanceof ManyToManyAssociationField) {
-            $definition = $segment['field']->getToManyReferenceDefinition();
+            return $segment['field']->getToManyReferenceDefinition();
         }
 
-        return $definition;
+        return $segment['definition'];
     }
 }

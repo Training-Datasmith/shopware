@@ -50,8 +50,8 @@ class DocumentConfigurationFactory
                     continue;
                 }
 
-                if (str_starts_with($key, 'custom.')) {
-                    $customKey = mb_substr($key, 7);
+                if (str_starts_with((string) $key, 'custom.')) {
+                    $customKey = mb_substr((string) $key, 7);
                     $baseConfig->__set('custom', array_merge((array) $baseConfig->__get('custom'), [$customKey => $value]));
                     continue;
                 }
@@ -70,7 +70,7 @@ class DocumentConfigurationFactory
                 }
 
                 $typeName = $propertyType->getName();
-                $setterMethod = 'set' . ucfirst($key);
+                $setterMethod = 'set' . ucfirst((string) $key);
 
                 /**
                  * Using dynamic access to handle entity properties generically, which improves maintainability by

@@ -36,7 +36,7 @@ final class DeleteThemeFilesTaskHandler extends ScheduledTaskHandler
     {
         $usedThemePaths = $this->getUsedThemePaths();
 
-        $themeDirectories = $this->themeFileSystem->listContents('theme')->filter(function (StorageAttributes $themeDirectory) use ($usedThemePaths) {
+        $themeDirectories = $this->themeFileSystem->listContents('theme')->filter(function (StorageAttributes $themeDirectory) use ($usedThemePaths): bool {
             // Only delete unused theme directories
             if (\in_array($themeDirectory->path(), $usedThemePaths, true)) {
                 return false;

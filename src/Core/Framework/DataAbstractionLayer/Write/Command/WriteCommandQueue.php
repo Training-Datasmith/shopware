@@ -197,7 +197,10 @@ class WriteCommandQueue
 
         $mapped = [];
         foreach ($definition->getPrimaryKeys() as $key) {
-            if ($key instanceof VersionField || $key instanceof ReferenceVersionField) {
+            if ($key instanceof VersionField) {
+                continue;
+            }
+            if ($key instanceof ReferenceVersionField) {
                 continue;
             }
             \assert($key instanceof StorageAware);
@@ -236,7 +239,10 @@ class WriteCommandQueue
 
             $fk = $fks[$key];
             // check if the payload field is a foreign key which we have to consider
-            if (!$fk instanceof FkField || $value === null) {
+            if (!$fk instanceof FkField) {
+                continue;
+            }
+            if ($value === null) {
                 continue;
             }
 

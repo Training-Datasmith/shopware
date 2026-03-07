@@ -24,9 +24,7 @@ class WebhookManagerSubscriber implements EventSubscriberInterface
 
     public function filterDuplicates(PreWebhooksDispatchEvent $event): void
     {
-        [$webhooks, $serviceSystemUpdates] = $this->partitionArray($event->webhooks, function (Webhook $webhook) {
-            return $webhook->eventName === UpdatePostFinishEvent::EVENT_NAME && $webhook->appSourceType === ServiceSourceResolver::name() ? 1 : 0;
-        });
+        [$webhooks, $serviceSystemUpdates] = $this->partitionArray($event->webhooks, fn(Webhook $webhook) => $webhook->eventName === UpdatePostFinishEvent::EVENT_NAME && $webhook->appSourceType === ServiceSourceResolver::name() ? 1 : 0);
 
         $deduplicatedUpdates = [];
         foreach ($serviceSystemUpdates as $webhook) {

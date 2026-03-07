@@ -30,7 +30,7 @@ class ConsentRepository
         );
 
         return array_map(
-            fn (array $row) => new ConsentStateRecord(
+            fn (array $row): \Shopware\Core\System\Consent\DTO\ConsentStateRecord => new ConsentStateRecord(
                 $row['name'],
                 $row['identifier'],
                 ConsentStatus::from($row['state']),

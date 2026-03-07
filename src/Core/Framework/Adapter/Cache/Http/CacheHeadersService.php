@@ -44,7 +44,7 @@ class CacheHeadersService
             PlatformRequest::HEADER_CURRENCY_ID,
             HttpCacheKeyGenerator::CONTEXT_CACHE_COOKIE,
         ]);
-        $newVaryArray = array_unique(array_map(fn (string $v) => \trim($v), $newVaryArray));
+        $newVaryArray = array_unique(array_map(\trim(...), $newVaryArray));
 
         $response->setVary($newVaryArray);
     }

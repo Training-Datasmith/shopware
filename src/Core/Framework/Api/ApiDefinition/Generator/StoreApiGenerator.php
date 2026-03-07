@@ -302,10 +302,12 @@ class StoreApiGenerator implements ApiDefinitionGeneratorInterface
 
         foreach ($specs['paths'] as &$pathDefinition) {
             foreach ($pathDefinition as &$operation) {
-                if (!isset($operation['parameters']) || !\is_array($operation['parameters'])) {
+                if (!isset($operation['parameters'])) {
                     continue;
                 }
-
+                if (!\is_array($operation['parameters'])) {
+                    continue;
+                }
                 $newParams = [];
                 $hasGroup = false;
 
@@ -362,17 +364,20 @@ class StoreApiGenerator implements ApiDefinitionGeneratorInterface
                 if (!isset($pathDefinition[$method])) {
                     continue;
                 }
-
                 // Only enrich read operations (operationId starts with "read")
-                if (!isset($pathDefinition[$method]['operationId'])
-                    || !str_starts_with($pathDefinition[$method]['operationId'], 'read')) {
+                if (!isset($pathDefinition[$method]['operationId'])) {
+                    continue;
+                }
+                if (!str_starts_with((string) $pathDefinition[$method]['operationId'], 'read')) {
                     continue;
                 }
 
                 // Try to find entity reference in the response schema
                 $entityName = $this->extractEntityNameFromOperation($pathDefinition[$method]);
-
-                if (!$entityName || !isset($associationDocs[$entityName])) {
+                if (!$entityName) {
+                    continue;
+                }
+                if (!isset($associationDocs[$entityName])) {
                     continue;
                 }
 
@@ -380,7 +385,7 @@ class StoreApiGenerator implements ApiDefinitionGeneratorInterface
                 if (isset($pathDefinition[$method]['description'])) {
                     $currentDesc = $pathDefinition[$method]['description'];
                     // Only add if not already present
-                    if (!str_contains($currentDesc, '**Available Associations:**')) {
+                    if (!str_contains((string) $currentDesc, '**Available Associations:**')) {
                         $pathDefinition[$method]['description'] = $currentDesc . $associationDocs[$entityName];
                     }
                 }
@@ -444,11 +449,11 @@ class StoreApiGenerator implements ApiDefinitionGeneratorInterface
             foreach ($schema['allOf'] as $item) {
                 if (isset($item['$ref'])) {
                     $ref = $item['$ref'];
-                    if (str_contains($ref, 'RouteResponse')) {
+                    if (str_contains((string) $ref, 'RouteResponse')) {
                         $entityName = $this->extractEntityFromRouteResponseRef($ref);
-                    } elseif (str_contains($ref, 'DetailResponse')) {
+                    } elseif (str_contains((string) $ref, 'DetailResponse')) {
                         $entityName = $this->extractEntityFromDetailResponseRef($ref);
-                    } elseif (str_contains($ref, 'Result')) {
+                    } elseif (str_contains((string) $ref, 'Result')) {
                         $entityName = $this->extractEntityFromResultRef($ref);
                     } else {
                         $entityName = $this->extractEntityNameFromRef($ref);
@@ -604,7 +609,10 @@ class StoreApiGenerator implements ApiDefinitionGeneratorInterface
 
             // Check ApiAware flag for Store API
             $apiAware = $field->getFlag(ApiAware::class);
-            if (!$apiAware || !$apiAware->isSourceAllowed(SalesChannelApiSource::class)) {
+            if (!$apiAware) {
+                continue;
+            }
+            if (!$apiAware->isSourceAllowed(SalesChannelApiSource::class)) {
                 continue;
             }
 

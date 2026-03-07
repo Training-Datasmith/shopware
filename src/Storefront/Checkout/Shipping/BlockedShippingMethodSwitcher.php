@@ -60,7 +60,7 @@ class BlockedShippingMethodSwitcher
             ->setLimit(1);
 
         if (Feature::isActive('v6.8.0.0')) {
-            $blockedShippingMethodIds = $errors->fmap(static fn (Error $error) => $error instanceof ShippingMethodBlockedError ? $error->getShippingMethodId() : null);
+            $blockedShippingMethodIds = $errors->fmap(static fn (Error $error): ?string => $error instanceof ShippingMethodBlockedError ? $error->getShippingMethodId() : null);
 
             $defaultShippingMethod = $this->shippingMethodRoute->load(
                 $request,
@@ -76,7 +76,7 @@ class BlockedShippingMethodSwitcher
             $criteria = (new Criteria())
                 ->addFilter(new NotEqualsAnyFilter('id', $blockedShippingMethodIds));
         } else {
-            $blockedShippingMethodNames = $errors->fmap(static fn (Error $error) => $error instanceof ShippingMethodBlockedError ? $error->getName() : null);
+            $blockedShippingMethodNames = $errors->fmap(static fn (Error $error): ?string => $error instanceof ShippingMethodBlockedError ? $error->getName() : null);
 
             $defaultShippingMethod = $this->shippingMethodRoute->load(
                 $request,

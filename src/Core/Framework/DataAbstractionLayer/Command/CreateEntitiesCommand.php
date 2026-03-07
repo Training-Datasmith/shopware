@@ -54,10 +54,12 @@ class CreateEntitiesCommand extends Command
 
         foreach ($classes as $domain => $domainClasses) {
             foreach ($domainClasses as $entityClasses) {
-                if ($entityClasses === null || $entityClasses === []) {
+                if ($entityClasses === null) {
                     continue;
                 }
-
+                if ($entityClasses === []) {
+                    continue;
+                }
                 if (!\is_dir($this->dir . '/' . $domain)) {
                     mkdir($this->dir . '/' . $domain);
                 }

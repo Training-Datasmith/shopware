@@ -58,7 +58,7 @@ readonly class SystemLanguageChangedSubscriber implements EventSubscriberInterfa
             return;
         }
 
-        $appsWithSnippets = array_values(array_unique($snippets->map(fn (AppAdministrationSnippetEntity $snippet) => $snippet->getAppId())));
+        $appsWithSnippets = array_values(array_unique($snippets->map(fn (AppAdministrationSnippetEntity $snippet): string => $snippet->getAppId())));
 
         $previousLocale = $this->getLocale($event->previousLocaleCode, $context);
         $newLocale = $this->getLocale($event->newLocaleCode, $context);
@@ -111,8 +111,6 @@ readonly class SystemLanguageChangedSubscriber implements EventSubscriberInterfa
         string $appId,
         LocaleEntity $locale
     ): ?AppAdministrationSnippetEntity {
-        return $snippets->filter(function (AppAdministrationSnippetEntity $snippet) use ($appId, $locale) {
-            return $appId === $snippet->getAppId() && $snippet->getLocaleId() === $locale->getId();
-        })->first();
+        return $snippets->filter(fn(AppAdministrationSnippetEntity $snippet) => $appId === $snippet->getAppId() && $snippet->getLocaleId() === $locale->getId())->first();
     }
 }

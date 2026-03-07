@@ -33,7 +33,7 @@ class ShopSecretInvalidMiddleware implements MiddlewareInterface
             return $response;
         }
 
-        $body = json_decode($response->getBody()->getContents(), true, 512, \JSON_THROW_ON_ERROR);
+        $body = json_decode((string) $response->getBody()->getContents(), true, 512, \JSON_THROW_ON_ERROR);
         $code = $body['code'] ?? null;
 
         if ($code !== self::INVALID_SHOP_SECRET) {

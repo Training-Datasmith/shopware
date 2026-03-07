@@ -67,15 +67,17 @@ class TranslationsAssociationFieldSerializer implements FieldSerializerInterface
 
         foreach ($value as $identifier => $fields) {
             /* Supported formats:
-                translations => [['property' => 'translation', 'languageId' => '{languageUuid}']] -> skip
-                translations => [['property' => 'translation', 'language' => ['id' => {languageUuid}'] ]] -> skip
-                translations => ['{languageUuid}' => ['property' => 'translation']] -> skip
-                translations => ['en-GB' => ['property' => 'translation']] -> proceed and use localeLanguageResolver
-            */
-            if (is_numeric($identifier) || Uuid::isValid($identifier)) {
+                   translations => [['property' => 'translation', 'languageId' => '{languageUuid}']] -> skip
+                   translations => [['property' => 'translation', 'language' => ['id' => {languageUuid}'] ]] -> skip
+                   translations => ['{languageUuid}' => ['property' => 'translation']] -> skip
+                   translations => ['en-GB' => ['property' => 'translation']] -> proceed and use localeLanguageResolver
+               */
+            if (is_numeric($identifier)) {
                 continue;
             }
-
+            if (Uuid::isValid($identifier)) {
+                continue;
+            }
             $languageId = $parameters->getContext()->getLanguageId($identifier);
 
             if ($languageId === null) {

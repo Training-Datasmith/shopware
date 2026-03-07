@@ -98,8 +98,10 @@ class MediaDeletionSubscriber implements EventSubscriberInterface
             } else {
                 $publicPaths[] = $mediaEntity->getPath();
             }
-
-            if ($this->remoteThumbnailsEnable || !$mediaEntity->getThumbnails()) {
+            if ($this->remoteThumbnailsEnable) {
+                continue;
+            }
+            if (!$mediaEntity->getThumbnails()) {
                 continue;
             }
 

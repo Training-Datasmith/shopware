@@ -70,7 +70,7 @@ class AuthMiddleware
                 return $handler($request, $options);
             }
 
-            $successCallback = function (ResponseInterface $response) use ($secret, $signature, $request) {
+            $successCallback = function (ResponseInterface $response) use ($secret, $signature, $request): \Psr\Http\Message\ResponseInterface {
                 if ($response->getStatusCode() !== 401) {
                     if (!$signature->isResponseAuthentic($response, $secret)) {
                         throw new ServerException(

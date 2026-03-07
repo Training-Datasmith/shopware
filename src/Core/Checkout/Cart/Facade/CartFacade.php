@@ -79,7 +79,7 @@ class CartFacade implements \Countable
             throw CartException::missingCartBehavior();
         }
 
-        $this->cart = $behavior->disableHooks(fn () => $this->helper->calculate($this->cart, $behavior, $this->context));
+        $this->cart = $behavior->disableHooks(fn (): \Shopware\Core\Checkout\Cart\Cart => $this->helper->calculate($this->cart, $behavior, $this->context));
     }
 
     /**

@@ -35,7 +35,7 @@ class AppContextGatewayPayloadService
             $response = $this->client->post($url, $optionRequest->jsonSerialize());
             $content = $response->getBody()->getContents();
 
-            return new AppContextGatewayResponse(\json_decode($content, true, flags: \JSON_THROW_ON_ERROR));
+            return new AppContextGatewayResponse(\json_decode((string) $content, true, flags: \JSON_THROW_ON_ERROR));
         } catch (RequestException $e) {
             throw AppException::gatewayRequestFailed($app->getName(), 'context', $e);
         }

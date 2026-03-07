@@ -120,10 +120,7 @@ class ArrayEntity extends Entity implements \ArrayAccess
         return $this->offsetGet($key);
     }
 
-    /**
-     * @param string $key
-     */
-    public function set($key, mixed $value): mixed
+    public function set(string $key, mixed $value): mixed
     {
         return $this->data[$key] = $value;
     }
@@ -131,7 +128,7 @@ class ArrayEntity extends Entity implements \ArrayAccess
     /**
      * @param array<string, mixed> $options
      */
-    public function assign(array $options)
+    public function assign(array $options): static
     {
         $this->data = array_replace_recursive($this->data, $options);
 

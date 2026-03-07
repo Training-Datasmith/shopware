@@ -37,7 +37,7 @@ readonly class SymfonyBearerTokenValidator
         }
 
         $header = $request->headers->get('authorization', '');
-        $jwt = \trim((string) \preg_replace('/^\s*Bearer\s/', '', $header));
+        $jwt = \trim((string) \preg_replace('/^\s*Bearer\s/', '', (string) $header));
 
         if ($jwt === '') {
             throw OAuthServerException::accessDenied('Missing token in "Authorization" header');

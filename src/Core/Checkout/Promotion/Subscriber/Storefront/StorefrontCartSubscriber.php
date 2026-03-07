@@ -131,7 +131,7 @@ class StorefrontCartSubscriber implements EventSubscriberInterface
 
         $discountId = $lineItem->getPayloadValue('discountId');
 
-        $removeThisDiscounts = $lineItems->filter(static fn (LineItem $lineItem) => $lineItem->getPayloadValue('discountId') === $discountId);
+        $removeThisDiscounts = $lineItems->filter(static fn (LineItem $lineItem): bool => $lineItem->getPayloadValue('discountId') === $discountId);
 
         foreach ($removeThisDiscounts as $discountItem) {
             $cart->remove($discountItem->getId());
@@ -141,7 +141,7 @@ class StorefrontCartSubscriber implements EventSubscriberInterface
     private function removeOtherDiscountsOfPromotion(Cart $cart, LineItem $removedLineItem, SalesChannelContext $context): void
     {
         $lineItemsOfSamePromotion = $cart->getLineItems()
-            ->filter(fn (LineItem $lineItem) => $lineItem->getType() === PromotionProcessor::LINE_ITEM_TYPE && $lineItem->getPayloadValue('promotionId') === $removedLineItem->getPayloadValue('promotionId'));
+            ->filter(fn (LineItem $lineItem): bool => $lineItem->getType() === PromotionProcessor::LINE_ITEM_TYPE && $lineItem->getPayloadValue('promotionId') === $removedLineItem->getPayloadValue('promotionId'));
 
         foreach ($lineItemsOfSamePromotion as $lineItemOfSamePromotion) {
             $cart->remove($lineItemOfSamePromotion->getId());

@@ -334,7 +334,7 @@ class Translator extends AbstractTranslator
         $keySuffix = $effectiveLocale ? '-' . $effectiveLocale : '';
         $key = \sprintf('translation.catalog.%s.%s', $this->salesChannelId ?: 'DEFAULT', $snippetSetId . $keySuffix);
 
-        return $this->cache->get($key, function (ItemInterface $item) use ($catalog, $snippetSetId, $effectiveLocale) {
+        return $this->cache->get($key, function (ItemInterface $item) use ($catalog, $snippetSetId, $effectiveLocale): array {
             $item->tag(self::ALL_CACHE_TAG);
             $item->tag(self::tag($snippetSetId));
             $item->tag(self::tag($this->salesChannelId ?: 'DEFAULT'));

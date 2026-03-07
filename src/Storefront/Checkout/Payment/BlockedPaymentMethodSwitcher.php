@@ -60,7 +60,7 @@ class BlockedPaymentMethodSwitcher
             ->setLimit(1);
 
         if (Feature::isActive('v6.8.0.0')) {
-            $blockedPaymentMethodIds = $errors->fmap(static fn (Error $error) => $error instanceof PaymentMethodBlockedError ? $error->getPaymentMethodId() : null);
+            $blockedPaymentMethodIds = $errors->fmap(static fn (Error $error): ?string => $error instanceof PaymentMethodBlockedError ? $error->getPaymentMethodId() : null);
 
             $defaultPaymentMethod = $this->paymentMethodRoute->load(
                 $request,
@@ -75,7 +75,7 @@ class BlockedPaymentMethodSwitcher
             $criteria = (new Criteria())
                 ->addFilter(new NotEqualsAnyFilter('id', $blockedPaymentMethodIds));
         } else {
-            $blockedPaymentMethodNames = $errors->fmap(static fn (Error $error) => $error instanceof PaymentMethodBlockedError ? $error->getName() : null);
+            $blockedPaymentMethodNames = $errors->fmap(static fn (Error $error): ?string => $error instanceof PaymentMethodBlockedError ? $error->getName() : null);
 
             $defaultPaymentMethod = $this->paymentMethodRoute->load(
                 $request,

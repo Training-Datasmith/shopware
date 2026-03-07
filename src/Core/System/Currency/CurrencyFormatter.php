@@ -45,10 +45,6 @@ class CurrencyFormatter implements ResetInterface
 
     private function getFormatter(string $locale): \NumberFormatter
     {
-        if (isset($this->formatter[$locale])) {
-            return $this->formatter[$locale];
-        }
-
-        return $this->formatter[$locale] = new \NumberFormatter($locale, \NumberFormatter::CURRENCY);
+        return $this->formatter[$locale] ?? $this->formatter[$locale] = new \NumberFormatter($locale, \NumberFormatter::CURRENCY);
     }
 }

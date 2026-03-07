@@ -78,10 +78,12 @@ class LicenseSyncSubscriber implements EventSubscriberInterface
         $licenseHost = $key === self::CONFIG_STORE_LICENSE_HOST ? $value : $this->config->getString(self::CONFIG_STORE_LICENSE_HOST);
 
         foreach ($apps as $app) {
-            if (!$app->getAppSecret() || !$app->isSelfManaged()) {
+            if (!$app->getAppSecret()) {
                 continue;
             }
-
+            if (!$app->isSelfManaged()) {
+                continue;
+            }
             $this->syncLicenseByService($app, $context, $licenseKey, $licenseHost);
         }
     }

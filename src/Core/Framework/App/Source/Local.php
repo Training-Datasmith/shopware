@@ -30,7 +30,7 @@ readonly class Local implements Source
         }
 
         return match (true) {
-            $app instanceof AppEntity => $app->getSourceType() === $this->name(),
+            $app instanceof AppEntity => $app->getSourceType() === static::name(),
             $app instanceof Manifest => is_dir(\dirname($app->getPath())),
         };
     }

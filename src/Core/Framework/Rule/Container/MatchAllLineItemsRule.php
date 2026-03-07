@@ -105,7 +105,7 @@ class MatchAllLineItemsRule extends Container
 
         return array_values(array_filter(
             $flat,
-            fn (LineItem $lineItem) => \in_array($lineItem->getType(), $this->types, true)
+            fn (LineItem $lineItem): bool => \in_array($lineItem->getType(), $this->types, true)
         ));
     }
 }

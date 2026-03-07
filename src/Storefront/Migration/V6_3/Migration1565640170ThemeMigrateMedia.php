@@ -40,20 +40,26 @@ class Migration1565640170ThemeMigrateMedia extends MigrationStep
             }
 
             $baseConfig = json_decode((string) $themeConfig['base_config'], true, 512, \JSON_THROW_ON_ERROR);
-
-            if (!\array_key_exists('fields', $baseConfig) || !\is_array($baseConfig['fields'])) {
+            if (!\array_key_exists('fields', $baseConfig)) {
+                continue;
+            }
+            if (!\is_array($baseConfig['fields'])) {
                 continue;
             }
 
             foreach ($baseConfig['fields'] as $field) {
-                if (!\array_key_exists('type', $field) || $field['type'] !== 'media') {
+                if (!\array_key_exists('type', $field)) {
                     continue;
                 }
-
-                if (!\array_key_exists('value', $field) || !Uuid::isValid($field['value'])) {
+                if ($field['type'] !== 'media') {
                     continue;
                 }
-
+                if (!\array_key_exists('value', $field)) {
+                    continue;
+                }
+                if (!Uuid::isValid($field['value'])) {
+                    continue;
+                }
                 if (\array_key_exists($field['value'], $themeMediaMapping)) {
                     continue;
                 }

@@ -100,7 +100,7 @@ class DateRangeRule extends Rule
         ];
     }
 
-    public function assign(array $options)
+    public function assign(array $options): static
     {
         parent::assign($options);
 

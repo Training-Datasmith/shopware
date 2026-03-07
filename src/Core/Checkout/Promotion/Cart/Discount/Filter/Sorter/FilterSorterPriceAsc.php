@@ -20,11 +20,10 @@ class FilterSorterPriceAsc extends AbstractPriceSorter
      */
     protected function sortPriceMap(array $map): array
     {
-        \uksort($map, static function (string $a, string $b) {
+        \uksort($map, 
             // the prices are stored as strings, so we need to cast them to float
             // we need to store the prices as string, because you can not use floats as array keys
-            return (float) $a <=> (float) $b;
-        });
+            static fn(string $a, string $b) => (float) $a <=> (float) $b);
 
         return $map;
     }

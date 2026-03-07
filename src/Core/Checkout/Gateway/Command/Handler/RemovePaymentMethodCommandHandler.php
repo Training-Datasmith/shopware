@@ -27,9 +27,7 @@ class RemovePaymentMethodCommandHandler extends AbstractCheckoutGatewayCommandHa
         $technicalName = $command->paymentMethodTechnicalName;
         $methods = $response->getAvailablePaymentMethods();
 
-        $methods = $methods->filter(function (PaymentMethodEntity $method) use ($technicalName) {
-            return $method->getTechnicalName() !== $technicalName;
-        });
+        $methods = $methods->filter(fn(PaymentMethodEntity $method) => $method->getTechnicalName() !== $technicalName);
 
         $response->setAvailablePaymentMethods($methods);
     }

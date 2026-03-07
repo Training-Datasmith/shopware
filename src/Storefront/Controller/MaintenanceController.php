@@ -122,7 +122,7 @@ class MaintenanceController extends StorefrontController
     private function addWhitelistIpHeader(Request $request, Response $response): void
     {
         if ($ips = $request->attributes->get(SalesChannelRequest::ATTRIBUTE_SALES_CHANNEL_MAINTENANCE_IP_WHITLELIST)) {
-            $ips = implode(',', json_decode($ips, true, flags: \JSON_THROW_ON_ERROR));
+            $ips = implode(',', json_decode((string) $ips, true, flags: \JSON_THROW_ON_ERROR));
 
             $response->headers->set(HttpCacheKernel::MAINTENANCE_WHITELIST_HEADER, $ips);
         }

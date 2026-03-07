@@ -53,7 +53,7 @@ class ParsedRobots
      */
     public function getErrors(): array
     {
-        return array_values(array_filter($this->issues, static fn (ParseIssue $issue) => $issue->severity === ParseIssueSeverity::ERROR));
+        return array_values(array_filter($this->issues, static fn (ParseIssue $issue): bool => $issue->severity === ParseIssueSeverity::ERROR));
     }
 
     /**
@@ -61,6 +61,6 @@ class ParsedRobots
      */
     public function getWarnings(): array
     {
-        return array_values(array_filter($this->issues, static fn (ParseIssue $issue) => $issue->severity === ParseIssueSeverity::WARNING));
+        return array_values(array_filter($this->issues, static fn (ParseIssue $issue): bool => $issue->severity === ParseIssueSeverity::WARNING));
     }
 }

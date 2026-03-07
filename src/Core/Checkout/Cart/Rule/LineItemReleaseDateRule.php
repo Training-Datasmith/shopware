@@ -110,8 +110,6 @@ class LineItemReleaseDateRule extends Rule
             return null;
         }
 
-        $dateTime = new \DateTime($dateString);
-
-        return $dateTime;
+        return new \DateTime($dateString);
     }
 }

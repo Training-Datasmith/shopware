@@ -35,7 +35,7 @@ class MailerTransportDecorator implements \Stringable, TransportInterface
 
     public function __toString(): string
     {
-        return $this->decorated->__toString();
+        return (string) $this->decorated->__toString();
     }
 
     public function send(RawMessage $message, ?Envelope $envelope = null): ?SentMessage
@@ -88,7 +88,7 @@ class MailerTransportDecorator implements \Stringable, TransportInterface
      */
     private function setDocumentsSent(array $attachments, MailSendSubscriberConfig $extension, Context $context): void
     {
-        $documentAttachments = array_filter($attachments, fn (array $attachment) => \in_array($attachment['id'] ?? null, $extension->getDocumentIds(), true));
+        $documentAttachments = array_filter($attachments, fn (array $attachment): bool => \in_array($attachment['id'] ?? null, $extension->getDocumentIds(), true));
 
         $documentAttachments = array_column($documentAttachments, 'id');
 
@@ -96,7 +96,7 @@ class MailerTransportDecorator implements \Stringable, TransportInterface
             return;
         }
 
-        $payload = array_map(static fn (string $documentId) => [
+        $payload = array_map(static fn (string $documentId): array => [
             'id' => $documentId,
             'sent' => true,
         ], $documentAttachments);

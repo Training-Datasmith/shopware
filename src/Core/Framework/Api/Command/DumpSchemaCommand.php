@@ -49,7 +49,7 @@ class DumpSchemaCommand extends Command
                 'If set, the store api definition will be dumped. Only applies to the openapi3 format.'
             )
             ->addOption('pretty', 'p', InputOption::VALUE_NONE, 'Dumps the output in a human-readable form.')
-            ->addOption('bundle-name', 'b', InputOption::VALUE_OPTIONAL, 'Only uses definitions from a specific bundle.', null);
+            ->addOption('bundle-name', 'b', InputOption::VALUE_OPTIONAL, 'Only uses definitions from a specific bundle.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

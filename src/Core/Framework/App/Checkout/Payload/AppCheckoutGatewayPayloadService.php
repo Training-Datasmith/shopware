@@ -38,7 +38,7 @@ class AppCheckoutGatewayPayloadService
             $response = $this->client->post($url, $optionRequest->jsonSerialize());
             $content = $response->getBody()->getContents();
 
-            return new AppCheckoutGatewayResponse(\json_decode($content, true, flags: \JSON_THROW_ON_ERROR));
+            return new AppCheckoutGatewayResponse(\json_decode((string) $content, true, flags: \JSON_THROW_ON_ERROR));
         } catch (GuzzleException $e) {
             $this->logger->logOrThrowException($e);
 

@@ -54,7 +54,7 @@ class MediaSerializer extends AbstractMediaSerializer implements ResetInterface
      *
      * @return array<mixed>
      */
-    public function deserialize(Config $config, EntityDefinition $definition, $entity)
+    public function deserialize(Config $config, EntityDefinition $definition, $entity): array
     {
         $entity = \is_array($entity) ? $entity : iterator_to_array($entity);
         $deserialized = parent::deserialize($config, $definition, $entity);

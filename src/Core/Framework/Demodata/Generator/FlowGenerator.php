@@ -184,7 +184,7 @@ class FlowGenerator implements DemodataGeneratorInterface
 
             $sequences = json_decode(json_encode($sequences->jsonSerialize(), \JSON_THROW_ON_ERROR), true, 512, \JSON_THROW_ON_ERROR);
 
-            $sequences = array_map(fn (array $sequence) => array_filter($sequence), $sequences);
+            $sequences = array_map(array_filter(...), $sequences);
 
             $flow['sequences'] = $sequences;
             $payload[] = $flow;
@@ -232,7 +232,7 @@ class FlowGenerator implements DemodataGeneratorInterface
             'actionName' => null,
         ]);
 
-        $this->ids['rule'] = array_filter($ruleIds, fn ($ruleId) => $ruleId !== $randomRuleId);
+        $this->ids['rule'] = array_filter($ruleIds, fn (string $ruleId): bool => $ruleId !== $randomRuleId);
 
         return $sequence;
     }

@@ -37,7 +37,7 @@ class MediaCreationSubscriber implements EventSubscriberInterface
     private function filterFilePath(array $commands): void
     {
         foreach ($commands as $command) {
-            $path = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $command->getPayload()['path']);
+            $path = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', (string) $command->getPayload()['path']);
 
             $command->addPayload('path', \is_string($path) ? $path : null);
         }
@@ -48,7 +48,7 @@ class MediaCreationSubscriber implements EventSubscriberInterface
      */
     private function getAffected(string $entityName, EntityWriteEvent $event): array
     {
-        return array_filter($event->getCommandsForEntity($entityName), static function (WriteCommand $command) {
+        return array_filter($event->getCommandsForEntity($entityName), static function (WriteCommand $command): bool {
             if ($command instanceof DeleteCommand) {
                 return false;
             }

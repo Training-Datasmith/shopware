@@ -62,7 +62,7 @@ class FlowPayloadUpdater
 
         $updated = [];
         foreach ($listFlowSequence as $flowId => $flowSequences) {
-            $flowSequences = array_map(static fn (array $flowSequence) => Sequence::createFromDb($flowSequence), $flowSequences);
+            $flowSequences = array_map(Sequence::createFromDb(...), $flowSequences);
             usort($flowSequences, static function (Sequence $a, Sequence $b): int {
                 $result = $a->displayGroup <=> $b->displayGroup;
 
@@ -75,7 +75,7 @@ class FlowPayloadUpdater
                 }
 
                 if ($result === 0) {
-                    $result = $a->position <=> $b->position;
+                    return $a->position <=> $b->position;
                 }
 
                 return $result;

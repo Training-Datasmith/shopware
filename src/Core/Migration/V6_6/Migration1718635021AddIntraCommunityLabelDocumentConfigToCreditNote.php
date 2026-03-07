@@ -33,7 +33,7 @@ class Migration1718635021AddIntraCommunityLabelDocumentConfigToCreditNote extend
                 return;
             }
 
-            $config = json_decode($invoiceConfig['config'], true, 512, \JSON_THROW_ON_ERROR);
+            $config = json_decode((string) $invoiceConfig['config'], true, 512, \JSON_THROW_ON_ERROR);
 
             if (!isset($config['displayAdditionalNoteDelivery'])) {
                 $config['displayAdditionalNoteDelivery'] = false;

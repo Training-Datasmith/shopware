@@ -144,7 +144,7 @@ class StoreApiSeoResolver implements EventSubscriberInterface
                 continue;
             }
 
-            $routes = array_map(static fn (SeoUrlRouteConfigRoute $seoUrlRoute) => $seoUrlRoute->getConfig()->getRouteName(), $routes);
+            $routes = array_map(static fn (SeoUrlRouteConfigRoute $seoUrlRoute): string => $seoUrlRoute->getConfig()->getRouteName(), $routes);
 
             $criteria = new Criteria();
             $criteria->addFilter(new EqualsFilter('isCanonical', true));

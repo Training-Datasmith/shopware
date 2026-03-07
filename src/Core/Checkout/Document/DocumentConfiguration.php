@@ -110,32 +110,27 @@ class DocumentConfiguration extends Struct
     protected array $fileTypes = [];
 
     /**
-     * @param string $name
      * @param array<array-key, mixed>|bool|int|string|null $value
      */
-    public function __set($name, $value): void
+    public function __set(string $name, mixed $value): void
     {
         // @phpstan-ignore property.dynamicName (We allow all dynamic properties in the document configuration)
         $this->$name = $value;
     }
 
     /**
-     * @param string $name
-     *
      * @return array<array-key, mixed>|bool|int|string|null
      */
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         // @phpstan-ignore property.dynamicName (We allow all dynamic properties in the document configuration)
         return $this->$name;
     }
 
     /**
-     * @param string $name
-     *
      * @return bool
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return property_exists($this, $name);
     }

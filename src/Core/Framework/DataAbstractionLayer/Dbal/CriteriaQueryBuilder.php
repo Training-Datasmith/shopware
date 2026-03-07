@@ -175,10 +175,12 @@ class CriteriaQueryBuilder
         $distincts = [];
 
         foreach ($criteria->getQueries() as $scoreQuery) {
-            if (!$scoreQuery->getScoreField() || \array_key_exists($scoreQuery->getScoreField(), $distincts)) {
+            if (!$scoreQuery->getScoreField()) {
                 continue;
             }
-
+            if (\array_key_exists($scoreQuery->getScoreField(), $distincts)) {
+                continue;
+            }
             $associatedDefinition = EntityDefinitionQueryHelper::getAssociatedDefinition($definition, $scoreQuery->getScoreField());
 
             if ($associatedDefinition === $definition) {
@@ -214,7 +216,7 @@ class CriteriaQueryBuilder
             $criteria->addSorting(new FieldSorting('_score', FieldSorting::DESCENDING));
         }
 
-        $minScore = array_map(fn (ScoreQuery $query) => $query->getScore(), $criteria->getQueries());
+        $minScore = array_map(fn (ScoreQuery $query): float => $query->getScore(), $criteria->getQueries());
         \assert($minScore !== []);
 
         $minScore = min($minScore);
@@ -261,8 +263,10 @@ class CriteriaQueryBuilder
         if ($query->hasState(EntityReader::MANY_TO_MANY_LIMIT_QUERY)) {
             return false;
         }
-
-        return $query->hasState(EntityDefinitionQueryHelper::HAS_TO_MANY_JOIN) || $criteria->getGroupFields() !== [];
+        if ($query->hasState(EntityDefinitionQueryHelper::HAS_TO_MANY_JOIN)) {
+            return true;
+        }
+        return $criteria->getGroupFields() !== [];
     }
 
     /**
@@ -300,7 +304,10 @@ class CriteriaQueryBuilder
 
     private function hasQueriesOrTerm(Criteria $criteria): bool
     {
-        return $criteria->getQueries() !== [] || $criteria->getTerm();
+        if ($criteria->getQueries() !== []) {
+            return true;
+        }
+        return (bool) $criteria->getTerm();
     }
 
     private function validateSortingDirection(string $direction): void

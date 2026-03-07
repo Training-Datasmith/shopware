@@ -20,9 +20,6 @@ class CachedFlowLoader extends AbstractFlowLoader implements EventSubscriberInte
 {
     final public const KEY = 'flow-loader';
 
-    /**
-     * @var EventGroupedFlowHolders
-     */
     private ?array $flows = null;
 
     public function __construct(
@@ -47,7 +44,7 @@ class CachedFlowLoader extends AbstractFlowLoader implements EventSubscriberInte
             return $this->flows;
         }
 
-        $value = $this->cache->get(self::KEY, function (ItemInterface $item) {
+        $value = $this->cache->get(self::KEY, function (ItemInterface $item): string {
             $item->tag([self::KEY]);
 
             return CacheValueCompressor::compress($this->decorated->load());

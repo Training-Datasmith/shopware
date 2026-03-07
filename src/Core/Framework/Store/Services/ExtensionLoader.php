@@ -380,14 +380,14 @@ class ExtensionLoader
     private function makeLanguagesArray(AppTranslationCollection $translations): array
     {
         $languageIds = array_map(
-            static fn ($translation) => $translation->getLanguageId(),
+            static fn (\Shopware\Core\Framework\App\Aggregate\AppTranslation\AppTranslationEntity $translation): string => $translation->getLanguageId(),
             $translations->getElements()
         );
 
         $translationLocales = $this->getLocalesCodesFromLanguageIds($languageIds);
 
         return array_map(
-            static fn ($translationLocale) => ['name' => $translationLocale],
+            static fn (string $translationLocale): array => ['name' => $translationLocale],
             $translationLocales
         );
     }
@@ -404,10 +404,6 @@ class ExtensionLoader
             return $translations[$currentLanguage];
         }
 
-        if (isset($translations[$fallbackLanguage])) {
-            return $translations[$fallbackLanguage];
-        }
-
-        return null;
+        return $translations[$fallbackLanguage] ?? null;
     }
 }

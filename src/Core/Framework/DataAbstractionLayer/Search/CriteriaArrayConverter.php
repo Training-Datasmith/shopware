@@ -63,19 +63,17 @@ class CriteriaArrayConverter
 
         /** @var array<string, mixed> $array */
         if ($criteria->getFilters() !== []) {
-            $array['filter'] = array_map(static fn (Filter $filter) => QueryStringParser::toArray($filter), $criteria->getFilters());
+            $array['filter'] = array_map(QueryStringParser::toArray(...), $criteria->getFilters());
         }
 
         /** @var array<string, mixed> $array */
         if ($criteria->getPostFilters() !== []) {
-            $array['post-filter'] = array_map(static fn (Filter $filter) => QueryStringParser::toArray($filter), $criteria->getPostFilters());
+            $array['post-filter'] = array_map(QueryStringParser::toArray(...), $criteria->getPostFilters());
         }
 
         /** @var array<string, mixed> $array */
-        if ($criteria->getAssociations() !== []) {
-            foreach ($criteria->getAssociations() as $assocName => $association) {
-                $array['associations'][$assocName] = $this->convert($association);
-            }
+        foreach ($criteria->getAssociations() as $assocName => $association) {
+            $array['associations'][$assocName] = $this->convert($association);
         }
 
         /** @var array<string, mixed> $array */

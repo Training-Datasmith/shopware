@@ -88,7 +88,7 @@ class ShopConfigurationController extends InstallerController
                     return $iso;
                 }
 
-                return isset($availableLanguages[$iso]['id']) ? $availableLanguages[$iso]['id'] : null;
+                return $availableLanguages[$iso]['id'] ?? null;
             }, $selectedLanguages);
 
             $schema = 'http';
@@ -178,10 +178,10 @@ class ShopConfigurationController extends InstallerController
         $localeIsoCode = mb_substr($this->supportedLanguages[$currentLocale]['id'], -2, 2);
 
         // flattening array
-        $countryIsos = array_map(fn ($country) => [
+        $countryIsos = array_map(fn (array $country): array => [
             'iso3' => $country['iso3'],
             'default' => $country['iso'] === $localeIsoCode,
-            'translated' => $this->translator->trans('shopware.installer.select_country_' . mb_strtolower($country['iso3'])),
+            'translated' => $this->translator->trans('shopware.installer.select_country_' . mb_strtolower((string) $country['iso3'])),
         ], $countries);
 
         usort(/**
@@ -189,7 +189,7 @@ class ShopConfigurationController extends InstallerController
          *
          * @param array<string, string> $first
          * @param array<string, string> $second
-         */ $countryIsos, fn (array $first, array $second) => strcmp($first['translated'], $second['translated']));
+         */ $countryIsos, fn (array $first, array $second): int => strcmp((string) $first['translated'], (string) $second['translated']));
 
         return $countryIsos;
     }

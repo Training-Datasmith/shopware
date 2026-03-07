@@ -49,7 +49,7 @@ class EntityDeleteEvent extends Event implements ShopwareEvent
      */
     public static function create(WriteContext $writeContext, array $commands): self
     {
-        $deleteCommands = \array_filter($commands, static fn (WriteCommand $command) => $command instanceof DeleteCommand);
+        $deleteCommands = \array_filter($commands, static fn (WriteCommand $command): bool => $command instanceof DeleteCommand);
 
         return new static($writeContext, $deleteCommands);
     }

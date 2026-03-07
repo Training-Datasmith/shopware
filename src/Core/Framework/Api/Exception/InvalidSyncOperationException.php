@@ -12,11 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 #[Package('framework')]
 class InvalidSyncOperationException extends ShopwareHttpException
 {
-    public function __construct(string $message)
-    {
-        parent::__construct($message);
-    }
-
     public function getErrorCode(): string
     {
         return 'FRAMEWORK__INVALID_SYNC_OPERATION';

@@ -78,7 +78,7 @@ class MediaPathPostUpdater extends SynchronousPostUpdateIndexer
 
     public function getTotal(): int
     {
-        return $this->iteratorFactory->createIterator('media', null)->fetchCount();
+        return $this->iteratorFactory->createIterator('media')->fetchCount();
     }
 
     public function getDecorated(): EntityIndexer

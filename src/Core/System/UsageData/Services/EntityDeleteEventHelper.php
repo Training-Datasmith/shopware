@@ -94,7 +94,7 @@ class EntityDeleteEventHelper
         $pks = [];
 
         $filteredFields = $entityPkFields->filter(
-            function (Field $field) {
+            function (Field $field): bool {
                 foreach ($this->excludedFields as $excludedField) {
                     if ($field instanceof $excludedField) {
                         return false;

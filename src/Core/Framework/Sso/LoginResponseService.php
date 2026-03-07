@@ -71,7 +71,7 @@ class LoginResponseService
      */
     private function createCookieData(ResponseInterface $response): array
     {
-        $data = json_decode($response->getBody()->__toString(), true);
+        $data = json_decode((string) $response->getBody()->__toString(), true);
 
         return [
             'access' => $data['access_token'],

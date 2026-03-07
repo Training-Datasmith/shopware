@@ -362,13 +362,11 @@ class Migration1625583619MoveDataFromEventActionToFlow extends MigrationStep
             ],
             ['salesChannelIds' => ArrayParameterType::BINARY]
         );
-
-        $result = 'Match one of saleschannels';
         if (\count($salesChannelName) === 1) {
-            $result = $salesChannelName[0];
+            return $salesChannelName[0];
         }
 
-        return $result;
+        return 'Match one of saleschannels';
     }
 
     private function getEventFullNameByEventName(string $eventName): string
@@ -463,7 +461,7 @@ class Migration1625583619MoveDataFromEventActionToFlow extends MigrationStep
 
         $result = [];
         foreach ($config as $key => $value) {
-            $key = lcfirst(implode('', array_map('ucfirst', explode('_', (string) $key))));
+            $key = lcfirst(implode('', array_map(ucfirst(...), explode('_', (string) $key))));
             $result[$key] = $value;
         }
 

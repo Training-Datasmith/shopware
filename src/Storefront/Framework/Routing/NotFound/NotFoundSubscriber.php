@@ -51,7 +51,7 @@ class NotFoundSubscriber implements EventSubscriberInterface, ResetInterface
     public function __construct(
         private readonly HttpKernelInterface $httpKernel,
         private readonly SalesChannelContextServiceInterface $contextService,
-        private bool $kernelDebug, // Do not change to readonly, as it is used in tests
+        private readonly bool $kernelDebug, // Do not change to readonly, as it is used in tests
         private readonly CacheInterface $cache,
         private readonly EntityCacheKeyGenerator $generator,
         private readonly CacheInvalidator $cacheInvalidator,
@@ -114,7 +114,7 @@ class NotFoundSubscriber implements EventSubscriberInterface, ResetInterface
         $name = self::buildName($salesChannelId, $domainId, $languageId);
         $key = $this->generateKey($salesChannelId, $domainId, $languageId, $request, $context);
 
-        $response = $this->cache->get($key, function (ItemInterface $item) use ($event, $name, $context, $request) {
+        $response = $this->cache->get($key, function (ItemInterface $item) use ($event, $name, $context, $request): \Symfony\Component\HttpFoundation\Response {
             $response = $this->renderErrorPage($request, $event->getThrowable(), $context->getContext());
 
             $item->tag($this->generateTags($name, $event->getRequest(), $context));

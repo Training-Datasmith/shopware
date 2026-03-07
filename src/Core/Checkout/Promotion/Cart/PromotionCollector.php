@@ -142,7 +142,7 @@ class PromotionCollector implements CartDataCollectorInterface
 
             $currentOrderId = $original->getExtensionOfType(OrderConverter::ORIGINAL_ID, IdStruct::class)?->getId();
 
-            $foundCodes = $discountLineItems->fmap(static fn (LineItem $item) => $item->getReferencedId());
+            $foundCodes = $discountLineItems->fmap(static fn (LineItem $item): ?string => $item->getReferencedId());
 
             foreach ($allPromotions->getPromotionCodeTuples() as $tuple) {
                 if (!$this->isEligible($tuple->getPromotion(), $context->getCustomerId(), $currentOrderId)) {
@@ -183,9 +183,9 @@ class PromotionCollector implements CartDataCollectorInterface
             $isRecalculation = !Feature::isActive('v6.8.0.0') && $behavior->isRecalculation();
             if ($isRecalculation || $behavior->hasPermission(CheckoutPermissions::AUTOMATIC_PROMOTION_DELETION_NOTICES)) {
                 $oldPromotions = $original->getLineItems()
-                    ->filter(static fn (LineItem $item) => $item->getType() === PromotionProcessor::LINE_ITEM_TYPE && !$item->getReferencedId())
+                    ->filter(static fn (LineItem $item): bool => $item->getType() === PromotionProcessor::LINE_ITEM_TYPE && !$item->getReferencedId())
                     ->getElements();
-                $newPromotions = $discountLineItems->filter(static fn (LineItem $item) => !$item->getReferencedId())->getElements();
+                $newPromotions = $discountLineItems->filter(static fn (LineItem $item): bool => !$item->getReferencedId())->getElements();
 
                 foreach (\array_diff_key($oldPromotions, $newPromotions) as $removedPromotion) {
                     $this->addPromotionDeletedNotice($original, $original, $removedPromotion);
@@ -212,17 +212,17 @@ class PromotionCollector implements CartDataCollectorInterface
             ->getLineItems()
             ->filterType(PromotionProcessor::LINE_ITEM_TYPE)
             /** Filter out placeholder line.items. {@see PromotionItemBuilder::buildPlaceholderItem} */
-            ->filter(static fn (LineItem $item) => $item->getLabel() !== PromotionItemBuilder::PLACEHOLDER_PREFIX . ((string) $item->getReferencedId()));
+            ->filter(static fn (LineItem $item): bool => $item->getLabel() !== PromotionItemBuilder::PLACEHOLDER_PREFIX . ($item->getReferencedId()));
 
         $discountLineItems = new LineItemCollection();
 
         if ($behavior->hasPermission(self::PIN_MANUAL_PROMOTIONS)) {
-            foreach ($promotionLineItems->filter(static fn (LineItem $item) => (bool) $item->getReferencedId()) as $lineItem) {
+            foreach ($promotionLineItems->filter(static fn (LineItem $item): bool => (bool) $item->getReferencedId()) as $lineItem) {
                 $discountLineItems->add($lineItem);
             }
         }
         if ($behavior->hasPermission(self::PIN_AUTOMATIC_PROMOTIONS)) {
-            foreach ($promotionLineItems->filter(static fn (LineItem $item) => !$item->getReferencedId()) as $lineItem) {
+            foreach ($promotionLineItems->filter(static fn (LineItem $item): bool => !$item->getReferencedId()) as $lineItem) {
                 $discountLineItems->add($lineItem);
             }
         }
@@ -415,9 +415,7 @@ class PromotionCollector implements CartDataCollectorInterface
                 $factor
             );
 
-            $originalCodeItem = $original->getLineItems()->firstWhere(static function (LineItem $item) use ($code, $discount) {
-                return ($item->getReferencedId() ?? '') === $code && $item->getPayloadValue('discountId') === $discount->getId();
-            });
+            $originalCodeItem = $original->getLineItems()->firstWhere(static fn(LineItem $item) => ($item->getReferencedId() ?? '') === $code && $item->getPayloadValue('discountId') === $discount->getId());
 
             if ($originalCodeItem && \count($originalCodeItem->getExtensions()) > 0) {
                 $discountItem->setExtensions($originalCodeItem->getExtensions());
@@ -432,7 +430,7 @@ class PromotionCollector implements CartDataCollectorInterface
     private function hasLineItemToDiscount(Cart $cart): bool
     {
         return $cart->getLineItems()->firstWhere(
-            static fn (LineItem $lineItem) => $lineItem->getType() !== PromotionProcessor::LINE_ITEM_TYPE,
+            static fn (LineItem $lineItem): bool => $lineItem->getType() !== PromotionProcessor::LINE_ITEM_TYPE,
         ) !== null;
     }
 }

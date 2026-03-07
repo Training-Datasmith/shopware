@@ -94,16 +94,20 @@ abstract class JWTGenerator
             ->expiresAt($jwt->exp);
 
         foreach ($jwt->getVars() as $key => $value) {
-            if (!$value && \in_array($key, RegisteredClaims::ALL, true) || \in_array($key, RegisteredClaims::DATE_CLAIMS, true)) {
+            if (!$value && \in_array($key, RegisteredClaims::ALL, true)) {
                 continue;
             }
-
+            if (\in_array($key, RegisteredClaims::DATE_CLAIMS, true)) {
+                continue;
+            }
             if ($key === RegisteredClaims::ID) {
                 $builder = $builder->identifiedBy($value);
                 continue;
             }
-
-            if (!$key || !$value) {
+            if (!$key) {
+                continue;
+            }
+            if (!$value) {
                 continue;
             }
 

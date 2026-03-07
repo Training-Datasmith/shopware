@@ -74,7 +74,7 @@ class SalesChannelContextService implements SalesChannelContextServiceInterface
 
     public function get(SalesChannelContextServiceParameters $parameters): SalesChannelContext
     {
-        return Profiler::trace('sales-channel-context', function () use ($parameters) {
+        return Profiler::trace('sales-channel-context', function () use ($parameters): \Shopware\Core\System\SalesChannel\SalesChannelContext {
             $token = $parameters->getToken();
 
             $session = $this->contextPersister->load($token, $parameters->getSalesChannelId());
@@ -140,7 +140,7 @@ class SalesChannelContextService implements SalesChannelContextServiceInterface
                 // @deprecated tag:v6.8.0 - Permission will always be true
                 $result = $context->withPermissions(
                     [AbstractCartPersister::PERSIST_CART_ERROR_PERMISSION => Feature::isActive('DEFERRED_CART_ERRORS')],
-                    fn (SalesChannelContext $context) => $this->ruleLoader->loadByToken($context, $token),
+                    fn (SalesChannelContext $context): \Shopware\Core\Checkout\Cart\RuleLoaderResult => $this->ruleLoader->loadByToken($context, $token),
                 );
 
                 $this->cartService->setCart($result->getCart());

@@ -14,7 +14,7 @@ use Shopware\Core\Framework\Migration\MigrationStep;
 #[Package('checkout')]
 class Migration1743256470RemoveDebitPayment extends MigrationStep
 {
-    public const METHOD_HANDLER = 'Shopware\\Core\\Checkout\\Payment\\Cart\\PaymentHandler\\DebitPayment';
+    public const METHOD_HANDLER = \Shopware\Core\Checkout\Payment\Cart\PaymentHandler\DebitPayment::class;
 
     public function getCreationTimestamp(): int
     {

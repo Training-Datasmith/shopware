@@ -29,13 +29,11 @@ class Entity extends Struct
     private ?FieldVisibility $_fieldVisibility = null;
 
     /**
-     * @param string $name
      *
      * @throws DataAbstractionLayerException
      *
-     * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         if (FieldVisibility::$isInTwigRenderingContext) {
             $this->checkIfPropertyAccessIsAllowed($name);
@@ -45,25 +43,20 @@ class Entity extends Struct
         return $this->$name;
     }
 
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function __set($name, $value): void
+    public function __set(string $name, mixed $value): void
     {
         // @phpstan-ignore property.dynamicName (We have to use dynamic properties here to allow access to all entity properties)
         $this->$name = $value;
     }
 
-    /**
-     * @param string $name
-     */
-    public function __isset($name)
+    public function __isset(string $name)
     {
-        if (FieldVisibility::$isInTwigRenderingContext) {
-            if (!$this->isPropertyVisible($name)) {
-                return false;
-            }
+        if (!FieldVisibility::$isInTwigRenderingContext) {
+            // @phpstan-ignore property.dynamicName
+            return isset($this->$name);
+        }
+        if (!$this->isPropertyVisible($name)) {
+            return false;
         }
 
         // @phpstan-ignore property.dynamicName
@@ -121,10 +114,11 @@ class Entity extends Struct
 
     public function has(string $property): bool
     {
-        if (FieldVisibility::$isInTwigRenderingContext) {
-            if (!$this->isPropertyVisible($property)) {
-                return false;
-            }
+        if (!FieldVisibility::$isInTwigRenderingContext) {
+            return property_exists($this, $property);
+        }
+        if (!$this->isPropertyVisible($property)) {
+            return false;
         }
 
         return property_exists($this, $property);

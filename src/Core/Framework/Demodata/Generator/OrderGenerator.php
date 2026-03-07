@@ -74,13 +74,13 @@ class OrderGenerator implements DemodataGeneratorInterface
         $context->getConsole()->progressStart($numberOfItems);
 
         $productLineItems = array_map(
-            fn ($productId) => (new LineItem($productId, LineItem::PRODUCT_LINE_ITEM_TYPE, $productId, $this->faker->randomDigit() + 1))
+            fn ($productId): \Shopware\Core\Checkout\Cart\LineItem\LineItem => (new LineItem($productId, LineItem::PRODUCT_LINE_ITEM_TYPE, $productId, $this->faker->randomDigit() + 1))
                 ->setStackable(true)
                 ->setRemovable(true),
             $productIds
         );
         $promotionLineItems = array_map(
-            function ($promotionCode) {
+            function (?string $promotionCode): \Shopware\Core\Checkout\Cart\LineItem\LineItem {
                 $uniqueKey = 'promotion-' . $promotionCode;
 
                 return (new LineItem(Uuid::fromStringToHex($uniqueKey), LineItem::PROMOTION_LINE_ITEM_TYPE))
@@ -149,7 +149,7 @@ class OrderGenerator implements DemodataGeneratorInterface
 
             if (!empty($chosenTags)) {
                 $tagAssignments = array_map(
-                    static fn (string $id) => ['id' => $id],
+                    static fn (string $id): array => ['id' => $id],
                     $chosenTags
                 );
             }

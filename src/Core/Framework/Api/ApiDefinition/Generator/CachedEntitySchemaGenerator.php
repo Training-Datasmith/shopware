@@ -40,6 +40,6 @@ class CachedEntitySchemaGenerator implements ApiDefinitionGeneratorInterface
      */
     public function getSchema(array $definitions): array
     {
-        return $this->cache->get(self::CACHE_KEY, fn () => $this->innerService->getSchema($definitions));
+        return $this->cache->get(self::CACHE_KEY, fn (): array => $this->innerService->getSchema($definitions));
     }
 }

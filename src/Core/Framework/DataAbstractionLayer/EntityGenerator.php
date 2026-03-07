@@ -121,7 +121,7 @@ EOF;
         }
         $entity = $definition->getEntityName();
         $entity = explode('_', $entity);
-        $entity = array_map('ucfirst', $entity);
+        $entity = array_map(ucfirst(...), $entity);
         $entity = implode('', $entity);
 
         $struct = $this->generateEntity($definition);
@@ -160,7 +160,7 @@ EOF;
 
         $entity = $definition->getEntityName();
         $entity = explode('_', $entity);
-        $entity = array_map('ucfirst', $entity);
+        $entity = array_map(ucfirst(...), $entity);
         $entity = implode('', $entity);
 
         $parameters = [
@@ -325,7 +325,7 @@ EOF;
 
         $entity = $definition->getEntityName();
         $entity = explode('_', $entity);
-        $entity = array_map('ucfirst', $entity);
+        $entity = array_map(ucfirst(...), $entity);
         $entity = implode('', $entity);
 
         $domain = explode('\\', $definition->getClass());

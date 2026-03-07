@@ -26,7 +26,7 @@ abstract class AbstractCaptcha
             return false;
         }
 
-        return (bool) $captchaConfig['isActive'];
+        return $captchaConfig['isActive'];
     }
 
     /**

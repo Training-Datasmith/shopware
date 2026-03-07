@@ -194,7 +194,7 @@ abstract class AbstractAsset
                 $value = $identifier->getValue();
 
                 if (!$identifier->isQuoted()) {
-                    $value = $folding->foldUnquotedIdentifier($value);
+                    return $folding->foldUnquotedIdentifier($value);
                 }
 
                 return $value;
@@ -282,7 +282,7 @@ abstract class AbstractAsset
         if ($input !== '') {
             try {
                 $parsedName = $this->getNameParser()->parse($input);
-            } catch (\Throwable $e) {
+            } catch (\Throwable) {
                 // Mute as this will always happen with SHOPWARE current foreign keys, as they are not compatible
                 // with this parser, since they are not strict (e.g. `fk.shopware.order_address`).
                 /*
@@ -422,7 +422,7 @@ abstract class AbstractAsset
      */
     protected function _generateIdentifierName(array $columnNames, string $prefix = '', int $maxSize = 30): string
     {
-        $hash = \implode('', \array_map(static fn ($column) => \dechex(\crc32($column)), $columnNames));
+        $hash = \implode('', \array_map(static fn (string $column): string => \dechex(\crc32($column)), $columnNames));
 
         return strtoupper(substr($prefix . '_' . $hash, 0, $maxSize));
     }

@@ -31,7 +31,7 @@ class StorefrontRouteUsageRule implements Rule
     /**
      * @var list<string>
      */
-    private array $allowedStorefrontRouteNamespaces;
+    private readonly array $allowedStorefrontRouteNamespaces;
 
     public function __construct(
         private readonly Configuration $configuration,

@@ -221,7 +221,7 @@ class CheckoutController extends StorefrontController
         try {
             $this->addAffiliateTracking($data, $request->getSession());
 
-            $orderId = Profiler::trace('checkout-order', fn () => $this->orderService->createOrder($data, $context));
+            $orderId = Profiler::trace('checkout-order', fn (): string => $this->orderService->createOrder($data, $context));
         } catch (ConstraintViolationException $formViolations) {
             return $this->forwardToRoute('frontend.checkout.confirm.page', ['formViolations' => $formViolations]);
         } catch (InvalidCartException|Error|EmptyCartException) {

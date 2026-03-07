@@ -47,7 +47,7 @@ class ThemeRuntimeConfigService
         }
 
         if ($config->scriptFiles === null) {
-            $config = $this->generateRuntimeConfigById($themeId, true);
+            return $this->generateRuntimeConfigById($themeId, true);
         }
 
         return $config;

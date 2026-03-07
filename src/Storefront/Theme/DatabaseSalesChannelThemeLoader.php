@@ -95,7 +95,7 @@ class DatabaseSalesChannelThemeLoader
         ]);
 
         if (\is_array($grandParents) && isset($grandParents['grandParentThemeId']) && \is_string($grandParents['grandParentThemeId'])) {
-            $filtered = array_merge($filtered, $this->getGrantParents($grandParents['grandParentThemeId']));
+            return array_merge($filtered, $this->getGrantParents($grandParents['grandParentThemeId']));
         }
 
         return $filtered;

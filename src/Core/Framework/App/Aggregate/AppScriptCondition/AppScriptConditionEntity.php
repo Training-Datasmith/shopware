@@ -124,7 +124,7 @@ class AppScriptConditionEntity extends Entity
      *
      * @return string|array<string, list<Constraint>>|null
      */
-    public function getConstraints()
+    public function getConstraints(): string|array|null
     {
         $this->checkIfPropertyAccessIsAllowed('constraints');
 
@@ -136,7 +136,7 @@ class AppScriptConditionEntity extends Entity
      *
      * @param string|array<string, list<Constraint>>|null $constraints
      */
-    public function setConstraints($constraints): void
+    public function setConstraints(string|array|null $constraints): void
     {
         $this->constraints = $constraints;
     }

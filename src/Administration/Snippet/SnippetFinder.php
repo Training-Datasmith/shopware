@@ -268,7 +268,7 @@ class SnippetFinder implements SnippetFinderInterface
         );
 
         $decodedSnippets = \array_map(
-            fn ($data) => \json_decode((string) $data['value'], true, 512, \JSON_THROW_ON_ERROR),
+            fn (array $data): mixed => \json_decode((string) $data['value'], true, 512, \JSON_THROW_ON_ERROR),
             $result
         );
 
@@ -337,7 +337,7 @@ class SnippetFinder implements SnippetFinderInterface
         $files = [];
         foreach ($paths as $path) {
             $snippetPaths = \array_map(
-                static fn (string $name) => Path::join($path->location, $name),
+                static fn (string $name): string => Path::join($path->location, $name),
                 $snippetNames
             );
             $existingSnippetNames = \array_filter(

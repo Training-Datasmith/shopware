@@ -146,7 +146,7 @@ class OpenApi3Generator implements ApiDefinitionGeneratorInterface
             if ($schema === null) {
                 throw ApiException::invalidSchemaForDefinition($definition, 'No schema found');
             }
-            $schema = json_decode($schema->toJson(), true, 512, \JSON_THROW_ON_ERROR);
+            $schema = json_decode((string) $schema->toJson(), true, 512, \JSON_THROW_ON_ERROR);
             $schema = $schema['allOf'][1]['properties'];
 
             $relationships = [];

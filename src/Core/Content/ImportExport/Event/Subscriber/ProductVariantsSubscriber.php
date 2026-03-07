@@ -77,7 +77,7 @@ class ProductVariantsSubscriber implements EventSubscriberInterface, ResetInterf
 
         $variants = $this->parseVariantString($row['variants']);
 
-        $entityWrittenEvent = $entityWrittenEvents->filter(fn ($event) => $event->getEntityName() === ProductDefinition::ENTITY_NAME)->first();
+        $entityWrittenEvent = $entityWrittenEvents->filter(fn ($event): bool => $event->getEntityName() === ProductDefinition::ENTITY_NAME)->first();
 
         if (!$entityWrittenEvent instanceof EntityWrittenEvent) {
             return;
@@ -156,7 +156,7 @@ class ProductVariantsSubscriber implements EventSubscriberInterface, ResetInterf
             }
 
             $groupName = trim($groupOptions[0]);
-            $options = array_filter(array_map('trim', explode(',', $groupOptions[1])));
+            $options = array_filter(array_map(trim(...), explode(',', $groupOptions[1])));
 
             if ($groupName === '' || $options === []) {
                 $this->throwExceptionFailedParsingVariants($variantsString);

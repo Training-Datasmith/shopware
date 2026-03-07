@@ -43,10 +43,12 @@ class LandingPageValidator implements EventSubscriberInterface
         $violationList = new ConstraintViolationList();
 
         foreach ($commands as $command) {
-            if (!($command instanceof InsertCommand) || $command->getEntityName() !== LandingPageDefinition::ENTITY_NAME) {
+            if (!($command instanceof InsertCommand)) {
                 continue;
             }
-
+            if ($command->getEntityName() !== LandingPageDefinition::ENTITY_NAME) {
+                continue;
+            }
             if (!$this->hasAnotherValidCommand($commands, $command)) {
                 $violationList->addAll(
                     $this->validator->startContext()

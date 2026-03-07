@@ -55,7 +55,7 @@ class ThemeMergedConfigBuilder
             throw ThemeException::couldNotFindThemeById($themeId);
         }
 
-        $baseTheme = $this->themes->filter(fn (ThemeEntity $themeEntry) => $themeEntry->getTechnicalName() === StorefrontPluginRegistry::BASE_THEME_NAME)->first();
+        $baseTheme = $this->themes->filter(fn (ThemeEntity $themeEntry): bool => $themeEntry->getTechnicalName() === StorefrontPluginRegistry::BASE_THEME_NAME)->first();
         if ($baseTheme === null) {
             throw ThemeException::couldNotFindThemeByName(StorefrontPluginRegistry::BASE_THEME_NAME);
         }
@@ -96,7 +96,7 @@ class ThemeMergedConfigBuilder
             }
         }
 
-        $configFields = json_decode((string) json_encode($configFields, \JSON_THROW_ON_ERROR), true, 512, \JSON_THROW_ON_ERROR);
+        $configFields = json_decode(json_encode($configFields, \JSON_THROW_ON_ERROR), true, 512, \JSON_THROW_ON_ERROR);
 
         if ($isLegacy && $translate) {
             if ($labels !== []) {
@@ -111,7 +111,7 @@ class ThemeMergedConfigBuilder
         // Check if the theme is a database copy of a physical theme.
         // If so, use the technical name of the parent theme.
         if ($theme->getTechnicalName() === null && $theme->getParentThemeId() !== null) {
-            $parentTheme = $this->themes->filter(fn (ThemeEntity $themeEntry) => $themeEntry->getId() === $theme->getParentThemeId())->first();
+            $parentTheme = $this->themes->filter(fn (ThemeEntity $themeEntry): bool => $themeEntry->getId() === $theme->getParentThemeId())->first();
 
             if ($parentTheme instanceof ThemeEntity) {
                 $themeConfig['themeTechnicalName'] = $parentTheme->getTechnicalName();
@@ -196,9 +196,9 @@ class ThemeMergedConfigBuilder
             $block = $this->getBlock($fieldConfig);
             $section = $this->getSection($fieldConfig);
 
-            $outputStructure = $this->addTranslations($outputStructure, $themeTechnicalName, $tab, $block, $section, $translations);
+            $outputStructure = $this->addTranslations($outputStructure, $tab, $block, $section, $translations);
 
-            $custom = $this->buildCustom($fieldConfig['custom'], $themeTechnicalName, $tab, $block, $section, $fieldName);
+            $custom = $this->buildCustom($fieldConfig['custom'], $tab, $block, $section, $fieldName);
 
             $outputStructure['tabs'][$tab]['blocks'][$block]['sections'][$section]['fields'][$fieldName] =
                 $this->buildField($fieldConfig, $custom, $themeTechnicalName, $tab, $block, $section, $fieldName);
@@ -220,7 +220,6 @@ class ThemeMergedConfigBuilder
     {
         $field = [
             'labelSnippetKey' => $this->buildSnippetKey(
-                $themeTechnicalName,
                 false,
                 $tab,
                 $block,
@@ -228,7 +227,6 @@ class ThemeMergedConfigBuilder
                 $fieldName,
             ),
             'helpTextSnippetKey' => $this->buildSnippetKey(
-                $themeTechnicalName,
                 true,
                 $tab,
                 $block,
@@ -256,7 +254,7 @@ class ThemeMergedConfigBuilder
     private function getParentThemes(ThemeCollection $themes, ThemeEntity $mainTheme, array $parentThemes = []): array
     {
         foreach ($this->getConfigInheritance($mainTheme) as $parentThemeName) {
-            $parentTheme = $themes->filter(fn (ThemeEntity $themeEntry) => $themeEntry->getTechnicalName() === str_replace('@', '', (string) $parentThemeName))->first();
+            $parentTheme = $themes->filter(fn (ThemeEntity $themeEntry): bool => $themeEntry->getTechnicalName() === str_replace('@', '', (string) $parentThemeName))->first();
 
             if ($parentTheme instanceof ThemeEntity && !\array_key_exists($parentTheme->getId(), $parentThemes)) {
                 $parentThemes[$parentTheme->getId()] = $parentTheme;
@@ -268,7 +266,7 @@ class ThemeMergedConfigBuilder
         }
 
         if ($mainTheme->getParentThemeId()) {
-            $parentTheme = $themes->filter(fn (ThemeEntity $themeEntry) => $themeEntry->getId() === $mainTheme->getParentThemeId())->first();
+            $parentTheme = $themes->filter(fn (ThemeEntity $themeEntry): bool => $themeEntry->getId() === $mainTheme->getParentThemeId())->first();
 
             if ($parentTheme instanceof ThemeEntity && !\array_key_exists($parentTheme->getId(), $parentThemes)) {
                 $parentThemes[$parentTheme->getId()] = $parentTheme;
@@ -356,13 +354,7 @@ class ThemeMergedConfigBuilder
      */
     private function getTab(array $fieldConfig): string
     {
-        $tab = 'default';
-
-        if (isset($fieldConfig['tab'])) {
-            $tab = $fieldConfig['tab'];
-        }
-
-        return $tab;
+        return $fieldConfig['tab'] ?? 'default';
     }
 
     /**
@@ -370,13 +362,7 @@ class ThemeMergedConfigBuilder
      */
     private function getBlock(array $fieldConfig): string
     {
-        $block = 'default';
-
-        if (isset($fieldConfig['block'])) {
-            $block = $fieldConfig['block'];
-        }
-
-        return $block;
+        return $fieldConfig['block'] ?? 'default';
     }
 
     /**
@@ -384,13 +370,7 @@ class ThemeMergedConfigBuilder
      */
     private function getSection(array $fieldConfig): string
     {
-        $section = 'default';
-
-        if (isset($fieldConfig['section'])) {
-            $section = $fieldConfig['section'];
-        }
-
-        return $section;
+        return $fieldConfig['section'] ?? 'default';
     }
 
     /**
@@ -505,7 +485,7 @@ class ThemeMergedConfigBuilder
         return false;
     }
 
-    private function buildSnippetKey(string $themeTechnicalName, bool $isHelpText, string ...$parts): string
+    private function buildSnippetKey(bool $isHelpText, string ...$parts): string
     {
         return implode(
             '.',
@@ -518,24 +498,21 @@ class ThemeMergedConfigBuilder
 
     /**
      * @param array<string,mixed>|null $custom
-     * @param string $themeTechnicalName
      *
      * @return ?array<string, mixed>
      */
     private function buildCustom(
         ?array $custom,
-        mixed $themeTechnicalName,
         string $tab,
         string $block,
         string $section,
         string $fieldName
     ): ?array {
-        $custom = $custom ?? null;
+        $custom ??= null;
 
         if ($custom && isset($custom['options']) && \is_array($custom['options'])) {
             foreach ($custom['options'] as $optionIndex => &$option) {
                 $option['labelSnippetKey'] = $this->buildSnippetKey(
-                    $themeTechnicalName,
                     false,
                     $tab,
                     $block,
@@ -558,15 +535,14 @@ class ThemeMergedConfigBuilder
      */
     private function addTranslations(
         array $outputStructure,
-        string $themeTechnicalName,
         string $tab,
         string $block,
         string $section,
         array $translations,
     ): array {
-        $tabSnippetKey = $this->buildSnippetKey($themeTechnicalName, false, $tab);
-        $blockSnippetKey = $this->buildSnippetKey($themeTechnicalName, false, $tab, $block);
-        $sectionSnippetKey = $this->buildSnippetKey($themeTechnicalName, false, $tab, $block, $section);
+        $tabSnippetKey = $this->buildSnippetKey(false, $tab);
+        $blockSnippetKey = $this->buildSnippetKey(false, $tab, $block);
+        $sectionSnippetKey = $this->buildSnippetKey(false, $tab, $block, $section);
 
         // set labels
         $outputStructure['tabs'][$tab]['labelSnippetKey'] = $tabSnippetKey;

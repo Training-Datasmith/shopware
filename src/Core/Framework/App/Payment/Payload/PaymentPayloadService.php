@@ -51,6 +51,6 @@ class PaymentPayloadService
 
         $content = $response->getBody()->getContents();
 
-        return $responseClass::create(\json_decode($content, true, 512, \JSON_THROW_ON_ERROR));
+        return $responseClass::create(\json_decode((string) $content, true, 512, \JSON_THROW_ON_ERROR));
     }
 }

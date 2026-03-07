@@ -16,12 +16,12 @@ class ThemeTranslationCollection extends EntityCollection
      */
     public function getThemeIds(): array
     {
-        return $this->fmap(fn (ThemeTranslationEntity $themeTranslation) => $themeTranslation->getThemeId());
+        return $this->fmap(fn (ThemeTranslationEntity $themeTranslation): ?string => $themeTranslation->getThemeId());
     }
 
     public function filterByThemeId(string $id): self
     {
-        return $this->filter(fn (ThemeTranslationEntity $themeTranslation) => $themeTranslation->getThemeId() === $id);
+        return $this->filter(fn (ThemeTranslationEntity $themeTranslation): bool => $themeTranslation->getThemeId() === $id);
     }
 
     /**
@@ -29,12 +29,12 @@ class ThemeTranslationCollection extends EntityCollection
      */
     public function getLanguageIds(): array
     {
-        return $this->fmap(fn (ThemeTranslationEntity $themeTranslation) => $themeTranslation->getLanguageId());
+        return $this->fmap(fn (ThemeTranslationEntity $themeTranslation): string => $themeTranslation->getLanguageId());
     }
 
     public function filterByLanguageId(string $id): self
     {
-        return $this->filter(fn (ThemeTranslationEntity $themeTranslation) => $themeTranslation->getLanguageId() === $id);
+        return $this->filter(fn (ThemeTranslationEntity $themeTranslation): bool => $themeTranslation->getLanguageId() === $id);
     }
 
     protected function getExpectedClass(): string

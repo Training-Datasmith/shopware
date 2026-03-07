@@ -21,12 +21,12 @@ class ProductCrossSellingAssignedProductsCollection extends EntityCollection
      */
     public function getProductIds(): array
     {
-        return $this->fmap(fn (ProductCrossSellingAssignedProductsEntity $entity) => $entity->getProductId());
+        return $this->fmap(fn (ProductCrossSellingAssignedProductsEntity $entity): string => $entity->getProductId());
     }
 
     public function sortByPosition(): void
     {
-        $this->sort(fn (ProductCrossSellingAssignedProductsEntity $a, ProductCrossSellingAssignedProductsEntity $b) => $a->getPosition() <=> $b->getPosition());
+        $this->sort(fn (ProductCrossSellingAssignedProductsEntity $a, ProductCrossSellingAssignedProductsEntity $b): int => $a->getPosition() <=> $b->getPosition());
     }
 
     protected function getExpectedClass(): string

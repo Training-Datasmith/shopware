@@ -179,7 +179,7 @@ class BundleConfigGenerator implements BundleConfigGeneratorInterface
         }
 
         return array_map(
-            static fn (string $path) => Path::join($basePath, 'Resources', $path),
+            static fn (string $path): string => Path::join($basePath, 'Resources', $path),
             $config->getStyleFiles()->getFilepaths()
         );
     }

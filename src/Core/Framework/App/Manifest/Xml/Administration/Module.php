@@ -60,8 +60,7 @@ class Module extends XmlElement
     protected static function parse(\DOMElement $element): array
     {
         $values = XmlParserUtils::parseAttributes($element);
-        $values += XmlParserUtils::parseChildrenAndTranslate($element, self::TRANSLATABLE_FIELDS);
 
-        return $values;
+        return $values + XmlParserUtils::parseChildrenAndTranslate($element, self::TRANSLATABLE_FIELDS);
     }
 }

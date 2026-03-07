@@ -351,7 +351,7 @@ class NewsletterSubscribeRoute extends AbstractNewsletterSubscribeRoute
             return [];
         }
 
-        return array_map(static fn (SalesChannelDomainEntity $domainEntity) => rtrim($domainEntity->getUrl(), '/'), $salesChannelDomainCollection->getElements());
+        return array_map(static fn (SalesChannelDomainEntity $domainEntity): string => rtrim($domainEntity->getUrl(), '/'), $salesChannelDomainCollection->getElements());
     }
 
     /**

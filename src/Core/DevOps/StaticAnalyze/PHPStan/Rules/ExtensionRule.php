@@ -51,7 +51,7 @@ class ExtensionRule implements Rule
         }
 
         if ($extension) {
-            $errors = array_merge($errors, $this->validateExtension($node));
+            return array_merge($errors, $this->validateExtension($node));
         }
 
         return $errors;

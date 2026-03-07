@@ -87,10 +87,8 @@ class CustomFieldService implements EventSubscriberInterface, ResetInterface
             return;
         }
 
-        $customFieldCommands = array_filter($commands, function ($command) {
-            return $command->getEntityName() === CustomFieldSetDefinition::ENTITY_NAME
-                || $command->getEntityName() === CustomFieldDefinition::ENTITY_NAME;
-        });
+        $customFieldCommands = array_filter($commands, fn($command) => $command->getEntityName() === CustomFieldSetDefinition::ENTITY_NAME
+            || $command->getEntityName() === CustomFieldDefinition::ENTITY_NAME);
 
         foreach ($customFieldCommands as $command) {
             $this->validateCustomFieldName($command->getPayload());
@@ -114,7 +112,7 @@ class CustomFieldService implements EventSubscriberInterface, ResetInterface
             return;
         }
 
-        if (!preg_match(self::CUSTOM_FIELD_NAME_PATTERN, $name)) {
+        if (!preg_match(self::CUSTOM_FIELD_NAME_PATTERN, (string) $name)) {
             throw CustomFieldException::customFieldNameInvalid($name);
         }
     }

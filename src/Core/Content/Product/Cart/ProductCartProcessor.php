@@ -468,7 +468,10 @@ class ProductCartProcessor implements CartProcessorInterface, CartDataCollectorI
 
         foreach ($lineItems as $lineItem) {
             $id = $lineItem->getReferencedId();
-            if ($id === '' || $id === null) {
+            if ($id === '') {
+                continue;
+            }
+            if ($id === null) {
                 continue;
             }
 
@@ -614,9 +617,7 @@ class ProductCartProcessor implements CartProcessorInterface, CartDataCollectorI
     {
         $contextHash = $this->generator->getSalesChannelContextHash($context, [RuleAreas::PRODUCT_AREA]);
 
-        $activeTaxRules = array_map(static function (TaxEntity $taxRule) {
-            return $taxRule->getRules()?->getIds() ?: $taxRule->getId();
-        }, $context->getTaxRules()->getElements());
+        $activeTaxRules = array_map(static fn(TaxEntity $taxRule) => $taxRule->getRules()?->getIds() ?: $taxRule->getId(), $context->getTaxRules()->getElements());
 
         return Hasher::hash([$contextHash, $activeTaxRules]);
     }

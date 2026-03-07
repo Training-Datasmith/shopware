@@ -49,7 +49,7 @@ class PromotionValueRule extends FilterRule
         if ($filter !== null) {
             $context = $scope->getSalesChannelContext();
 
-            $promotions = $promotions->filter(static function (LineItem $lineItem) use ($filter, $context) {
+            $promotions = $promotions->filter(static function (LineItem $lineItem) use ($filter, $context): bool {
                 $scope = new LineItemScope($lineItem, $context);
 
                 return $filter->match($scope);

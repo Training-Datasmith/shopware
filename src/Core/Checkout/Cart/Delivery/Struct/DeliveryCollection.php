@@ -21,7 +21,7 @@ class DeliveryCollection extends Collection
      */
     public function sortDeliveries(): self
     {
-        $this->sort(function (Delivery $a, Delivery $b) {
+        $this->sort(function (Delivery $a, Delivery $b): int {
             if ($a->getLocation() !== $b->getLocation()) {
                 return -1;
             }
@@ -67,7 +67,7 @@ class DeliveryCollection extends Collection
     public function getShippingCosts(): PriceCollection
     {
         return new PriceCollection(
-            $this->map(fn (Delivery $delivery) => $delivery->getShippingCosts())
+            $this->map(fn (Delivery $delivery): \Shopware\Core\Checkout\Cart\Price\Struct\CalculatedPrice => $delivery->getShippingCosts())
         );
     }
 
@@ -90,12 +90,10 @@ class DeliveryCollection extends Collection
     public function getPrimaryDelivery(?string $primaryDeliveryId): ?Delivery
     {
         if ($primaryDeliveryId) {
-            $delivery = $this->firstWhere(function (Delivery $delivery) use ($primaryDeliveryId) {
-                return $delivery->getExtensionOfType(OrderConverter::ORIGINAL_ID, IdStruct::class)?->getId() === $primaryDeliveryId;
-            });
+            $delivery = $this->firstWhere(fn(Delivery $delivery) => $delivery->getExtensionOfType(OrderConverter::ORIGINAL_ID, IdStruct::class)?->getId() === $primaryDeliveryId);
         }
 
-        return $delivery ?? $this->filter(static fn (Delivery $delivery) => $delivery->getShippingCosts()->getTotalPrice() >= 0)->first();
+        return $delivery ?? $this->filter(static fn (Delivery $delivery): bool => $delivery->getShippingCosts()->getTotalPrice() >= 0)->first();
     }
 
     public function getApiAlias(): string

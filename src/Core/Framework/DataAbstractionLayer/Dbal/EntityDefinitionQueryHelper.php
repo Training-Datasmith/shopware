@@ -372,7 +372,7 @@ class EntityDefinitionQueryHelper
         } elseif ($definition->isVersionAware()) {
             $versionIdField = array_filter(
                 $definition->getPrimaryKeys()->getElements(),
-                fn ($f) => $f instanceof VersionField || $f instanceof ReferenceVersionField
+                fn (\Shopware\Core\Framework\DataAbstractionLayer\Field\Field $f): bool => $f instanceof VersionField || $f instanceof ReferenceVersionField
             );
 
             if (!$versionIdField) {
@@ -479,11 +479,11 @@ class EntityDefinitionQueryHelper
         }
 
         $fields = $translationDefinition->getFields()->filter(
-            fn (Field $field) => $field instanceof StorageAware
+            fn (Field $field): bool => $field instanceof StorageAware
                 && $definition->getFields()->get($field->getPropertyName()) instanceof TranslatedField,
         );
         if ($partial !== []) {
-            $fields = $fields->filter(fn (Field $field) => isset($partial[$field->getPropertyName()]));
+            $fields = $fields->filter(fn (Field $field): bool => isset($partial[$field->getPropertyName()]));
         }
 
         $translationChain = self::buildTranslationChain(
@@ -603,7 +603,7 @@ class EntityDefinitionQueryHelper
         if (!\is_array($primaryKeys[0]) || \count($primaryKeys[0]) === 1) {
             $primaryKeyField = $definition->getPrimaryKeys()->first();
             if ($primaryKeyField instanceof IdField || $primaryKeyField instanceof FkField) {
-                $primaryKeys = array_map(static function ($id) {
+                $primaryKeys = array_map(static function ($id): string {
                     if (\is_array($id)) {
                         $shiftedId = array_shift($id);
                         \assert(\is_string($shiftedId));

@@ -62,7 +62,7 @@ class ArrayStruct extends Struct implements \ArrayAccess, \IteratorAggregate, \C
     /**
      * @param TData $options
      */
-    public function assign(array $options)
+    public function assign(array $options): static
     {
         /** @phpstan-ignore assign.propertyType (PHPStan cannot recognize the result of the array function correctly) */
         $this->data = array_replace_recursive($this->data, $options);

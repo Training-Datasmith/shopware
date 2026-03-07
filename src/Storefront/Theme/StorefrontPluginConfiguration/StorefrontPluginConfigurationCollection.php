@@ -31,17 +31,17 @@ class StorefrontPluginConfigurationCollection extends Collection
 
     public function getByTechnicalName(string $name): ?StorefrontPluginConfiguration
     {
-        return $this->filter(fn (StorefrontPluginConfiguration $config) => $config->getTechnicalName() === $name)->first();
+        return $this->filter(fn (StorefrontPluginConfiguration $config): bool => $config->getTechnicalName() === $name)->first();
     }
 
     public function getThemes(): StorefrontPluginConfigurationCollection
     {
-        return $this->filter(fn (StorefrontPluginConfiguration $configuration) => $configuration->getIsTheme() === true);
+        return $this->filter(fn (StorefrontPluginConfiguration $configuration): bool => $configuration->getIsTheme() === true);
     }
 
     public function getNoneThemes(): StorefrontPluginConfigurationCollection
     {
-        return $this->filter(fn (StorefrontPluginConfiguration $configuration) => !$configuration->getIsTheme());
+        return $this->filter(fn (StorefrontPluginConfiguration $configuration): bool => !$configuration->getIsTheme());
     }
 
     protected function getExpectedClass(): ?string

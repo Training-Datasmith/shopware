@@ -98,7 +98,6 @@ class UserRecoveryService
                 $salesChannel->getCurrencyId(),
                 null,
                 $context,
-                null,
             )
         );
 

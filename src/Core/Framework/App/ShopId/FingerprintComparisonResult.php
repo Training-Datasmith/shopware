@@ -21,7 +21,7 @@ readonly class FingerprintComparisonResult
         public array $mismatchingFingerprints,
         public int $threshold,
     ) {
-        $this->score = array_sum(array_map(fn (FingerprintMismatch $mismatch) => $mismatch->score, $mismatchingFingerprints));
+        $this->score = array_sum(array_map(fn (FingerprintMismatch $mismatch): int => $mismatch->score, $mismatchingFingerprints));
     }
 
     public function getMismatchingFingerprint(string $identifier): ?FingerprintMismatch

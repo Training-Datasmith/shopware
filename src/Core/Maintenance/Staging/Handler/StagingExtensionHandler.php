@@ -26,7 +26,7 @@ readonly class StagingExtensionHandler
 
     public function __invoke(SetupStagingEvent $event): void
     {
-        $extensionsToDisable = array_values(array_unique(array_filter(array_map(static fn ($v) => trim($v), $event->extensionsToDisable))));
+        $extensionsToDisable = array_values(array_unique(array_filter(array_map(trim(...), $event->extensionsToDisable))));
         if ($extensionsToDisable === []) {
             return;
         }

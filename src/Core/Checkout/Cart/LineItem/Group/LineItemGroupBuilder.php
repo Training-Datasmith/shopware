@@ -47,10 +47,12 @@ class LineItemGroupBuilder implements ResetInterface
         $result = new LineItemGroupBuilderResult();
 
         foreach ($groupDefinitions as $index => $groupDefinition) {
-            if (!\array_key_exists($groupDefinition->getId(), $this->results) || $this->results[$groupDefinition->getId()] === null) {
+            if (!\array_key_exists($groupDefinition->getId(), $this->results)) {
                 continue;
             }
-
+            if ($this->results[$groupDefinition->getId()] === null) {
+                continue;
+            }
             $result->addGroupResult($groupDefinition->getId(), $this->results[$groupDefinition->getId()]);
 
             unset($groupDefinitions[$index]);

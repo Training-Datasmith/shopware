@@ -217,7 +217,7 @@ class PromotionValidator implements EventSubscriberInterface
             $pattern = '';
         }
 
-        $trimmedCode = trim($code);
+        $trimmedCode = trim((string) $code);
 
         // if we have both a date from and until, make sure that
         // the dateUntil is always in the future.
@@ -252,7 +252,7 @@ class PromotionValidator implements EventSubscriberInterface
 
             // if our code length is greater than the trimmed one,
             // this means we have leading or trailing whitespaces
-            if (mb_strlen($code) > mb_strlen($trimmedCode)) {
+            if (mb_strlen((string) $code) > mb_strlen($trimmedCode)) {
                 $violationList->add($this->buildViolation(
                     'Code may not have any leading or ending whitespaces',
                     $code,

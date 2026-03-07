@@ -67,10 +67,6 @@ class CustomerEmailUnique extends Constraint
                 $options['context'] = $options['salesChannelContext']->getContext();
             }
 
-            if (!($options['context'] ?? null) instanceof Context) {
-                throw CustomerException::missingOption('context', self::class);
-            }
-
             parent::__construct($options);
         }
     }

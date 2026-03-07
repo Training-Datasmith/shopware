@@ -54,7 +54,7 @@ class SeoUrlPlaceholderHandler implements SeoUrlPlaceholderHandlerInterface
                     $seoMapping[$key] = $host . '/' . ltrim($value, '/');
                 }
 
-                return (string) \preg_replace_callback('/' . self::DOMAIN_PLACEHOLDER . '[^#]*#/', static fn (array $match) => $seoMapping[$match[0]], $content);
+                return (string) \preg_replace_callback('/' . self::DOMAIN_PLACEHOLDER . '[^#]*#/', static fn (array $match): string => $seoMapping[$match[0]], $content);
             }
 
             return $content;

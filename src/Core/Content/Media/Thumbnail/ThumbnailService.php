@@ -95,17 +95,19 @@ class ThumbnailService
         if ($delete !== []) {
             $context->addState(MediaDeletionSubscriber::SYNCHRONE_FILE_DELETE);
 
-            $delete = \array_values(\array_map(fn (string $id) => ['id' => $id], $delete));
+            $delete = \array_values(\array_map(fn (string $id): array => ['id' => $id], $delete));
 
             $this->thumbnailRepository->delete($delete, $context);
         }
 
         $updates = [];
         foreach ($generate as $media) {
-            if ($media->getMediaFolder() === null || $media->getMediaFolder()->getConfiguration() === null) {
+            if ($media->getMediaFolder() === null) {
                 continue;
             }
-
+            if ($media->getMediaFolder()->getConfiguration() === null) {
+                continue;
+            }
             $config = $media->getMediaFolder()->getConfiguration();
 
             $thumbnails = $this->generateAndSave($media, $config, $context, $config->getMediaThumbnailSizes());
@@ -172,19 +174,17 @@ class ThumbnailService
             }
         }
 
-        $delete = \array_values(\array_map(static fn (string $id) => ['id' => $id], $toBeDeletedThumbnails->getIds()));
+        $delete = \array_values(\array_map(static fn (string $id): array => ['id' => $id], $toBeDeletedThumbnails->getIds()));
 
-        $update = $this->connection->transactional(function () use ($delete, $media, $config, $context, $toBeCreatedSizes): array {
-            return $context->state(function () use ($delete, $media, $config, $context, $toBeCreatedSizes): array {
-                $this->thumbnailRepository->delete($delete, $context);
+        $update = $this->connection->transactional(fn(): array => $context->state(function () use ($delete, $media, $config, $context, $toBeCreatedSizes): array {
+            $this->thumbnailRepository->delete($delete, $context);
 
-                $updated = $this->generateAndSave($media, $config, $context, $toBeCreatedSizes);
+            $updated = $this->generateAndSave($media, $config, $context, $toBeCreatedSizes);
 
-                $this->indexer->handle(new MediaIndexingMessage([$media->getId()]));
+            $this->indexer->handle(new MediaIndexingMessage([$media->getId()]));
 
-                return $updated;
-            }, EntityIndexerRegistry::DISABLE_INDEXING, MediaDeletionSubscriber::SYNCHRONE_FILE_DELETE);
-        });
+            return $updated;
+        }, EntityIndexerRegistry::DISABLE_INDEXING, MediaDeletionSubscriber::SYNCHRONE_FILE_DELETE));
 
         return \count($update);
     }
@@ -233,7 +233,7 @@ class ThumbnailService
         }
 
         // write thumbnail records to trigger path generation afterward
-        $context->scope(Context::SYSTEM_SCOPE, function ($context) use ($records): void {
+        $context->scope(Context::SYSTEM_SCOPE, function (\Shopware\Core\Framework\Context $context) use ($records): void {
             $context->addState(EntityIndexerRegistry::DISABLE_INDEXING);
 
             $this->thumbnailRepository->create($records, $context);
@@ -497,7 +497,7 @@ class ThumbnailService
 
         $delete = $media->getThumbnails()->getIds();
 
-        $delete = \array_values(\array_map(static fn (string $id) => ['id' => $id], $delete));
+        $delete = \array_values(\array_map(static fn (string $id): array => ['id' => $id], $delete));
 
         $this->thumbnailRepository->delete($delete, $context);
     }

@@ -38,7 +38,7 @@ class CustomerEmailUniqueValidator extends ConstraintValidator
             ->executeQuery()
             ->fetchAllAssociative();
 
-        $results = \array_filter($results, static function (array $entry) use ($constraint) {
+        $results = \array_filter($results, static function (array $entry) use ($constraint): bool {
             // Filter out guest entries
             if ($entry['guest']) {
                 return false;

@@ -100,9 +100,7 @@ class DeliveryProcessor implements CartProcessorInterface, CartDataCollectorInte
     {
         Profiler::trace('cart::delivery::process', function () use ($data, $original, $toCalculate, $context, $behavior): void {
             if ($behavior->hasPermission(self::SKIP_DELIVERY_PRICE_RECALCULATION)) {
-                $deliveries = $original->getDeliveries()->filter(function (Delivery $delivery) {
-                    return $delivery->getShippingCosts()->getTotalPrice() >= 0;
-                });
+                $deliveries = $original->getDeliveries()->filter(fn(Delivery $delivery) => $delivery->getShippingCosts()->getTotalPrice() >= 0);
 
                 $firstDelivery = $original->getDeliveries()->getPrimaryDelivery(
                     $original->getExtensionOfType(OrderConverter::ORIGINAL_PRIMARY_ORDER_DELIVERY, IdStruct::class)?->getId()

@@ -47,7 +47,10 @@ class EntityProtectionValidator implements EventSubscriberInterface
 
             foreach ($protections as $protection) {
                 $protectionInstance = $definition->getProtections()->get($protection);
-                if (!$protectionInstance || $protectionInstance->isAllowed($context->getScope())) {
+                if (!$protectionInstance) {
+                    continue;
+                }
+                if ($protectionInstance->isAllowed($context->getScope())) {
                     continue;
                 }
 

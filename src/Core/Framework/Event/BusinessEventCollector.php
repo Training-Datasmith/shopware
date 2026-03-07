@@ -43,7 +43,7 @@ class BusinessEventCollector
 
         $result = $event->getCollection();
 
-        $result->sort(fn (BusinessEventDefinition $a, BusinessEventDefinition $b) => $a->getName() <=> $b->getName());
+        $result->sort(fn (BusinessEventDefinition $a, BusinessEventDefinition $b): int => $a->getName() <=> $b->getName());
 
         return $result;
     }
@@ -88,12 +88,12 @@ class BusinessEventCollector
     {
         $appEvents = $this->connection->fetchAllAssociative('SELECT `app_flow_event`.`name`, `app_flow_event`.`aware` FROM `app_flow_event` JOIN `app` ON `app_flow_event`.`app_id` = `app`.`id` WHERE `app`.`active` = 1');
 
-        array_map(function ($event) use ($result): void {
+        array_map(function (array $event) use ($result): void {
             $definition = new BusinessEventDefinition(
                 $event['name'],
                 CustomAppEvent::class,
                 [],
-                json_decode($event['aware'], true) ?? []
+                json_decode((string) $event['aware'], true) ?? []
             );
 
             if (!$result->get($definition->getName())) {

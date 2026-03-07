@@ -55,9 +55,7 @@ class AppPayloadStruct
         $vars = $this->traitJsonSerialize();
         $converter = new CamelCaseToSnakeCaseNameConverter();
 
-        $snakeCaseKeys = array_map(function (string $key) use ($converter) {
-            return $converter->normalize($key);
-        }, array_keys($vars));
+        $snakeCaseKeys = array_map(fn(string $key) => $converter->normalize($key), array_keys($vars));
 
         return array_combine($snakeCaseKeys, $vars);
     }

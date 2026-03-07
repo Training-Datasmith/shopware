@@ -13,13 +13,13 @@ use Shopware\Core\Framework\Struct\Struct;
 #[Package('framework')]
 class CookieEntry extends Struct
 {
-    public ?string $value;
+    public ?string $value = null;
 
-    public ?int $expiration;
+    public ?int $expiration = null;
 
-    public ?string $name;
+    public ?string $name = null;
 
-    public ?string $description;
+    public ?string $description = null;
 
     public bool $hidden = false;
 

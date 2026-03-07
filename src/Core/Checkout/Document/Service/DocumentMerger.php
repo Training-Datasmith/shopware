@@ -81,7 +81,7 @@ final class DocumentMerger
 
         try {
             return $this->mergeWithFpdi($documents, $context, $renderedDocument);
-        } catch (FpdiException $e) {
+        } catch (FpdiException) {
             return $this->createDocumentsZip($documents, $context);
         }
     }
@@ -211,9 +211,7 @@ final class DocumentMerger
                 continue;
             }
 
-            $fileContent = $context->scope(Context::SYSTEM_SCOPE, function (Context $context) use ($documentMediaId) {
-                return $this->mediaService->loadFile($documentMediaId, $context);
-            });
+            $fileContent = $context->scope(Context::SYSTEM_SCOPE, fn(Context $context) => $this->mediaService->loadFile($documentMediaId, $context));
 
             $technicalName = $document->getDocumentType()?->getTechnicalName() ?? 'unknown';
             $orderNumber = $document->getOrder()?->getOrderNumber() ?? $document->getOrderId();

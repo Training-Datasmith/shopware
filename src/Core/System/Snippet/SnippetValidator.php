@@ -117,9 +117,7 @@ readonly class SnippetValidator implements SnippetValidatorInterface
 
     protected function getAllFiles(): SnippetFileCollection
     {
-        $snippetFiles = $this->loadedSnippetFiles->filter(function (AbstractSnippetFile $snippetFile) {
-            return $snippetFile instanceof GenericSnippetFile;
-        });
+        $snippetFiles = $this->loadedSnippetFiles->filter(fn(AbstractSnippetFile $snippetFile) => $snippetFile instanceof GenericSnippetFile);
 
         $this->hydrateFiles($this->snippetFileHandler->findAdministrationSnippetFiles(), $snippetFiles);
         $this->hydrateFiles($this->snippetFileHandler->findStorefrontSnippetFiles(), $snippetFiles);
@@ -220,10 +218,12 @@ readonly class SnippetValidator implements SnippetValidatorInterface
                 unset($tempISOs[$isoKey]);
 
                 foreach ($tempISOs as $tempISO) {
-                    if (!isset($snippetFileMappings[$tempISO]) || \array_key_exists($snippetKeyPath, $snippetFileMappings[$tempISO])) {
+                    if (!isset($snippetFileMappings[$tempISO])) {
                         continue;
                     }
-
+                    if (\array_key_exists($snippetKeyPath, $snippetFileMappings[$tempISO])) {
+                        continue;
+                    }
                     $missingSnippetsArray[$tempISO][$snippetKeyPath] = [
                         'path' => $snippetFileMeta['path'],
                         'availableISO' => $availableISO,

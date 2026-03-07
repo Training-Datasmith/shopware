@@ -64,7 +64,7 @@ class CreateMigrationCommand extends Command
 
         $io->title('DAL generate migration');
 
-        $entities = explode(',', $input->getArgument('entities'));
+        $entities = explode(',', (string) $input->getArgument('entities'));
 
         foreach ($entities as $entity) {
             $this->handleEntity($entity, $timestamp, $namespace, $directory, $package, $io);

@@ -75,7 +75,7 @@ class GuestWishlistPageletLoader
         }
 
         /** @var array<string> $productIds */
-        return array_filter($productIds, static fn (string $productId) => Uuid::isValid($productId));
+        return array_filter($productIds, Uuid::isValid(...));
     }
 
     /**

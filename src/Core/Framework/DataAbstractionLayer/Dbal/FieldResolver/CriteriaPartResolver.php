@@ -377,12 +377,11 @@ class CriteriaPartResolver
 
     private function getVersionIdFieldForManyToOneRelation(EntityDefinition $definition, EntityDefinition $reference): string
     {
-        $rootVersionId = 'version_id';
         // it could be the case that we have a reverse join and the reference is the "parent" definition
         if ($definition->getFields()->getByStorageName($reference->getEntityName() . '_version_id')) {
-            $rootVersionId = $reference->getEntityName() . '_version_id';
+            return $reference->getEntityName() . '_version_id';
         }
 
-        return $rootVersionId;
+        return 'version_id';
     }
 }

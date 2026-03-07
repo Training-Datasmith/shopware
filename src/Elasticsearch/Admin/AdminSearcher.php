@@ -232,10 +232,12 @@ class AdminSearcher
         $result = [];
 
         foreach ($rawResponse['responses'] as $response) {
-            if (!isset($response['hits']['hits']) || !\is_array($response['hits']['hits'])) {
+            if (!isset($response['hits']['hits'])) {
                 continue;
             }
-
+            if (!\is_array($response['hits']['hits'])) {
+                continue;
+            }
             if ($response['hits']['hits'] === []) {
                 continue;
             }

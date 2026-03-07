@@ -103,14 +103,19 @@ class CsvReader extends AbstractReader
             $this->handleBom($resource);
             $record = fgetcsv($resource, 0, $this->delimiter, $this->enclosure, $this->escape);
             // skip if it's an empty line
-            if ($record === false || (\count($record) === 1 && $record[0] === null)) {
+            if ($record === false) {
+                continue;
+            }
+            if (\count($record) === 1 && $record[0] === null) {
                 continue;
             }
 
             $record = $this->mapRecord($record);
-
             // skip empty
-            if ($record === null || array_filter($record) === []) {
+            if ($record === null) {
+                continue;
+            }
+            if (array_filter($record) === []) {
                 continue;
             }
 

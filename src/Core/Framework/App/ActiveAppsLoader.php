@@ -60,7 +60,7 @@ class ActiveAppsLoader implements ResetInterface
                 WHERE `active` = 1
             ');
 
-            return array_map(fn (array $app) => [
+            return array_map(fn (array $app): array => [
                 'name' => $app['name'],
                 'path' => $app['path'],
                 'author' => $app['author'],
@@ -79,7 +79,7 @@ class ActiveAppsLoader implements ResetInterface
                 IOStreamHelper::writeError($message, $e);
             }
 
-            return array_map(fn (Manifest $manifest) => [
+            return array_map(fn (Manifest $manifest): array => [
                 'name' => $manifest->getMetadata()->getName(),
                 'path' => Path::makeRelative($manifest->getPath(), $this->projectDir),
                 'author' => $manifest->getMetadata()->getAuthor(),

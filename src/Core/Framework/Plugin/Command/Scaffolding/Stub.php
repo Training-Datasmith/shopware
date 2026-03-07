@@ -42,7 +42,7 @@ class Stub
         }
 
         return str_replace(
-            array_map(static fn (string $param) => '{{ ' . $param . ' }}', array_keys($this->params)),
+            array_map(static fn (string $param): string => '{{ ' . $param . ' }}', array_keys($this->params)),
             array_values($this->params),
             $content
         );

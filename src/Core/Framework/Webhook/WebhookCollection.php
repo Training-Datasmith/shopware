@@ -16,7 +16,7 @@ class WebhookCollection extends EntityCollection
     /**
      * @return WebhookCollection<WebhookEntity>
      */
-    public function filterForEvent(string $name)
+    public function filterForEvent(string $name): \Shopware\Core\Framework\DataAbstractionLayer\EntityCollection
     {
         return $this->filterByProperty('eventName', $name);
     }

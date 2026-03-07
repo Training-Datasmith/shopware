@@ -184,7 +184,7 @@ class AdministrationController extends AbstractController
         $criteria = (new Criteria())->addAssociation('locale');
 
         $languages = $this->languageRepository->search($criteria, $context);
-        $installedLocales = $languages->reduce(static function (array $accumulator, LanguageEntity $language) {
+        $installedLocales = $languages->reduce(static function (array $accumulator, LanguageEntity $language): array {
             $locale = $language->getLocale();
             if ($locale !== null) {
                 $accumulator[$language->getId()] = $locale->getCode();
@@ -405,7 +405,7 @@ class AdministrationController extends AbstractController
     {
         $sortedSupportedApiVersions = array_values($this->supportedApiVersions);
 
-        usort($sortedSupportedApiVersions, fn (int $version1, int $version2) => \version_compare((string) $version1, (string) $version2));
+        usort($sortedSupportedApiVersions, fn (int $version1, int $version2): int => \version_compare((string) $version1, (string) $version2));
 
         return array_pop($sortedSupportedApiVersions);
     }
@@ -444,7 +444,7 @@ class AdministrationController extends AbstractController
         } catch (OAuthServerException) {
             $snippets[$locale] = \array_filter(
                 $snippets[$locale],
-                static fn (string $key) => \in_array($key, self::UNAUTHENTICATED_SNIPPET_NAMESPACES, true),
+                static fn (string $key): bool => \in_array($key, self::UNAUTHENTICATED_SNIPPET_NAMESPACES, true),
                 \ARRAY_FILTER_USE_KEY
             );
         }

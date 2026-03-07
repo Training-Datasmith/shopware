@@ -28,8 +28,8 @@ class GuestAuthenticator
         // Verify email and zip code with this order
         $billingAddress = $order->getBillingAddress();
         if ($billingAddress === null
-            || mb_strtolower($email) !== mb_strtolower($order->getOrderCustomer()?->getEmail() ?: '')
-            || mb_strtoupper($zipcode) !== mb_strtoupper($billingAddress->getZipcode() ?: '')) {
+            || mb_strtolower((string) $email) !== mb_strtolower($order->getOrderCustomer()?->getEmail() ?: '')
+            || mb_strtoupper((string) $zipcode) !== mb_strtoupper($billingAddress->getZipcode() ?: '')) {
             throw CustomerException::wrongGuestCredentials();
         }
     }

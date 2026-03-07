@@ -54,7 +54,7 @@ class CacheTagCollectorSubscriber extends AbstractDataCollector implements Event
 
     public function getTotal(): int
     {
-        return array_sum(array_map('count', $this->getData()));
+        return array_sum(array_map(count(...), $this->getData()));
     }
 
     public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
@@ -135,7 +135,7 @@ class CacheTagCollectorSubscriber extends AbstractDataCollector implements Event
         if (!\array_key_exists('function', $caller)) {
             return CacheTagCollector::INVALID_URI;
         }
-        $class = explode('\\', $caller['class']);
+        $class = explode('\\', (string) $caller['class']);
         $class = array_pop($class);
 
         return $class . '::' . $caller['function'];

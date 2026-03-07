@@ -300,23 +300,21 @@ EOD;
         }
 
         if ($fk->getOnDeleteAction()->value === 'SET NULL') {
-            $addColumnSql = \sprintf(
+            return \sprintf(
                 self::ADD_NEW_COLUMN_NULLABLE,
                 $tableName,
                 $foreignKeyColumnName,
                 $columnName
             );
-        } else {
-            $addColumnSql = \sprintf(
-                self::ADD_NEW_COLUMN_WITH_DEFAULT,
-                $tableName,
-                $foreignKeyColumnName,
-                $default,
-                $columnName
-            );
         }
 
-        return $addColumnSql;
+        return \sprintf(
+            self::ADD_NEW_COLUMN_WITH_DEFAULT,
+            $tableName,
+            $foreignKeyColumnName,
+            $default,
+            $columnName
+        );
     }
 
     /**

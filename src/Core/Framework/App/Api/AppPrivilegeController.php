@@ -38,11 +38,9 @@ class AppPrivilegeController
     {
         $this->assertHasUserId($context);
 
-        return $context->scope(Context::SYSTEM_SCOPE, function () {
-            return new JsonResponse([
-                'privileges' => $this->privileges->getRequestedPrivilegesForAllApps(),
-            ]);
-        });
+        return $context->scope(Context::SYSTEM_SCOPE, fn() => new JsonResponse([
+            'privileges' => $this->privileges->getRequestedPrivilegesForAllApps(),
+        ]));
     }
 
     #[Route(

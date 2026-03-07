@@ -11,11 +11,6 @@ class InvalidTemplateException extends ShopwareHttpException
 {
     final public const ERROR_CODE = 'FRAMEWORK__INVALID_SEO_TEMPLATE';
 
-    public function __construct(string $message)
-    {
-        parent::__construct($message);
-    }
-
     public function getStatusCode(): int
     {
         return Response::HTTP_BAD_REQUEST;

@@ -24,7 +24,7 @@ class Migration1589357321AddCountries extends MigrationStep
         $deLanguageId = $this->getLanguageId($connection, 'de-DE');
         $languageDE = null;
         if ($deLanguageId && $deLanguageId !== Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM)) {
-            $languageDE = static fn (string $countryId, string $name) => [
+            $languageDE = static fn (string $countryId, string $name): array => [
                 'language_id' => $deLanguageId,
                 'name' => $name,
                 'country_id' => $countryId,
@@ -35,7 +35,7 @@ class Migration1589357321AddCountries extends MigrationStep
         $enLanguageId = $this->getLanguageId($connection, 'en-GB');
         $languageEN = null;
         if ($enLanguageId && $enLanguageId !== Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM)) {
-            $languageEN = static fn (string $countryId, string $name) => [
+            $languageEN = static fn (string $countryId, string $name): array => [
                 'language_id' => $enLanguageId,
                 'name' => $name,
                 'country_id' => $countryId,
@@ -43,7 +43,7 @@ class Migration1589357321AddCountries extends MigrationStep
             ];
         }
 
-        $default = static fn (string $countryId, string $name) => [
+        $default = static fn (string $countryId, string $name): array => [
             'language_id' => Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM),
             'name' => $name,
             'country_id' => $countryId,

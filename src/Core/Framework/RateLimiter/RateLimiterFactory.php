@@ -47,7 +47,7 @@ class RateLimiterFactory
             return new NoLimiter();
         }
 
-        $id = $this->config['id'] . '-' . (string) $key;
+        $id = $this->config['id'] . '-' . $key;
         $lock = $this->lockFactory ? $this->lockFactory->createLock($id) : new NoLock();
 
         if (isset($this->config['reset']) && !($this->config['reset'] instanceof \DateInterval)) {

@@ -33,10 +33,12 @@ class CurrencyValidator implements EventSubscriberInterface
         $violations = new ConstraintViolationList();
 
         foreach ($commands as $command) {
-            if (!($command instanceof DeleteCommand) || $command->getEntityName() !== CurrencyDefinition::ENTITY_NAME) {
+            if (!($command instanceof DeleteCommand)) {
                 continue;
             }
-
+            if ($command->getEntityName() !== CurrencyDefinition::ENTITY_NAME) {
+                continue;
+            }
             $pk = $command->getPrimaryKey();
             $id = mb_strtolower(Uuid::fromBytesToHex($pk['id']));
             if ($id !== Defaults::CURRENCY) {

@@ -16,12 +16,12 @@ class SalesChannelTranslationCollection extends EntityCollection
      */
     public function getSalesChannelIds(): array
     {
-        return $this->fmap(fn (SalesChannelTranslationEntity $salesChannelTranslation) => $salesChannelTranslation->getSalesChannelId());
+        return $this->fmap(fn (SalesChannelTranslationEntity $salesChannelTranslation): string => $salesChannelTranslation->getSalesChannelId());
     }
 
     public function filterBySalesChannelId(string $id): self
     {
-        return $this->filter(fn (SalesChannelTranslationEntity $salesChannelTranslation) => $salesChannelTranslation->getSalesChannelId() === $id);
+        return $this->filter(fn (SalesChannelTranslationEntity $salesChannelTranslation): bool => $salesChannelTranslation->getSalesChannelId() === $id);
     }
 
     /**
@@ -29,12 +29,12 @@ class SalesChannelTranslationCollection extends EntityCollection
      */
     public function getLanguageIds(): array
     {
-        return $this->fmap(fn (SalesChannelTranslationEntity $salesChannelTranslation) => $salesChannelTranslation->getLanguageId());
+        return $this->fmap(fn (SalesChannelTranslationEntity $salesChannelTranslation): string => $salesChannelTranslation->getLanguageId());
     }
 
     public function filterByLanguageId(string $id): self
     {
-        return $this->filter(fn (SalesChannelTranslationEntity $salesChannelTranslation) => $salesChannelTranslation->getLanguageId() === $id);
+        return $this->filter(fn (SalesChannelTranslationEntity $salesChannelTranslation): bool => $salesChannelTranslation->getLanguageId() === $id);
     }
 
     public function getApiAlias(): string

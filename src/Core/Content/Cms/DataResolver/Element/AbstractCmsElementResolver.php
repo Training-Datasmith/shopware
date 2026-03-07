@@ -182,7 +182,7 @@ abstract class AbstractCmsElementResolver implements CmsElementResolverInterface
         // https://regex101.com/r/idIfbk/1
         return preg_replace_callback(
             '/{{\s*(?<property>[\w.\d]+)\s*}}/',
-            function ($matches) use ($resolverContext) {
+            function (array $matches) use ($resolverContext): string {
                 try {
                     return $this->resolveEntityValueToString($resolverContext->getEntity(), $matches['property'], $resolverContext);
                 } catch (PropertyNotFoundException|\InvalidArgumentException) {
@@ -198,7 +198,7 @@ abstract class AbstractCmsElementResolver implements CmsElementResolverInterface
         $referenceDefinition = $field->getReferenceDefinition();
 
         $manyToMany = $field->getToManyReferenceDefinition()->getFields()
-            ->firstWhere(static fn (Field $field) => $field instanceof ManyToManyAssociationField && $field->getReferenceDefinition() === $referenceDefinition);
+            ->firstWhere(static fn (Field $field): bool => $field instanceof ManyToManyAssociationField && $field->getReferenceDefinition() === $referenceDefinition);
 
         if (!$manyToMany instanceof ManyToManyAssociationField) {
             return null;
@@ -212,7 +212,7 @@ abstract class AbstractCmsElementResolver implements CmsElementResolverInterface
         $referenceDefinition = $field->getReferenceDefinition();
 
         $manyToOne = $field->getReferenceDefinition()->getFields()
-            ->firstWhere(static fn (Field $field) => $field instanceof ManyToOneAssociationField && $field->getReferenceDefinition() === $referenceDefinition);
+            ->firstWhere(static fn (Field $field): bool => $field instanceof ManyToOneAssociationField && $field->getReferenceDefinition() === $referenceDefinition);
 
         if (!$manyToOne instanceof ManyToOneAssociationField) {
             return null;

@@ -162,7 +162,7 @@ class SyncService implements SyncServiceInterface
         if (\count($primaries) === 1) {
             $first = $primaries->first();
             \assert($first instanceof IdField); // we already checked with the count
-            $values = \array_map(static fn ($id) => [$first->getPropertyName() => $id], $values);
+            $values = \array_map(static fn (string $id): array => [$first->getPropertyName() => $id], $values);
         }
 
         $operation->replacePayload($values);

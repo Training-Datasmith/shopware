@@ -37,8 +37,7 @@ abstract class Field extends XmlElement
     protected static function parse(\DOMElement $element): array
     {
         $values = XmlParserUtils::parseAttributes($element);
-        $values += XmlParserUtils::parseChildren($element);
 
-        return $values;
+        return $values + XmlParserUtils::parseChildren($element);
     }
 }

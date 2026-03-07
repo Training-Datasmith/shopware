@@ -19,10 +19,6 @@ class CartPromotionsDataDefinition extends Struct
      */
     private array $automaticPromotions = [];
 
-    public function __construct()
-    {
-    }
-
     /**
      * Adds a list of promotions to the existing list of automatic promotions.
      *

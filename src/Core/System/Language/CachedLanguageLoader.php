@@ -41,7 +41,7 @@ class CachedLanguageLoader implements LanguageLoaderInterface, EventSubscriberIn
      */
     public function loadLanguages(): array
     {
-        return $this->cache->get(self::CACHE_KEY, fn () => $this->loader->loadLanguages());
+        return $this->cache->get(self::CACHE_KEY, fn (): array => $this->loader->loadLanguages());
     }
 
     public function invalidateCache(): void

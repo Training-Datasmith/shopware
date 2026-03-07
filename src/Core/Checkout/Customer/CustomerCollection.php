@@ -20,12 +20,12 @@ class CustomerCollection extends EntityCollection
      */
     public function getGroupIds(): array
     {
-        return $this->fmap(fn (CustomerEntity $customer) => $customer->getGroupId());
+        return $this->fmap(fn (CustomerEntity $customer): string => $customer->getGroupId());
     }
 
     public function filterByGroupId(string $id): self
     {
-        return $this->filter(fn (CustomerEntity $customer) => $customer->getGroupId() === $id);
+        return $this->filter(fn (CustomerEntity $customer): bool => $customer->getGroupId() === $id);
     }
 
     /**
@@ -33,12 +33,12 @@ class CustomerCollection extends EntityCollection
      */
     public function getSalesChannelIds(): array
     {
-        return $this->fmap(fn (CustomerEntity $customer) => $customer->getSalesChannelId());
+        return $this->fmap(fn (CustomerEntity $customer): string => $customer->getSalesChannelId());
     }
 
     public function filterBySalesChannelId(string $id): self
     {
-        return $this->filter(fn (CustomerEntity $customer) => $customer->getSalesChannelId() === $id);
+        return $this->filter(fn (CustomerEntity $customer): bool => $customer->getSalesChannelId() === $id);
     }
 
     /**
@@ -46,7 +46,7 @@ class CustomerCollection extends EntityCollection
      */
     public function getLanguageIds(): array
     {
-        return $this->fmap(fn (CustomerEntity $customer) => $customer->getLanguageId());
+        return $this->fmap(fn (CustomerEntity $customer): string => $customer->getLanguageId());
     }
 
     /**
@@ -54,12 +54,12 @@ class CustomerCollection extends EntityCollection
      */
     public function getLastPaymentMethodIds(): array
     {
-        return $this->fmap(fn (CustomerEntity $customer) => $customer->getLastPaymentMethodId());
+        return $this->fmap(fn (CustomerEntity $customer): ?string => $customer->getLastPaymentMethodId());
     }
 
     public function filterByLastPaymentMethodId(string $id): self
     {
-        return $this->filter(fn (CustomerEntity $customer) => $customer->getLastPaymentMethodId() === $id);
+        return $this->filter(fn (CustomerEntity $customer): bool => $customer->getLastPaymentMethodId() === $id);
     }
 
     /**
@@ -67,12 +67,12 @@ class CustomerCollection extends EntityCollection
      */
     public function getDefaultBillingAddressIds(): array
     {
-        return $this->fmap(fn (CustomerEntity $customer) => $customer->getDefaultBillingAddressId());
+        return $this->fmap(fn (CustomerEntity $customer): string => $customer->getDefaultBillingAddressId());
     }
 
     public function filterByDefaultBillingAddressId(string $id): self
     {
-        return $this->filter(fn (CustomerEntity $customer) => $customer->getDefaultBillingAddressId() === $id);
+        return $this->filter(fn (CustomerEntity $customer): bool => $customer->getDefaultBillingAddressId() === $id);
     }
 
     /**
@@ -80,46 +80,46 @@ class CustomerCollection extends EntityCollection
      */
     public function getDefaultShippingAddressIds(): array
     {
-        return $this->fmap(fn (CustomerEntity $customer) => $customer->getDefaultShippingAddressId());
+        return $this->fmap(fn (CustomerEntity $customer): string => $customer->getDefaultShippingAddressId());
     }
 
     public function filterByDefaultShippingAddressId(string $id): self
     {
-        return $this->filter(fn (CustomerEntity $customer) => $customer->getDefaultShippingAddressId() === $id);
+        return $this->filter(fn (CustomerEntity $customer): bool => $customer->getDefaultShippingAddressId() === $id);
     }
 
     public function getGroups(): CustomerGroupCollection
     {
         return new CustomerGroupCollection(
-            $this->fmap(fn (CustomerEntity $customer) => $customer->getGroup())
+            $this->fmap(fn (CustomerEntity $customer): ?\Shopware\Core\Checkout\Customer\Aggregate\CustomerGroup\CustomerGroupEntity => $customer->getGroup())
         );
     }
 
     public function getSalesChannels(): SalesChannelCollection
     {
         return new SalesChannelCollection(
-            $this->fmap(fn (CustomerEntity $customer) => $customer->getSalesChannel())
+            $this->fmap(fn (CustomerEntity $customer): ?\Shopware\Core\System\SalesChannel\SalesChannelEntity => $customer->getSalesChannel())
         );
     }
 
     public function getLastPaymentMethods(): PaymentMethodCollection
     {
         return new PaymentMethodCollection(
-            $this->fmap(fn (CustomerEntity $customer) => $customer->getLastPaymentMethod())
+            $this->fmap(fn (CustomerEntity $customer): ?\Shopware\Core\Checkout\Payment\PaymentMethodEntity => $customer->getLastPaymentMethod())
         );
     }
 
     public function getDefaultBillingAddress(): CustomerAddressCollection
     {
         return new CustomerAddressCollection(
-            $this->fmap(fn (CustomerEntity $customer) => $customer->getDefaultBillingAddress())
+            $this->fmap(fn (CustomerEntity $customer): ?\Shopware\Core\Checkout\Customer\Aggregate\CustomerAddress\CustomerAddressEntity => $customer->getDefaultBillingAddress())
         );
     }
 
     public function getDefaultShippingAddress(): CustomerAddressCollection
     {
         return new CustomerAddressCollection(
-            $this->fmap(fn (CustomerEntity $customer) => $customer->getDefaultShippingAddress())
+            $this->fmap(fn (CustomerEntity $customer): ?\Shopware\Core\Checkout\Customer\Aggregate\CustomerAddress\CustomerAddressEntity => $customer->getDefaultShippingAddress())
         );
     }
 
@@ -128,12 +128,12 @@ class CustomerCollection extends EntityCollection
      */
     public function getListVatIds(): array
     {
-        return $this->fmap(fn (CustomerEntity $customer) => $customer->getVatIds());
+        return $this->fmap(fn (CustomerEntity $customer): ?array => $customer->getVatIds());
     }
 
     public function filterByVatId(string $id): self
     {
-        return $this->filter(fn (CustomerEntity $customer) => \in_array($id, $customer->getVatIds() ?? [], true));
+        return $this->filter(fn (CustomerEntity $customer): bool => \in_array($id, $customer->getVatIds() ?? [], true));
     }
 
     public function getApiAlias(): string

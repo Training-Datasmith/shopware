@@ -13,7 +13,7 @@ class SeoUrlCollection extends EntityCollection
 {
     public function filterBySalesChannelId(string $id): SeoUrlCollection
     {
-        return $this->filter(static fn (SeoUrlEntity $seoUrl) => $seoUrl->getSalesChannelId() === $id);
+        return $this->filter(static fn (SeoUrlEntity $seoUrl): bool => $seoUrl->getSalesChannelId() === $id);
     }
 
     public function getApiAlias(): string

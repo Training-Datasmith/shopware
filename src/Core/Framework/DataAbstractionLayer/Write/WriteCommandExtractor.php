@@ -94,7 +94,10 @@ class WriteCommandExtractor
             }
 
             $field = $definition->getFields()->get($property);
-            if ($field === null || $field instanceof AssociationField) {
+            if ($field === null) {
+                continue;
+            }
+            if ($field instanceof AssociationField) {
                 continue;
             }
 
@@ -142,7 +145,10 @@ class WriteCommandExtractor
             if ($field instanceof ChildrenAssociationField) {
                 continue;
             }
-            if ($field === null || !$field instanceof AssociationField) {
+            if ($field === null) {
+                continue;
+            }
+            if (!$field instanceof AssociationField) {
                 continue;
             }
 
@@ -226,7 +232,7 @@ class WriteCommandExtractor
         }
 
         // call map with child associations only
-        $children = array_filter($fields, static fn (Field $field) => $field instanceof ChildrenAssociationField);
+        $children = array_filter($fields, static fn (Field $field): bool => $field instanceof ChildrenAssociationField);
 
         if ($children !== []) {
             $this->map($children, $stack, $existence, $parameters);
@@ -299,7 +305,7 @@ class WriteCommandExtractor
      */
     private function map(array $fields, DataStack $stack, EntityExistence $existence, WriteParameterBag $parameters): array
     {
-        $isCreate = !$existence->exists() || $existence->childChangedToParent();
+        !$existence->exists() || $existence->childChangedToParent();
 
         foreach ($fields as $field) {
             $kvPair = $this->getKeyValuePair($field, $stack, $existence);
@@ -585,10 +591,12 @@ class WriteCommandExtractor
         $changes = [];
 
         foreach ($fields as $field) {
-            if (!$field instanceof StorageAware || !$field->is(Immutable::class)) {
+            if (!$field instanceof StorageAware) {
                 continue;
             }
-
+            if (!$field->is(Immutable::class)) {
+                continue;
+            }
             if (!isset($data[$field->getStorageName()])) {
                 continue;
             }

@@ -80,7 +80,7 @@ final readonly class KeyFetcher
                 $this->systemConfigService->set(self::CORE_STORE_JWKS, $result);
 
                 /** @var array{keys: array<int, JSONWebKey>} $key */
-                $key = json_decode($result, true, 512, \JSON_THROW_ON_ERROR);
+                $key = json_decode((string) $result, true, 512, \JSON_THROW_ON_ERROR);
 
                 return JWKCollection::fromArray($key);
             }

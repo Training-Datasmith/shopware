@@ -98,7 +98,7 @@ final class CustomerAdminSearchIndexer extends AbstractAdminIndexer
             }
         }
 
-        return array_values(array_unique(array_filter($customerIds, '\is_string')));
+        return array_values(array_unique(array_filter($customerIds, \is_string(...))));
     }
 
     public function mapping(array $mapping): array

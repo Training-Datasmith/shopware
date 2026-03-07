@@ -237,7 +237,7 @@ class TreeUpdater
         return $definition->getFields()
             ->filterInstance(TreePathField::class)
             /** @phpstan-ignore argument.type (Collection only contains `TreePathField`) */
-            ->reduce(function (array $fields, TreePathField $field) {
+            ->reduce(function (array $fields, TreePathField $field): array {
                 if (!\in_array($field->getPathField(), $fields, true)) {
                     $fields[] = $field->getPathField();
                 }

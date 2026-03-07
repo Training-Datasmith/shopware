@@ -174,13 +174,13 @@ class SendMailAction extends FlowAction implements DelayableAction
             ...$flow->data(),
         ];
 
-        $this->send($data, $flow->getContext(), $templateData, $mailExtension, $injectedTranslator);
+        $this->send($data, $flow->getContext(), $templateData, $injectedTranslator);
     }
 
     /**
      * @param array<string, mixed> $templateData
      */
-    private function send(DataBag $data, Context $context, array $templateData, MailSendSubscriberConfig $extension, bool $injectedTranslator): void
+    private function send(DataBag $data, Context $context, array $templateData, bool $injectedTranslator): void
     {
         try {
             $this->emailService->send(
@@ -260,7 +260,10 @@ class SendMailAction extends FlowAction implements DelayableAction
             }
 
             $internalEntityName = $value->getInternalEntityName();
-            if ($internalEntityName === null || $internalEntityName === '') {
+            if ($internalEntityName === null) {
+                continue;
+            }
+            if ($internalEntityName === '') {
                 continue;
             }
 
@@ -354,7 +357,7 @@ class SendMailAction extends FlowAction implements DelayableAction
             return [];
         }
 
-        return [trim($formData['email']) => trim(($formData['firstName'] ?? '') . ' ' . ($formData['lastName'] ?? ''))];
+        return [trim((string) $formData['email']) => trim(($formData['firstName'] ?? '') . ' ' . ($formData['lastName'] ?? ''))];
     }
 
     /**

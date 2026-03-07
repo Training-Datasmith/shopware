@@ -80,13 +80,18 @@ class ThemeCompileCommand extends Command
         }
 
         foreach ($this->themeProvider->load($context, $input->getOption('active-only')) as $salesChannelId => $themeId) {
-            if ($onlySalesChannel !== null && !\in_array($salesChannelId, $onlySalesChannel, true)
-                || $skipSalesChannel !== null && \in_array($salesChannelId, $skipSalesChannel, true)
-                || $onlyThemes !== null && !\in_array($themeId, $onlyThemes, true)
-                || $skipThemes !== null && \in_array($themeId, $skipThemes, true)) {
+            if ($onlySalesChannel !== null && !\in_array($salesChannelId, $onlySalesChannel, true)) {
                 continue;
             }
-
+            if ($skipSalesChannel !== null && \in_array($salesChannelId, $skipSalesChannel, true)) {
+                continue;
+            }
+            if ($onlyThemes !== null && !\in_array($themeId, $onlyThemes, true)) {
+                continue;
+            }
+            if ($skipThemes !== null && \in_array($themeId, $skipThemes, true)) {
+                continue;
+            }
             $this->io->block(\sprintf('Compiling theme for sales channel for : %s', $salesChannelId));
 
             $start = microtime(true);

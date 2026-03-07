@@ -72,8 +72,10 @@ class PriceSerializer extends FieldSerializer
 
         foreach ($record as $currencyIso => $price) {
             $currency = $this->getCurrencyIdFromIso($currencyIso, $context);
-
-            if ($currency === null || !$this->isValidPrice($price)) {
+            if ($currency === null) {
+                continue;
+            }
+            if (!$this->isValidPrice($price)) {
                 continue;
             }
 

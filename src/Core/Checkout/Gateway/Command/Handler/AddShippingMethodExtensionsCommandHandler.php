@@ -35,9 +35,7 @@ class AddShippingMethodExtensionsCommandHandler extends AbstractCheckoutGatewayC
      */
     public function handle(AbstractCheckoutGatewayCommand $command, CheckoutGatewayResponse $response, SalesChannelContext $context): void
     {
-        $method = $response->getAvailableShippingMethods()->filter(function (ShippingMethodEntity $method) use ($command) {
-            return $method->getTechnicalName() === $command->shippingMethodTechnicalName;
-        })->first();
+        $method = $response->getAvailableShippingMethods()->filter(fn(ShippingMethodEntity $method) => $method->getTechnicalName() === $command->shippingMethodTechnicalName)->first();
 
         if (!$method) {
             $this->logger->logOrThrowException(

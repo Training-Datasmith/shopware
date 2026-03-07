@@ -94,9 +94,7 @@ class TranslationController extends InstallerController
     {
         return array_values(array_unique(array_filter(
             $locales,
-            static function (string $locale): bool {
-                return \preg_match(self::LOCALE_PATTERN, $locale) === 1;
-            }
+            static fn(string $locale): bool => \preg_match(self::LOCALE_PATTERN, $locale) === 1
         )));
     }
 }

@@ -58,9 +58,7 @@ class PrefixFilesystem implements FilesystemOperator
         $location = $this->preparePath($location);
 
         return $this->filesystem->listContents($location, $deep)->map(
-            function (StorageAttributes $info) {
-                return $info->withPath($this->stripPath($info->path()));
-            }
+            fn(StorageAttributes $info) => $info->withPath($this->stripPath($info->path()))
         );
     }
 

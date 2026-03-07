@@ -221,7 +221,7 @@ class CreateAppCommand extends Command
         ];
 
         return array_combine(
-            array_map(fn (array $property) => $property['name'], $properties),
+            array_map(fn (array $property): string => $property['name'], $properties),
             $properties
         );
     }
@@ -341,7 +341,7 @@ class CreateAppCommand extends Command
     private function replaceTemplateValues(string $manifestTemplate, array $details): string
     {
         return str_replace(
-            array_map(fn ($param) => \sprintf('{{%s}}', $param), array_keys($details)),
+            array_map(fn (string $param): string => \sprintf('{{%s}}', $param), array_keys($details)),
             array_values($details),
             $manifestTemplate
         );

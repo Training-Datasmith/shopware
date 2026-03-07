@@ -35,7 +35,7 @@ final readonly class DecodedPurchaseStruct
         $this->sub = $data['sub'];
     }
 
-    protected function throwException(string $message): HttpException
+    protected function throwException(string $message): \Shopware\Core\Framework\JWT\JWTException
     {
         return JWTException::invalidJwt($message);
     }

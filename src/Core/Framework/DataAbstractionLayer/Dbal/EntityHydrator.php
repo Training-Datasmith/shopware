@@ -122,7 +122,10 @@ class EntityHydrator
         $primaryKey = [];
 
         foreach ($primaryKeyFields as $field) {
-            if ($field instanceof VersionField || $field instanceof ReferenceVersionField) {
+            if ($field instanceof VersionField) {
+                continue;
+            }
+            if ($field instanceof ReferenceVersionField) {
                 continue;
             }
             $accessor = $root . '.' . $field->getPropertyName();
@@ -300,7 +303,7 @@ class EntityHydrator
         // explode hexed ids
         $ids = explode('||', (string) $row[$accessor]);
 
-        $ids = array_map('strtolower', array_filter($ids));
+        $ids = array_map(strtolower(...), array_filter($ids));
 
         $mapping = $entity->getExtension(EntityReader::INTERNAL_MAPPING_STORAGE);
         if (!$mapping instanceof ArrayStruct) {

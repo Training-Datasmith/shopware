@@ -58,7 +58,7 @@ class KernelFactory
 
         $cacheId = (string) EnvironmentHelper::getVariable('SHOPWARE_CACHE_ID', '');
 
-        $kernel = new static::$kernelClass(
+        return new static::$kernelClass(
             $environment,
             $debug,
             $pluginLoader,
@@ -67,8 +67,6 @@ class KernelFactory
             $connection,
             self::getProjectDir()
         );
-
-        return $kernel;
     }
 
     private static function getProjectDir(): string

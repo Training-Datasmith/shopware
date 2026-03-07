@@ -198,9 +198,7 @@ EOF;
 
         $replace = str_replace('#class#', $class, $replace);
 
-        $content = str_replace($find, $replace, $content);
-
-        return $content;
+        return str_replace($find, $replace, $content);
     }
 
     private function generateService(EntityDefinition $definition): string
@@ -303,7 +301,7 @@ EOF;
     {
         $parts = explode('_', $definition->getEntityName());
 
-        $parts = array_map('ucfirst', $parts);
+        $parts = array_map(ucfirst(...), $parts);
 
         return implode('', $parts) . 'Hydrator';
     }

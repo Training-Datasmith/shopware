@@ -190,7 +190,7 @@ class SalesChannelProxyController extends AbstractController
 
             $token = $this->imitateCustomerTokenGenerator->encode($token);
         } else {
-            $token = Feature::silent('v6.8.0.0', fn () => $this->imitateCustomerTokenGenerator->generate($salesChannelId, $customerId, $userId));
+            $token = Feature::silent('v6.8.0.0', fn (): string => $this->imitateCustomerTokenGenerator->generate($salesChannelId, $customerId, $userId));
         }
 
         return new JsonResponse([
@@ -342,7 +342,7 @@ class SalesChannelProxyController extends AbstractController
         $contextToken = $request->headers->get(PlatformRequest::HEADER_CONTEXT_TOKEN);
 
         if ($contextToken === null) {
-            $contextToken = Random::getAlphanumericString(32);
+            return Random::getAlphanumericString(32);
         }
 
         return $contextToken;

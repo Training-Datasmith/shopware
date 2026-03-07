@@ -159,7 +159,7 @@ class ProductConfiguratorLoader
                 continue;
             }
             $options->sort(
-                static function (PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) use ($group) {
+                static function (PropertyGroupOptionEntity $a, PropertyGroupOptionEntity $b) use ($group): int {
                     $configuratorSettingA = $a->getConfiguratorSetting();
                     $configuratorSettingB = $b->getConfiguratorSetting();
 

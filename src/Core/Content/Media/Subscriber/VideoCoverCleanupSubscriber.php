@@ -69,8 +69,10 @@ class VideoCoverCleanupSubscriber implements EventSubscriberInterface
             if ($metaData === null) {
                 continue;
             }
-
-            if (!\is_array($metaData['video'] ?? null) || !isset($metaData['video']['coverMediaId'])) {
+            if (!\is_array($metaData['video'] ?? null)) {
+                continue;
+            }
+            if (!isset($metaData['video']['coverMediaId'])) {
                 continue;
             }
 

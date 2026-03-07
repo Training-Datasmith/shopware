@@ -117,13 +117,11 @@ class PluginService
             $plugins[] = $pluginData;
         }
 
-        if ($plugins !== []) {
-            foreach ($plugins as $plugin) {
-                try {
-                    $this->pluginRepo->upsert([$plugin], $shopwareContext);
-                } catch (ShopwareHttpException $exception) {
-                    $errors->set($plugin['name'], $exception);
-                }
+        foreach ($plugins as $plugin) {
+            try {
+                $this->pluginRepo->upsert([$plugin], $shopwareContext);
+            } catch (ShopwareHttpException $exception) {
+                $errors->set($plugin['name'], $exception);
             }
         }
 

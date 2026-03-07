@@ -143,7 +143,7 @@ abstract class Collection extends Struct implements \IteratorAggregate, \Countab
      */
     public function flatMap(\Closure $closure): array
     {
-        return \array_merge(...$this->fmap(static fn ($value) => (array) $closure($value)));
+        return \array_merge(...$this->fmap(static fn ($value): array => (array) $closure($value)));
     }
 
     /**
@@ -159,9 +159,7 @@ abstract class Collection extends Struct implements \IteratorAggregate, \Countab
      */
     public function filterInstance(string $class): static
     {
-        return $this->filter(static function ($item) use ($class) {
-            return $item instanceof $class;
-        });
+        return $this->filter(static fn($item) => $item instanceof $class);
     }
 
     /**

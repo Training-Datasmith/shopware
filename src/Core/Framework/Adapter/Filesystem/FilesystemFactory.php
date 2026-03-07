@@ -134,12 +134,11 @@ class FilesystemFactory
         $request = new Request(query: $_GET, server: $_SERVER);
 
         $basePath = $request->getSchemeAndHttpHost() . $request->getBasePath();
-        $requestUrl = rtrim($basePath, '/') . '/';
 
         if ($request->getHost() === '' && EnvironmentHelper::getVariable('APP_URL')) {
-            $requestUrl = (string) EnvironmentHelper::getVariable('APP_URL');
+            return (string) EnvironmentHelper::getVariable('APP_URL');
         }
 
-        return $requestUrl;
+        return rtrim($basePath, '/') . '/';
     }
 }

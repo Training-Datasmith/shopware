@@ -358,7 +358,7 @@ class ZugferdDocument
 
     protected function getPriceWithFallback(?CalculatedTax $tax, ?CalculatedPrice $fallbackPrice = null): float
     {
-        $tax = $tax ?? $fallbackPrice?->getCalculatedTaxes()?->first();
+        $tax ??= $fallbackPrice?->getCalculatedTaxes()?->first();
 
         if ($tax === null) {
             return $fallbackPrice?->getTotalPrice() ?? 0.0;

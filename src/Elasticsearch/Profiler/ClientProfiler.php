@@ -148,7 +148,7 @@ class ClientProfiler extends Client
 
         if (isset($request['index'])) {
             if (\is_array($request['index'])) {
-                $request['index'] = implode(',', array_map('trim', $request['index']));
+                $request['index'] = implode(',', array_map(trim(...), $request['index']));
             }
 
             $path .= $request['index'] . '/_search';

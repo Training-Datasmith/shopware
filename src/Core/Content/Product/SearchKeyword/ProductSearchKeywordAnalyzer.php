@@ -40,7 +40,7 @@ class ProductSearchKeywordAnalyzer implements ProductSearchKeywordAnalyzerInterf
             ksort($values);
 
             if ($isTokenize) {
-                $nonScalarValues = array_filter($values, static fn ($value) => !\is_scalar($value));
+                $nonScalarValues = array_filter($values, static fn ($value): bool => !\is_scalar($value));
 
                 if ($nonScalarValues !== []) {
                     continue;
@@ -52,7 +52,7 @@ class ProductSearchKeywordAnalyzer implements ProductSearchKeywordAnalyzerInterf
                 $values[] = implode(' ', $values);
             }
 
-            $values = array_filter($values, static fn ($value) => \is_scalar($value)); // Keep only scalar values
+            $values = array_filter($values, \is_scalar(...)); // Keep only scalar values
             $values = array_unique($values);
 
             foreach ($values as $value) {

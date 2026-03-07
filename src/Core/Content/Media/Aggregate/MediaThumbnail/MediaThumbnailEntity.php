@@ -27,7 +27,7 @@ class MediaThumbnailEntity extends Entity
     /**
      * @deprecated tag:v6.8.0 - Will be non-nullable
      */
-    protected ?string $mediaId;
+    protected ?string $mediaId = null;
 
     protected ?MediaEntity $media = null;
 

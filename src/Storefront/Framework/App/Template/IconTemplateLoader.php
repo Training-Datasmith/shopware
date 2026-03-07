@@ -51,9 +51,7 @@ class IconTemplateLoader extends AbstractTemplateLoader
             ->ignoreUnreadableDirs();
 
         // return file paths relative to Resources/views directory
-        $iconPaths = array_values(array_map(static function (SplFileInfo $file): string {
-            return $file->getRelativePathname();
-        }, iterator_to_array($finder)));
+        $iconPaths = array_values(array_map(static fn(SplFileInfo $file): string => $file->getRelativePathname(), iterator_to_array($finder)));
 
         return [
             ...array_values($viewPaths),

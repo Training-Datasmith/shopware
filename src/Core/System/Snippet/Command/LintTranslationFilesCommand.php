@@ -97,7 +97,7 @@ class LintTranslationFilesCommand extends Command
                         'Found multiple country-specific candidates for "%s". Select the file to rename',
                         $targetPath,
                     ),
-                    \array_map(static fn ($file) => $file->getFullPath(), $fileOptions),
+                    \array_map(static fn ($file): string => $file->getFullPath(), $fileOptions),
                 ));
             }
 

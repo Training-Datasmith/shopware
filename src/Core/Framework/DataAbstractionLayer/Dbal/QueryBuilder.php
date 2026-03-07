@@ -97,7 +97,7 @@ class QueryBuilder extends DBALQueryBuilder
         $sql = $query->getUnmodifiedSQL();
 
         if ($this->title) {
-            $sql = '-- ' . $this->title . \PHP_EOL . $sql;
+            return '-- ' . $this->title . \PHP_EOL . $sql;
         }
 
         return $sql;

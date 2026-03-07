@@ -55,7 +55,7 @@ class DocumentDefinition extends EntityDefinition
 
     protected function defineFields(): FieldCollection
     {
-        $collection = new FieldCollection([
+        return new FieldCollection([
             (new IdField('id', 'id'))->addFlags(new ApiAware(), new PrimaryKey(), new Required()),
 
             (new FkField('document_type_id', 'documentTypeId', DocumentTypeDefinition::class))->addFlags(new ApiAware(), new Required()),
@@ -80,7 +80,5 @@ class DocumentDefinition extends EntityDefinition
             (new ManyToOneAssociationField('documentMediaFile', 'document_media_file_id', MediaDefinition::class, 'id', false))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('documentA11yMediaFile', 'document_a11y_media_file_id', MediaDefinition::class, 'id', false))->addFlags(new ApiAware()),
         ]);
-
-        return $collection;
     }
 }

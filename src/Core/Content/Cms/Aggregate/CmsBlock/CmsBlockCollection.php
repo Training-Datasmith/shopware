@@ -29,7 +29,7 @@ class CmsBlockCollection extends EntityCollection
 
     public function filterBySectionPosition(string $position): CmsBlockCollection
     {
-        return $this->filter(fn (CmsBlockEntity $entity) => $entity->getSectionPosition() === $position);
+        return $this->filter(fn (CmsBlockEntity $entity): bool => $entity->getSectionPosition() === $position);
     }
 
     public function setSlots(CmsSlotCollection $slots): void
@@ -58,7 +58,7 @@ class CmsBlockCollection extends EntityCollection
      */
     public function hasBlockWithType(string $type): bool
     {
-        return $this->firstWhere(fn (CmsBlockEntity $block) => $block->getType() === $type) !== null;
+        return $this->firstWhere(fn (CmsBlockEntity $block): bool => $block->getType() === $type) !== null;
     }
 
     protected function getExpectedClass(): string

@@ -204,7 +204,7 @@ class UserController extends AbstractController
             throw new PermissionDeniedException();
         }
 
-        $events = $context->scope(Context::SYSTEM_SCOPE, fn (Context $context) => $this->userRepository->upsert([$data], $context));
+        $events = $context->scope(Context::SYSTEM_SCOPE, fn (Context $context): \Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent => $this->userRepository->upsert([$data], $context));
         $eventIds = $events->getEventByEntityName(UserDefinition::ENTITY_NAME)?->getIds() ?? [];
         $entityId = array_last($eventIds);
 
@@ -244,7 +244,7 @@ class UserController extends AbstractController
             $data['id'] = $roleId ?? null;
         }
 
-        $events = $context->scope(Context::SYSTEM_SCOPE, fn (Context $context) => $this->roleRepository->upsert([$data], $context));
+        $events = $context->scope(Context::SYSTEM_SCOPE, fn (Context $context): \Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent => $this->roleRepository->upsert([$data], $context));
         $eventIds = $events->getEventByEntityName(AclRoleDefinition::ENTITY_NAME)?->getIds() ?? [];
         $entityId = array_last($eventIds);
         \assert($entityId !== null);

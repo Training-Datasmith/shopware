@@ -92,10 +92,10 @@ class LineItemTransformer
             $data['downloads'] = array_values($downloads->map(fn (OrderLineItemDownloadEntity $download): array => ['id' => $download->getId()]));
         }
 
-        $output[$lineItem->getId()] = array_filter($data, fn ($value) => $value !== null);
+        $output[$lineItem->getId()] = array_filter($data, fn ($value): bool => $value !== null);
 
         if ($lineItem->hasChildren()) {
-            $output = [...$output, ...self::transformCollection($lineItem->getChildren(), $id)];
+            return [...$output, ...self::transformCollection($lineItem->getChildren(), $id)];
         }
 
         return $output;

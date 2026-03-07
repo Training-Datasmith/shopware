@@ -91,10 +91,8 @@ class FlowEntity extends Entity
 
     /**
      * @internal
-     *
-     * @return string|Flow|null
      */
-    public function getPayload()
+    public function getPayload(): string|\Shopware\Core\Content\Flow\Dispatching\Struct\Flow|null
     {
         $this->checkIfPropertyAccessIsAllowed('payload');
 
@@ -103,10 +101,8 @@ class FlowEntity extends Entity
 
     /**
      * @internal
-     *
-     * @param string|Flow|null $payload
      */
-    public function setPayload($payload): void
+    public function setPayload(string|\Shopware\Core\Content\Flow\Dispatching\Struct\Flow|null $payload): void
     {
         $this->payload = $payload;
     }

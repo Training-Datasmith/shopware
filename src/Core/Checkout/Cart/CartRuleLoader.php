@@ -98,7 +98,7 @@ class CartRuleLoader implements ResetInterface
             }
 
             $timestamps = $cart->getLineItems()->fmap(static fn (LineItem $lineItem) => $lineItem->getDataTimestamp()?->format(Defaults::STORAGE_DATE_TIME_FORMAT));
-            $dataHashes = $cart->getLineItems()->fmap(static fn (LineItem $lineItem) => $lineItem->getDataContextHash());
+            $dataHashes = $cart->getLineItems()->fmap(static fn (LineItem $lineItem): ?string => $lineItem->getDataContextHash());
 
             $result = $this->extensions->publish(
                 name: CheckoutCartRuleLoaderExtension::NAME,
@@ -131,7 +131,7 @@ class CartRuleLoader implements ResetInterface
         // For existing carts filter rules to only contain the rules from the current cart
         if ($new === false) {
             $rules = $rules->filter(
-                fn (RuleEntity $rule) => \in_array($rule->getId(), $originalCart->getRuleIds(), true)
+                fn (RuleEntity $rule): bool => \in_array($rule->getId(), $originalCart->getRuleIds(), true)
             );
         }
 
@@ -203,11 +203,16 @@ class CartRuleLoader implements ResetInterface
     {
         $previousLineItems = $previous->getLineItems();
         $currentLineItems = $current->getLineItems();
-
-        return $previousLineItems->count() !== $currentLineItems->count()
-            || $previous->getPrice()->getTotalPrice() !== $current->getPrice()->getTotalPrice()
-            || $previousLineItems->getKeys() !== $currentLineItems->getKeys()
-            || $previousLineItems->getTypes() !== $currentLineItems->getTypes();
+        if ($previousLineItems->count() !== $currentLineItems->count()) {
+            return true;
+        }
+        if ($previous->getPrice()->getTotalPrice() !== $current->getPrice()->getTotalPrice()) {
+            return true;
+        }
+        if ($previousLineItems->getKeys() !== $currentLineItems->getKeys()) {
+            return true;
+        }
+        return $previousLineItems->getTypes() !== $currentLineItems->getTypes();
     }
 
     private function detectTaxType(SalesChannelContext $context, float $cartNetAmount = 0): string

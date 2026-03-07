@@ -139,7 +139,6 @@ class AppLifecycle extends AbstractAppLifecycle
             new AppUpdateParameters(acceptPermissions: $parameters->acceptPermissions),
             $metadata,
             $appId,
-            $roleId,
             $defaultLocale,
             $context,
             true
@@ -167,7 +166,6 @@ class AppLifecycle extends AbstractAppLifecycle
             $parameters,
             $metadata,
             $app['id'],
-            $app['roleId'],
             $defaultLocale,
             $context,
             false
@@ -212,7 +210,6 @@ class AppLifecycle extends AbstractAppLifecycle
         AppUpdateParameters $parameters,
         array $metadata,
         string $id,
-        string $roleId,
         string $defaultLocale,
         Context $context,
         bool $install
@@ -510,7 +507,7 @@ class AppLifecycle extends AbstractAppLifecycle
 
             $payload['modules'] = array_reduce(
                 $manifest->getAdmin()->getModules(),
-                static function (array $modules, Module $module) use ($defaultLocale) {
+                static function (array $modules, Module $module) use ($defaultLocale): array {
                     $modules[] = $module->toArray($defaultLocale);
 
                     return $modules;
@@ -691,7 +688,7 @@ class AppLifecycle extends AbstractAppLifecycle
             $actions = $flowActions->getActions()?->getActions() ?? [];
         }
 
-        $webhooks = array_map(function ($action) use ($appId) {
+        $webhooks = array_map(function (\Shopware\Core\Framework\App\Flow\Action\Xml\Action $action) use ($appId): array {
             $name = $action->getMeta()->getName();
 
             return [

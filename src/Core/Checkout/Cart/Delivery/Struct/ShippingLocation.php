@@ -31,7 +31,7 @@ class ShippingLocation extends Struct
 
     public static function createFromCountry(CountryEntity $country): self
     {
-        return new self($country, null, null);
+        return new self($country);
     }
 
     public function getCountry(): CountryEntity

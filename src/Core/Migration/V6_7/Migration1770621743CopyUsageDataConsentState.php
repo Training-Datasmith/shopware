@@ -35,7 +35,7 @@ class Migration1770621743CopyUsageDataConsentState extends MigrationStep
         }
 
         /** @var array{_value?: string} $config */
-        $config = json_decode($rawConfig['configuration_value'], true, flags: \JSON_THROW_ON_ERROR);
+        $config = json_decode((string) $rawConfig['configuration_value'], true, flags: \JSON_THROW_ON_ERROR);
 
         $value = $config['_value'] ?? null;
         if (!\is_string($value)) {

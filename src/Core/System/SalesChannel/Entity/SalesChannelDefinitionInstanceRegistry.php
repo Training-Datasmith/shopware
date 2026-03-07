@@ -57,7 +57,7 @@ class SalesChannelDefinitionInstanceRegistry extends DefinitionInstanceRegistry
      */
     public function getSalesChannelDefinitions(): array
     {
-        return array_filter($this->getDefinitions(), static fn ($definition): bool => $definition instanceof SalesChannelDefinitionInterface);
+        return array_filter($this->getDefinitions(), static fn (\Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition $definition): bool => $definition instanceof SalesChannelDefinitionInterface);
     }
 
     public function register(EntityDefinition $definition, ?string $serviceId = null): void

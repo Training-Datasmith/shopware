@@ -63,8 +63,10 @@ class StopwordTokenFilter extends AbstractTokenFilter
         $filtered = [];
         foreach ($tokens as $tag) {
             $tag = trim($tag);
-
-            if ($tag === '' || mb_strlen($tag) < $minSearchTermLength) {
+            if ($tag === '') {
+                continue;
+            }
+            if (mb_strlen($tag) < $minSearchTermLength) {
                 continue;
             }
 

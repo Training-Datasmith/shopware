@@ -213,7 +213,7 @@ class Migration1599822061MigrateOrderMails extends MigrationStep
         foreach ($events as $event) {
             $typeId = $event['typeId'];
 
-            $typeMails = array_filter($mails, static fn ($mail) => $mail['mail_template_type_id'] === $typeId);
+            $typeMails = array_filter($mails, static fn (array $mail): bool => $mail['mail_template_type_id'] === $typeId);
 
             foreach ($typeMails as &$mail) {
                 $mail['technical_name'] = $event['event_name'];

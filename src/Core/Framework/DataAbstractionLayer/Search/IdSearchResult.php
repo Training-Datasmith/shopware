@@ -39,7 +39,7 @@ class IdSearchResult extends Struct
     ) {
         $this->ids = array_column($data, 'primaryKey');
 
-        $this->data = array_map(static fn ($row) => $row['data'], $data);
+        $this->data = array_map(static fn (array $row): array => $row['data'], $data);
     }
 
     /**

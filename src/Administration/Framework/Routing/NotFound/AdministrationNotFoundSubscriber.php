@@ -35,7 +35,7 @@ readonly class AdministrationNotFoundSubscriber implements EventSubscriberInterf
     public function onError(ExceptionEvent $event): void
     {
         $path = $event->getRequest()->getPathInfo();
-        $isAdminPath = str_starts_with($path, '/' . $this->adminPath);
+        $isAdminPath = str_starts_with((string) $path, '/' . $this->adminPath);
 
         $is404StatusCode = $event->getThrowable() instanceof HttpException && $event->getThrowable()->getStatusCode() === Response::HTTP_NOT_FOUND;
 

@@ -128,7 +128,7 @@ class CacheInvalidator
 
         if ($this->tagInvalidationLogEnabled) {
             $callerFrame = $this->backtraceCollector->getFirstFrame(
-                fn (array $frame) => !isset($frame['class'], $frame['function'])
+                fn (array $frame): bool => !isset($frame['class'], $frame['function'])
                     || $frame['class'] === self::class
             );
 

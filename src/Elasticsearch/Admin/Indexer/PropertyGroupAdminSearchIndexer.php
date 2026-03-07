@@ -73,7 +73,7 @@ final class PropertyGroupAdminSearchIndexer extends AbstractAdminIndexer
             }
         }
 
-        return array_values(array_unique(array_filter($propertyGroupIds, '\is_string')));
+        return array_values(array_unique(array_filter($propertyGroupIds, \is_string(...))));
     }
 
     public function mapping(array $mapping): array

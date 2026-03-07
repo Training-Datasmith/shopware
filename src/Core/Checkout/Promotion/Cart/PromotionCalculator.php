@@ -80,9 +80,7 @@ class PromotionCalculator
     public function calculate(LineItemCollection $discountLineItems, Cart $original, Cart $calculated, SalesChannelContext $context, CartBehavior $behaviour): void
     {
         // sort discount line items by priority before building exclusions and calculating discounts
-        $discountLineItems->sort(function (LineItem $a, LineItem $b) {
-            return $b->getPayloadValue('priority') <=> $a->getPayloadValue('priority');
-        });
+        $discountLineItems->sort(fn(LineItem $a, LineItem $b) => $b->getPayloadValue('priority') <=> $a->getPayloadValue('priority'));
 
         // array that holds all excluded promotion ids.
         // if a promotion has exclusions they are added on the stack
@@ -321,7 +319,7 @@ class PromotionCalculator
         // if our price is larger than the max discount value,
         // then use the max discount value as negative discount
         if (abs($result->getPrice()->getTotalPrice()) > abs($maxDiscountValue)) {
-            $result = $this->limitDiscountResult($maxDiscountValue, $packages->getAffectedPrices(), $result, $context);
+            return $this->limitDiscountResult($maxDiscountValue, $packages->getAffectedPrices(), $result, $context);
         }
 
         return $result;

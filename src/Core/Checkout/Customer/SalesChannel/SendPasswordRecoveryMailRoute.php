@@ -152,7 +152,7 @@ class SendPasswordRecoveryMailRoute extends AbstractSendPasswordRecoveryMailRout
             return [];
         }
 
-        return array_map(static fn (SalesChannelDomainEntity $domainEntity) => rtrim($domainEntity->getUrl(), '/'), $domains->getElements());
+        return array_map(static fn (SalesChannelDomainEntity $domainEntity): string => rtrim($domainEntity->getUrl(), '/'), $domains->getElements());
     }
 
     private function dispatchValidationEvent(DataValidationDefinition $definition, DataBag $data, Context $context): void

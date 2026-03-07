@@ -21,17 +21,17 @@ class CookieGroup extends Struct
 {
     public bool $isRequired = false;
 
-    public ?string $description;
+    public ?string $description = null;
 
-    public ?string $value;
+    public ?string $value = null;
 
-    public ?int $expiration;
+    public ?int $expiration = null;
 
     public string $name;
 
-    protected ?string $cookie;
+    protected ?string $cookie = null;
 
-    protected ?CookieEntryCollection $entries;
+    protected ?CookieEntryCollection $entries = null;
 
     public function __construct(
         private readonly string $technicalName,

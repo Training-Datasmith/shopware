@@ -66,7 +66,7 @@ final class DeleteCascadeAppsHandler extends ScheduledTaskHandler
             return;
         }
 
-        $deleteIds = array_map(static fn (string $id) => ['id' => $id], $ids);
+        $deleteIds = array_map(static fn (string $id): array => ['id' => $id], $ids);
 
         $repository->delete($deleteIds, $context);
     }

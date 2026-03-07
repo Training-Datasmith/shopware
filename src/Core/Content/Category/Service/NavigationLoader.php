@@ -77,7 +77,7 @@ class NavigationLoader implements NavigationLoaderInterface
 
             $sorted = AfterSort::sort($children);
 
-            $filtered = \array_filter($sorted, static fn (TreeItem $filter) => $filter->getCategory()->getActive() && $filter->getCategory()->getVisible());
+            $filtered = \array_filter($sorted, static fn (TreeItem $filter): bool => $filter->getCategory()->getActive() && $filter->getCategory()->getVisible());
 
             if (!isset($items[$parentId])) {
                 continue;
@@ -93,10 +93,12 @@ class NavigationLoader implements NavigationLoaderInterface
         $filtered = [];
         /** @var TreeItem $item */
         foreach ($root as $key => $item) {
-            if (!$item->getCategory()->getActive() || !$item->getCategory()->getVisible()) {
+            if (!$item->getCategory()->getActive()) {
                 continue;
             }
-
+            if (!$item->getCategory()->getVisible()) {
+                continue;
+            }
             $filtered[$key] = $item;
         }
 

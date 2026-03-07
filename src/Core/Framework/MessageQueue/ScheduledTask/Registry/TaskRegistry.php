@@ -147,7 +147,7 @@ class TaskRegistry
         ScheduledTask $task
     ): ?ScheduledTaskEntity {
         return $alreadyScheduledTasks
-                ->filter(fn (ScheduledTaskEntity $registeredTask) => $registeredTask->getScheduledTaskClass() === $task::class)
+                ->filter(fn (ScheduledTaskEntity $registeredTask): bool => $registeredTask->getScheduledTaskClass() === $task::class)
                 ->first();
     }
 

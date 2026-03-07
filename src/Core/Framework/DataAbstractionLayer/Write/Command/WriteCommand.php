@@ -114,7 +114,7 @@ abstract class WriteCommand
 
     private function setDecodedPrimaryKey(EntityDefinition $definition): void
     {
-        $primaryKeys = $definition->getPrimaryKeys()->filter(static fn (Field $field) => !$field instanceof VersionField
+        $primaryKeys = $definition->getPrimaryKeys()->filter(static fn (Field $field): bool => !$field instanceof VersionField
             && !$field instanceof ReferenceVersionField
             && $field instanceof StorageAware);
 

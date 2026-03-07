@@ -157,10 +157,7 @@ class Cart extends Struct
         return $this;
     }
 
-    /**
-     * @return LineItem|null
-     */
-    public function get(string $lineItemKey)
+    public function get(string $lineItemKey): ?\Shopware\Core\Checkout\Cart\LineItem\LineItem
     {
         return $this->lineItems->get($lineItemKey);
     }

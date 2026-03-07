@@ -40,7 +40,7 @@ class CachedSalesChannelContextFactory extends AbstractSalesChannelContextFactor
 
         $key = implode('-', [$name, Hasher::hash($options)]);
 
-        $value = $this->cache->get($key, function (ItemInterface $item) use ($name, $token, $salesChannelId, $options) {
+        $value = $this->cache->get($key, function (ItemInterface $item) use ($name, $token, $salesChannelId, $options): string {
             $item->tag([$name, self::ALL_TAG]);
 
             return CacheValueCompressor::compress(

@@ -16,14 +16,6 @@ use Shopware\Core\System\SalesChannel\SalesChannelException;
 #[Package('discovery')]
 class Mapping extends Collection
 {
-    /**
-     * @param iterable<string, SalesChannelData> $elements indexed by sales channel ID
-     */
-    public function __construct(iterable $elements = [])
-    {
-        parent::__construct($elements);
-    }
-
     public function add($element): void
     {
         throw SalesChannelException::invalidMappingOperation('SalesChannelData needs to be added indexed by sales channel ID. Use set() instead.');

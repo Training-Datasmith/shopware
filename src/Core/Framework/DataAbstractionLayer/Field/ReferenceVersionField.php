@@ -28,7 +28,7 @@ class ReferenceVersionField extends FkField
         $storageName ??= $entity . '_version_id';
 
         $propertyName = explode('_', $storageName);
-        $propertyName = array_map('ucfirst', $propertyName);
+        $propertyName = array_map(ucfirst(...), $propertyName);
         $propertyName = lcfirst(implode('', $propertyName));
 
         parent::__construct($storageName, $propertyName, VersionDefinition::class);

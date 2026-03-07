@@ -103,8 +103,8 @@ class DoctrineExtension extends AbstractExtension
 
         return (string) preg_replace_callback(
             '/\?|((?<!:):[a-z0-9_]+)/i',
-            static function ($matches) use ($parameters, &$i) {
-                $key = substr($matches[0], 1);
+            static function ($matches) use ($parameters, &$i): string {
+                $key = substr((string) $matches[0], 1);
 
                 if (!\array_key_exists($i, $parameters) && !\array_key_exists($key, $parameters)) {
                     return $matches[0];

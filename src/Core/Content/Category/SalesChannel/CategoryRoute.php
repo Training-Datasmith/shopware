@@ -176,14 +176,12 @@ class CategoryRoute extends AbstractCategoryRoute
      */
     private function getTranslatedSlotConfigs(CategoryEntity $category, array $languageMergeOrder): array
     {
-        $getCategoryTranslationByLanguageId = static function (CategoryEntity $category, string $languageId): ?CategoryTranslationEntity {
-            return \array_find(
-                $category->getTranslations()?->getElements() ?? [],
-                static fn (CategoryTranslationEntity $translation) => $translation->getLanguageId() === $languageId,
-            );
-        };
+        $getCategoryTranslationByLanguageId = (static fn(CategoryEntity $category, string $languageId): ?CategoryTranslationEntity => \array_find(
+            $category->getTranslations()?->getElements() ?? [],
+            static fn (CategoryTranslationEntity $translation): bool => $translation->getLanguageId() === $languageId,
+        ));
 
-        return \array_map(static function (string $languageId) use ($category, $getCategoryTranslationByLanguageId) {
+        return \array_map(static function (string $languageId) use ($category, $getCategoryTranslationByLanguageId): array {
             $currentTranslation = $getCategoryTranslationByLanguageId($category, $languageId);
 
             return $currentTranslation?->getSlotConfig() ?? [];

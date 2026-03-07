@@ -68,7 +68,7 @@ class PermissionCollection extends StoreCollection
 
     private function getPermissionsForCategory(string $category): PermissionCollection
     {
-        return $this->filter(static fn (PermissionStruct $element) => PermissionCategorization::isInCategory($element->getEntity(), $category));
+        return $this->filter(static fn (PermissionStruct $element): bool => PermissionCategorization::isInCategory($element->getEntity(), $category));
     }
 
     /**
@@ -105,6 +105,6 @@ class PermissionCollection extends StoreCollection
      */
     private function hasNoPermissionStructElements(array $elements): bool
     {
-        return array_filter($elements, static fn ($element) => $element instanceof PermissionStruct) === [];
+        return array_filter($elements, static fn (array|\Shopware\Core\Framework\Store\Struct\PermissionStruct $element): bool => $element instanceof PermissionStruct) === [];
     }
 }

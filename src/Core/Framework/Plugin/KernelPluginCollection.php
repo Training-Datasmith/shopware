@@ -65,7 +65,7 @@ class KernelPluginCollection
             return [];
         }
 
-        return array_filter($this->plugins, static fn (Plugin $plugin) => $plugin->isActive());
+        return array_filter($this->plugins, static fn (Plugin $plugin): bool => $plugin->isActive());
     }
 
     public function filter(\Closure $closure): KernelPluginCollection

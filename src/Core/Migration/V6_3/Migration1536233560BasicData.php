@@ -206,14 +206,14 @@ class Migration1536233560BasicData extends MigrationStep
 
     private function createCountry(Connection $connection): void
     {
-        $languageDE = fn (string $countryId, string $name) => [
+        $languageDE = fn (string $countryId, string $name): array => [
             'language_id' => Uuid::fromHexToBytes($this->getDeDeLanguageId()),
             'name' => $name,
             'country_id' => $countryId,
             'created_at' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
         ];
 
-        $languageEN = static fn (string $countryId, string $name) => [
+        $languageEN = static fn (string $countryId, string $name): array => [
             'language_id' => Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM),
             'name' => $name,
             'country_id' => $countryId,
@@ -1008,7 +1008,7 @@ class Migration1536233560BasicData extends MigrationStep
     private function getMediaFolderName(string $entity): string
     {
         $capitalizedEntityParts = array_map(
-            static fn ($part) => ucfirst($part),
+            ucfirst(...),
             explode('_', $entity)
         );
 

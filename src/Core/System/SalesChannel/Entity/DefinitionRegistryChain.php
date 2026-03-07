@@ -55,6 +55,9 @@ class DefinitionRegistryChain
 
     public function has(string $type): bool
     {
-        return $this->salesChannel->has($type) || $this->core->has($type);
+        if ($this->salesChannel->has($type)) {
+            return true;
+        }
+        return $this->core->has($type);
     }
 }

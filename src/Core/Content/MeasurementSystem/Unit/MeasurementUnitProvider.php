@@ -33,13 +33,9 @@ class MeasurementUnitProvider extends AbstractMeasurementUnitProvider implements
     {
         $units = $this->getUnits();
 
-        $availableUnits = $units->map(static function (MeasurementDisplayUnitEntity $unit) {
-            return $unit->shortName;
-        });
+        $availableUnits = $units->map(static fn(MeasurementDisplayUnitEntity $unit) => $unit->shortName);
 
-        $foundUnit = $units->firstWhere(static function (MeasurementDisplayUnitEntity $unitEntity) use ($unit) {
-            return $unitEntity->shortName === $unit;
-        });
+        $foundUnit = $units->firstWhere(static fn(MeasurementDisplayUnitEntity $unitEntity) => $unitEntity->shortName === $unit);
 
         if (!$foundUnit instanceof MeasurementDisplayUnitEntity) {
             throw MeasurementSystemException::unsupportedMeasurementUnit($unit, $availableUnits);

@@ -22,7 +22,7 @@ class CartCalculator
 
     public function calculate(Cart $cart, SalesChannelContext $context): Cart
     {
-        return Profiler::trace('cart-calculation', function () use ($cart, $context) {
+        return Profiler::trace('cart-calculation', function () use ($cart, $context): \Shopware\Core\Checkout\Cart\Cart {
             // validate cart against the context rules
             $cart = $this->cartRuleLoader
                 ->loadByCart($context, $cart, new CartBehavior($context->getPermissions()))

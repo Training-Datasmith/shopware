@@ -10,13 +10,6 @@ use Shopware\Core\Framework\Log\Package;
 class ImageMetadataLoader implements MetadataLoaderInterface
 {
     /**
-     * @internal
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @return array{width: int, height: int, type: int}|null
      */
     public function extractMetadata(string $filePath): ?array

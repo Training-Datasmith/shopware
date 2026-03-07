@@ -17,10 +17,8 @@ class EnvironmentHelper
      * The caller needs to take care of casting the return value to the appropriate type
      *
      * @param bool|float|int|string|null $default
-     *
-     * @return bool|float|int|string|null
      */
-    public static function getVariable(string $key, $default = null)
+    public static function getVariable(string $key, $default = null): bool|float|int|string|null
     {
         $value = $_SERVER[$key] ?? $_ENV[$key] ?? null;
         $transformerData = new EnvironmentHelperTransformerData($key, $value, $default);

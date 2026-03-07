@@ -77,7 +77,7 @@ abstract class ZipCodeRule extends Rule
      */
     private function getMatches(string $zipCode): array
     {
-        return array_filter((array) $this->zipCodes, function (string $zipCodeMatch) use ($zipCode) {
+        return array_filter((array) $this->zipCodes, function (string $zipCodeMatch) use ($zipCode): bool {
             $zipCodeMatch = str_replace('\*', '(.*?)', preg_quote($zipCodeMatch, '/'));
             $regex = \sprintf('/^%s$/i', $zipCodeMatch);
 
@@ -95,7 +95,7 @@ abstract class ZipCodeRule extends Rule
 
         // Japanese post codes are separated by dashes but otherwise numeric, replace dashes for numeric expressions
         if ($address->getCountry() && $address->getCountry()->getIso3() === 'JPN') {
-            $zipCode = str_replace('-', '', $zipCode);
+            return str_replace('-', '', $zipCode);
         }
 
         return $zipCode;

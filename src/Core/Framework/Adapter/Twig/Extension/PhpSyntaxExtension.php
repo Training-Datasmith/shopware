@@ -105,7 +105,7 @@ class PhpSyntaxExtension extends AbstractExtension
                     }
                 }
             ),
-            new TwigFilter('md5', function (mixed $var) {
+            new TwigFilter('md5', function (mixed $var): string {
                 if (\is_array($var)) {
                     $var = \json_encode($var, \JSON_THROW_ON_ERROR);
                 }

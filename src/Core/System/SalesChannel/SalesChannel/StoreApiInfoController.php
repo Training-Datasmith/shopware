@@ -105,7 +105,7 @@ class StoreApiInfoController
     public function getRoutes(): JsonResponse
     {
         $endpoints = array_map(
-            static fn (RouteInfo $endpoint) => ['path' => $endpoint->path, 'methods' => $endpoint->methods],
+            static fn (RouteInfo $endpoint): array => ['path' => $endpoint->path, 'methods' => $endpoint->methods],
             $this->apiRouteInfoResolver->getApiRoutes(StoreApiRouteScope::ID)
         );
 

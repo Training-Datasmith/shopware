@@ -77,10 +77,12 @@ class TreeBuildingNavigationRoute extends AbstractNavigationRoute
 
         $items = new CategoryCollection();
         foreach ($children as $child) {
-            if (!$child->getActive() || !$child->getVisible()) {
+            if (!$child->getActive()) {
                 continue;
             }
-
+            if (!$child->getVisible()) {
+                continue;
+            }
             $child->setChildren($this->buildTree($child->getId(), $categories));
 
             $items->add($child);

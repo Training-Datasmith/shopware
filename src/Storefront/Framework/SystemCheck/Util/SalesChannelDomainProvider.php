@@ -36,7 +36,7 @@ class SalesChannelDomainProvider extends AbstractSalesChannelDomainProvider
         );
 
         $collection = array_map(
-            fn ($domain) => SalesChannelDomain::create($domain['sales_channel_id'], $domain['url']),
+            fn (array $domain): \Shopware\Storefront\Framework\SystemCheck\Util\SalesChannelDomain => SalesChannelDomain::create($domain['sales_channel_id'], $domain['url']),
             $result
         );
 

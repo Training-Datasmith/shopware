@@ -35,7 +35,7 @@ readonly class RemoteZip implements Source
     public function supports(Manifest|AppEntity $app): bool
     {
         return match (true) {
-            $app instanceof AppEntity => $app->getSourceType() === $this->name(),
+            $app instanceof AppEntity => $app->getSourceType() === static::name(),
             $app instanceof Manifest => (bool) preg_match('#^https?://#', $app->getPath()),
         };
     }
@@ -64,7 +64,7 @@ readonly class RemoteZip implements Source
     public function reset(array $filesystems): void
     {
         $this->io->remove(
-            array_map(fn (Filesystem $fs) => $fs->location, $filesystems)
+            array_map(fn (Filesystem $fs): string => $fs->location, $filesystems)
         );
     }
 

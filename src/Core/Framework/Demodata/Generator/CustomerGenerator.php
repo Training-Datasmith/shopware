@@ -242,7 +242,7 @@ class CustomerGenerator implements DemodataGeneratorInterface
 
             if (!empty($chosenTags)) {
                 $tagAssignments = array_map(
-                    static fn (string $id) => ['id' => $id],
+                    static fn (string $id): array => ['id' => $id],
                     $chosenTags
                 );
             }

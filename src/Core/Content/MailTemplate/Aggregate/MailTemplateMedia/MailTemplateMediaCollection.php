@@ -17,12 +17,12 @@ class MailTemplateMediaCollection extends EntityCollection
      */
     public function getMailTemplateIds(): array
     {
-        return $this->fmap(fn (MailTemplateMediaEntity $mailTemplateAttachment) => $mailTemplateAttachment->getMailTemplateId());
+        return $this->fmap(fn (MailTemplateMediaEntity $mailTemplateAttachment): string => $mailTemplateAttachment->getMailTemplateId());
     }
 
     public function filterByMailTemplateId(string $id): self
     {
-        return $this->filter(fn (MailTemplateMediaEntity $mailTemplateMedia) => $mailTemplateMedia->getMailTemplateId() === $id);
+        return $this->filter(fn (MailTemplateMediaEntity $mailTemplateMedia): bool => $mailTemplateMedia->getMailTemplateId() === $id);
     }
 
     /**
@@ -30,18 +30,18 @@ class MailTemplateMediaCollection extends EntityCollection
      */
     public function getMediaIds(): array
     {
-        return $this->fmap(fn (MailTemplateMediaEntity $mailTemplateMedia) => $mailTemplateMedia->getMediaId());
+        return $this->fmap(fn (MailTemplateMediaEntity $mailTemplateMedia): string => $mailTemplateMedia->getMediaId());
     }
 
     public function filterByMediaId(string $id): self
     {
-        return $this->filter(fn (MailTemplateMediaEntity $mailTemplateMedia) => $mailTemplateMedia->getMediaId() === $id);
+        return $this->filter(fn (MailTemplateMediaEntity $mailTemplateMedia): bool => $mailTemplateMedia->getMediaId() === $id);
     }
 
     public function getMedia(): MediaCollection
     {
         return new MediaCollection(
-            $this->fmap(fn (MailTemplateMediaEntity $mailTemplateMedia) => $mailTemplateMedia->getMedia())
+            $this->fmap(fn (MailTemplateMediaEntity $mailTemplateMedia): ?\Shopware\Core\Content\Media\MediaEntity => $mailTemplateMedia->getMedia())
         );
     }
 

@@ -52,7 +52,7 @@ class ElasticsearchCleanIndicesCommand extends Command
             return self::SUCCESS;
         }
 
-        $io->table(['Indices to be deleted:'], array_map(static fn (string $name) => [$name], $indices));
+        $io->table(['Indices to be deleted:'], array_map(static fn (string $name): array => [$name], $indices));
 
         if (Feature::isActive('v6.8.0.0') || !$input->getOption('force')) {
             $confirm = $io->confirm(\sprintf('Delete these %d indices?', \count($indices)));

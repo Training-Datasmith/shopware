@@ -24,7 +24,7 @@ class RetryableQuery
      */
     public function execute(array $params = []): int|string
     {
-        return self::retry($this->connection, fn () => StatementHelper::executeStatement($this->query, $params), 0);
+        return self::retry($this->connection, fn (): int|string => StatementHelper::executeStatement($this->query, $params), 0);
     }
 
     /**

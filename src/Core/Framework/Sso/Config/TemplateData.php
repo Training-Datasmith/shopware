@@ -9,13 +9,13 @@ use Shopware\Core\Framework\Struct\JsonSerializableTrait;
  * @internal
  */
 #[Package('framework')]
-final class TemplateData implements \JsonSerializable
+final readonly class TemplateData implements \JsonSerializable
 {
     use JsonSerializableTrait;
 
     public function __construct(
-        public readonly bool $useDefault,
-        public readonly ?string $url,
+        public bool $useDefault,
+        public ?string $url,
     ) {
     }
 }

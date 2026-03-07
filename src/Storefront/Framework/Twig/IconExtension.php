@@ -9,13 +9,6 @@ use Twig\Extension\AbstractExtension;
 #[Package('framework')]
 class IconExtension extends AbstractExtension
 {
-    /**
-     * @internal
-     */
-    public function __construct()
-    {
-    }
-
     public function getTokenParsers(): array
     {
         return [

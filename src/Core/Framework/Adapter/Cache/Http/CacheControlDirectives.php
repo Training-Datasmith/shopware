@@ -64,7 +64,7 @@ readonly class CacheControlDirectives
             's_maxage' => $this->sMaxAge,
             'stale_while_revalidate' => $this->staleWhileRevalidate,
             'stale_if_error' => $this->staleIfError,
-        ], fn ($value) => $value !== null);
+        ], fn (bool|int|null $value): bool => $value !== null);
     }
 
     /**
@@ -75,18 +75,18 @@ readonly class CacheControlDirectives
     public static function fromArray(array $data): self
     {
         return new self(
-            public: isset($data['public']) ? (bool) $data['public'] : null,
-            private: isset($data['private']) ? (bool) $data['private'] : null,
-            noCache: isset($data['no_cache']) ? (bool) $data['no_cache'] : null,
-            noStore: isset($data['no_store']) ? (bool) $data['no_store'] : null,
-            noTransform: isset($data['no_transform']) ? (bool) $data['no_transform'] : null,
-            mustRevalidate: isset($data['must_revalidate']) ? (bool) $data['must_revalidate'] : null,
-            proxyRevalidate: isset($data['proxy_revalidate']) ? (bool) $data['proxy_revalidate'] : null,
-            immutable: isset($data['immutable']) ? (bool) $data['immutable'] : null,
-            maxAge: isset($data['max_age']) ? (int) $data['max_age'] : null,
-            sMaxAge: isset($data['s_maxage']) ? (int) $data['s_maxage'] : null,
-            staleWhileRevalidate: isset($data['stale_while_revalidate']) ? (int) $data['stale_while_revalidate'] : null,
-            staleIfError: isset($data['stale_if_error']) ? (int) $data['stale_if_error'] : null,
+            public: $data['public'] ?? null,
+            private: $data['private'] ?? null,
+            noCache: $data['no_cache'] ?? null,
+            noStore: $data['no_store'] ?? null,
+            noTransform: $data['no_transform'] ?? null,
+            mustRevalidate: $data['must_revalidate'] ?? null,
+            proxyRevalidate: $data['proxy_revalidate'] ?? null,
+            immutable: $data['immutable'] ?? null,
+            maxAge: $data['max_age'] ?? null,
+            sMaxAge: $data['s_maxage'] ?? null,
+            staleWhileRevalidate: $data['stale_while_revalidate'] ?? null,
+            staleIfError: $data['stale_if_error'] ?? null,
         );
     }
 

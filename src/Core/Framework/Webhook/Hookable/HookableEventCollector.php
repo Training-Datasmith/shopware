@@ -149,8 +149,8 @@ class HookableEventCollector implements ResetInterface
     private function getHookableEventNames(): array
     {
         return array_reduce(array_values(
-            array_map(static fn ($hookableEvent) => [$hookableEvent => [self::PRIVILEGES => []]], Hookable::HOOKABLE_EVENTS)
-        ), 'array_merge', []);
+            array_map(static fn (string $hookableEvent): array => [$hookableEvent => [self::PRIVILEGES => []]], Hookable::HOOKABLE_EVENTS)
+        ), array_merge(...), []);
     }
 
     /**
@@ -160,7 +160,7 @@ class HookableEventCollector implements ResetInterface
     {
         $response = $this->businessEventCollector->collect($context);
 
-        return array_map(function (BusinessEventDefinition $businessEventDefinition) {
+        return array_map(function (BusinessEventDefinition $businessEventDefinition): array {
             $privileges = $this->getPrivilegesFromBusinessEventDefinition($businessEventDefinition);
 
             return [

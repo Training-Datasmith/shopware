@@ -99,8 +99,6 @@ class LineItemCreationDateRule extends Rule
      */
     private function buildDate(string $dateString): \DateTime
     {
-        $dateTime = new \DateTime($dateString);
-
-        return $dateTime;
+        return new \DateTime($dateString);
     }
 }

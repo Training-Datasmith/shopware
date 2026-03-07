@@ -48,9 +48,10 @@ class PropertyNativeTypeRule implements Rule
             $docComment = $property->getDocComment();
             if ($docComment instanceof Doc) {
                 // resource and callable cannot be typed natively
-                if (str_contains($docComment->getText(), '@var resource')
-                    || str_contains($docComment->getText(), '@var callable')
-                ) {
+                if (str_contains($docComment->getText(), '@var resource')) {
+                    continue;
+                }
+                if (str_contains($docComment->getText(), '@var callable')) {
                     continue;
                 }
             }

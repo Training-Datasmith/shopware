@@ -145,7 +145,7 @@ class FieldSerializer extends AbstractFieldSerializer
         if ($field instanceof ManyToManyAssociationField) {
             return array_filter(
                 array_map(
-                    function ($id) {
+                    function ($id): ?array {
                         $id = $this->normalizeId($id);
                         if ($id === '') {
                             return null;
@@ -166,7 +166,7 @@ class FieldSerializer extends AbstractFieldSerializer
 
             return array_filter(
                 array_map(
-                    function ($id) {
+                    function ($id): ?string {
                         $id = $this->normalizeId($id);
                         if ($id === '') {
                             return null;

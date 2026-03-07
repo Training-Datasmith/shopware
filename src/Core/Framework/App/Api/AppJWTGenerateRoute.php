@@ -107,7 +107,7 @@ WHERE `app`.name = ? AND
             throw AppException::notFound($name);
         }
 
-        $row['privileges'] = json_decode($row['privileges'], true, 512, \JSON_THROW_ON_ERROR);
+        $row['privileges'] = json_decode((string) $row['privileges'], true, 512, \JSON_THROW_ON_ERROR);
 
         /** @phpstan-ignore-next-line PHPStan could not recognize the loaded array shape from the database */
         return $row;

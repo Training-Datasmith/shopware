@@ -76,7 +76,7 @@ class ProductFeatureBuilder
             return [];
         }
 
-        usort($sortedFeatures, static fn (array $a, array $b) => $a['position'] <=> $b['position']);
+        usort($sortedFeatures, static fn (array $a, array $b): int => $a['position'] <=> $b['position']);
 
         $features = [];
         foreach ($sortedFeatures as $feature) {
@@ -120,7 +120,10 @@ class ProductFeatureBuilder
             }
 
             $product = $data->get($this->getDataKey($productId));
-            if (!$product instanceof SalesChannelProductEntity || $product->getCustomFields() === null) {
+            if (!$product instanceof SalesChannelProductEntity) {
+                continue;
+            }
+            if ($product->getCustomFields() === null) {
                 continue;
             }
 
@@ -214,7 +217,7 @@ class ProductFeatureBuilder
         }
 
         $properties = $properties->fmap(
-            static function (PropertyGroupOptionEntity $property) use ($id) {
+            static function (PropertyGroupOptionEntity $property) use ($id): ?array {
                 if ($property->getGroupId() !== $id) {
                     return null;
                 }

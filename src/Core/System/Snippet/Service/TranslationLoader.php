@@ -86,7 +86,7 @@ class TranslationLoader extends AbstractTranslationLoader
         }
 
         foreach ($this->translationWriter->listContents($localesBasePath, Filesystem::LIST_DEEP) as $fsNode) {
-            if ($fsNode->isDir() && str_ends_with($fsNode->path(), 'Plugins/' . $name)) {
+            if ($fsNode->isDir() && str_ends_with((string) $fsNode->path(), 'Plugins/' . $name)) {
                 return true;
             }
         }

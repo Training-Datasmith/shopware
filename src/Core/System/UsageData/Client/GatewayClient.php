@@ -31,7 +31,7 @@ class GatewayClient
             ]
         );
 
-        $body = json_decode($response->getContent(), true, flags: \JSON_THROW_ON_ERROR);
+        $body = json_decode((string) $response->getContent(), true, flags: \JSON_THROW_ON_ERROR);
 
         return !$body['killswitch'];
     }

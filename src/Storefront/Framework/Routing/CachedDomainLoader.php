@@ -34,7 +34,7 @@ class CachedDomainLoader extends AbstractDomainLoader
      */
     public function load(): array
     {
-        $value = $this->cache->get(self::CACHE_KEY, fn (ItemInterface $item) => CacheValueCompressor::compress(
+        $value = $this->cache->get(self::CACHE_KEY, fn (ItemInterface $item): string => CacheValueCompressor::compress(
             $this->getDecorated()->load()
         ));
 

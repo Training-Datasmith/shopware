@@ -54,7 +54,7 @@ class BufferedFlowExecutor
 
         if ($flowExecutionDepth >= self::MAXIMUM_EXECUTION_DEPTH) {
             $eventNames = array_map(
-                static fn (BufferedFlow $bufferedFlow) => $bufferedFlow->eventName,
+                static fn (BufferedFlow $bufferedFlow): string => $bufferedFlow->eventName,
                 $this->bufferedFlowQueue->dequeueFlows(),
             );
 
@@ -72,11 +72,10 @@ class BufferedFlowExecutor
      */
     private function getFlowHoldersForEvent(string $eventName, array $eventGroupedFlowHolders): array
     {
-        $flowHolders = [];
         if (\array_key_exists($eventName, $eventGroupedFlowHolders)) {
-            $flowHolders = $eventGroupedFlowHolders[$eventName];
+            return $eventGroupedFlowHolders[$eventName];
         }
 
-        return $flowHolders;
+        return [];
     }
 }

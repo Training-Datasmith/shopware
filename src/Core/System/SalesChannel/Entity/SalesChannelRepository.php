@@ -57,7 +57,7 @@ class SalesChannelRepository
             return $this->_search($criteria, $salesChannelContext);
         }
 
-        return Profiler::trace($criteria->getTitle(), fn () => $this->_search($criteria, $salesChannelContext), 'saleschannel-repository');
+        return Profiler::trace($criteria->getTitle(), fn (): \Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult => $this->_search($criteria, $salesChannelContext), 'saleschannel-repository');
     }
 
     public function aggregate(Criteria $criteria, SalesChannelContext $salesChannelContext): AggregationResultCollection
@@ -66,7 +66,7 @@ class SalesChannelRepository
             return $this->_aggregate($criteria, $salesChannelContext);
         }
 
-        return Profiler::trace($criteria->getTitle(), fn () => $this->_aggregate($criteria, $salesChannelContext), 'saleschannel-repository');
+        return Profiler::trace($criteria->getTitle(), fn (): \Shopware\Core\Framework\DataAbstractionLayer\Search\AggregationResult\AggregationResultCollection => $this->_aggregate($criteria, $salesChannelContext), 'saleschannel-repository');
     }
 
     public function searchIds(Criteria $criteria, SalesChannelContext $salesChannelContext): IdSearchResult
@@ -75,7 +75,7 @@ class SalesChannelRepository
             return $this->_searchIds($criteria, $salesChannelContext);
         }
 
-        return Profiler::trace($criteria->getTitle(), fn () => $this->_searchIds($criteria, $salesChannelContext), 'saleschannel-repository');
+        return Profiler::trace($criteria->getTitle(), fn (): \Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult => $this->_searchIds($criteria, $salesChannelContext), 'saleschannel-repository');
     }
 
     /**
