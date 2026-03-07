@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Plugin\Command\Scaffolding\Generator;
 
@@ -197,6 +199,6 @@ class EntityGenerator implements ScaffoldingGenerator
 
         $entities = explode(',', $entities);
 
-        return array_filter(array_map(fn(string $entity) => ucfirst(trim($entity)), $entities));
+        return array_filter(array_map(fn (string $entity) => ucfirst(trim($entity)), $entities));
     }
 }

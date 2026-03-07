@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Migration\Administration\V6_7;
 
@@ -36,7 +38,7 @@ class Migration1744203319MailTemplateTest extends TestCase
 
     public function testUpdateThrowsExceptionHtmlTemplateFileNotFound(): void
     {
-        $migration = new class extends Migration1744203319MailTemplate {
+        $migration = new class () extends Migration1744203319MailTemplate {
             protected string $assetFolder = '/non/existent/path/';
         };
 

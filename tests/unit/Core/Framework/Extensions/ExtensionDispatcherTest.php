@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\Extensions;
 
@@ -18,7 +20,7 @@ class ExtensionDispatcherTest extends TestCase
     public function testPublishesEventsSuccessfully(): void
     {
         $dispatcher = new CollectingEventDispatcher();
-        $extension = new class extends Extension {
+        $extension = new class () extends Extension {
             public const NAME = 'test.extension';
 
             public function getParams(): array
@@ -43,7 +45,7 @@ class ExtensionDispatcherTest extends TestCase
     public function testHandlesExceptionGracefully(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $extension = new class extends Extension {
+        $extension = new class () extends Extension {
             public const NAME = 'test.extension';
 
             public function getParams(): array
@@ -74,7 +76,7 @@ class ExtensionDispatcherTest extends TestCase
     public function testRethrowsExceptionWhenNoResult(): void
     {
         $dispatcher = new CollectingEventDispatcher();
-        $extension = new class extends Extension {
+        $extension = new class () extends Extension {
             public const NAME = 'test.extension';
 
             public function getParams(): array

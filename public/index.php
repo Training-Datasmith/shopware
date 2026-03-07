@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use Shopware\Core\DevOps\Environment\EnvironmentHelper;
-use Shopware\Core\Installer\Helper\InstallerRedirectHelper;
 use Shopware\Core\Framework\Adapter\Kernel\KernelFactory;
 use Shopware\Core\Framework\Plugin\KernelPluginLoader\ComposerPluginLoader;
+use Shopware\Core\Installer\Helper\InstallerRedirectHelper;
 use Shopware\Core\Installer\InstallerKernel;
 
 $_SERVER['SCRIPT_FILENAME'] = __FILE__;

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\App\Payload;
 
@@ -55,7 +57,7 @@ class AppPayloadStruct
         $vars = $this->traitJsonSerialize();
         $converter = new CamelCaseToSnakeCaseNameConverter();
 
-        $snakeCaseKeys = array_map(fn(string $key) => $converter->normalize($key), array_keys($vars));
+        $snakeCaseKeys = array_map(fn (string $key) => $converter->normalize($key), array_keys($vars));
 
         return array_combine($snakeCaseKeys, $vars);
     }

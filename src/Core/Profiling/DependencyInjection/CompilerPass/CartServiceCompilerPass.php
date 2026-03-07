@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Profiling\DependencyInjection\CompilerPass;
 
@@ -45,7 +47,7 @@ class CartServiceCompilerPass implements CompilerPassInterface
         $this->extractDecorationInfo($container, $services);
 
         // Sort collectors by priority (higher number = higher priority)
-        uasort($services, static fn($a, $b) => $b['priority'] <=> $a['priority']);
+        uasort($services, static fn ($a, $b) => $b['priority'] <=> $a['priority']);
 
         return $services;
     }
@@ -74,7 +76,7 @@ class CartServiceCompilerPass implements CompilerPassInterface
 
         foreach ($services as $serviceId => $info) {
             $decorators = $decoratedByIndex[$serviceId] ?? [];
-            usort($decorators, static fn(array $a, array $b) => $b['priority'] <=> $a['priority']);
+            usort($decorators, static fn (array $a, array $b) => $b['priority'] <=> $a['priority']);
 
             $services[$serviceId]['decoratedBy'] = $decorators;
         }

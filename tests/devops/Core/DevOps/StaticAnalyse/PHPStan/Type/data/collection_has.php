@@ -1,9 +1,12 @@
-<?php declare(strict_types=1);
+<?php
 
-use Shopware\Core\Framework\DataAbstractionLayer\Entity;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
+declare(strict_types=1);
 
 use function PHPStan\Testing\assertType;
+
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
 $collection = new EntityCollection(['foo' => new Entity()]);
 

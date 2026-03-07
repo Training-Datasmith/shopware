@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Storefront\Framework\App\Template;
 
@@ -51,7 +53,7 @@ class IconTemplateLoader extends AbstractTemplateLoader
             ->ignoreUnreadableDirs();
 
         // return file paths relative to Resources/views directory
-        $iconPaths = array_values(array_map(static fn(SplFileInfo $file): string => $file->getRelativePathname(), iterator_to_array($finder)));
+        $iconPaths = array_values(array_map(static fn (SplFileInfo $file): string => $file->getRelativePathname(), iterator_to_array($finder)));
 
         return [
             ...array_values($viewPaths),

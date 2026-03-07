@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Elasticsearch\Admin;
 
@@ -107,7 +109,7 @@ class AdminElasticsearchEntitySearcherTest extends TestCase
 
     private function createDefinition(): EntityDefinition
     {
-        return new class extends EntityDefinition {
+        return new class () extends EntityDefinition {
             public function getEntityName(): string
             {
                 return 'test_entity';
@@ -122,7 +124,7 @@ class AdminElasticsearchEntitySearcherTest extends TestCase
 
     private function createIndexer(): AbstractAdminIndexer
     {
-        return new class extends AbstractAdminIndexer {
+        return new class () extends AbstractAdminIndexer {
             public function getDecorated(): AbstractAdminIndexer
             {
                 throw new DecorationPatternException(self::class);

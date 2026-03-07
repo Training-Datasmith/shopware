@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Integration\Core\Content\Seo;
 
@@ -351,7 +353,7 @@ class SeoUrlGeneratorTest extends TestCase
 
     public function testErrorLogging(): void
     {
-        $logger = new class extends AbstractLogger {
+        $logger = new class () extends AbstractLogger {
             /**
              * @var array<int|string, array<string, list<array<string, mixed>>>>
              */

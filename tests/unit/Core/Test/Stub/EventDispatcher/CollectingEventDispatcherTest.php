@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Test\Stub\EventDispatcher;
 
@@ -20,7 +22,8 @@ class CollectingEventDispatcherTest extends TestCase
 
         static::assertEmpty($dispatcher->getListeners());
 
-        $callable = function (): void {};
+        $callable = function (): void {
+        };
 
         $dispatcher->addListener('event.name', $callable, 10);
         static::assertSame(['10' => [$callable]], $dispatcher->getListeners('event.name'));
@@ -31,8 +34,8 @@ class CollectingEventDispatcherTest extends TestCase
     {
         $dispatcher = new CollectingEventDispatcher();
 
-        $event1 = new class {};
-        $event2 = new class {};
+        $event1 = new class () {};
+        $event2 = new class () {};
 
         $dispatcher->dispatch($event1, 'event.one');
         $dispatcher->dispatch($event2);

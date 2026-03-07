@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Content\Flow\Dispatching;
 
@@ -500,7 +502,7 @@ class FlowExecutorTest extends TestCase
     public function testActionExecutedInTransactionWhenItImplementsTransactional(): void
     {
         $ids = new IdsCollection();
-        $action = new class extends FlowAction implements TransactionalAction {
+        $action = new class () extends FlowAction implements TransactionalAction {
             public bool $handled = false;
 
             public function requirements(): array
@@ -552,7 +554,7 @@ class FlowExecutorTest extends TestCase
     public function testTransactionCommitFailureExceptionIsWrapped(): void
     {
         $ids = new IdsCollection();
-        $action = new class extends FlowAction implements TransactionalAction {
+        $action = new class () extends FlowAction implements TransactionalAction {
             public function requirements(): array
             {
                 return [];
@@ -615,7 +617,7 @@ class FlowExecutorTest extends TestCase
     public function testTransactionAbortExceptionIsWrapped(): void
     {
         $ids = new IdsCollection();
-        $action = new class extends FlowAction implements TransactionalAction {
+        $action = new class () extends FlowAction implements TransactionalAction {
             public function requirements(): array
             {
                 return [];
@@ -670,7 +672,7 @@ class FlowExecutorTest extends TestCase
     public function testTransactionWithUncaughtExceptionIsWrapped(): void
     {
         $ids = new IdsCollection();
-        $action = new class extends FlowAction implements TransactionalAction {
+        $action = new class () extends FlowAction implements TransactionalAction {
             public function requirements(): array
             {
                 return [];

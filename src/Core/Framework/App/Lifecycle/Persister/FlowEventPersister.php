@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\App\Lifecycle\Persister;
 
@@ -75,7 +77,7 @@ class FlowEventPersister
             return;
         }
 
-        $ids = array_map(static fn(string $id): array => ['id' => $id], $ids);
+        $ids = array_map(static fn (string $id): array => ['id' => $id], $ids);
 
         $this->flowEventsRepository->delete($ids, $context);
     }

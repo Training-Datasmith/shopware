@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Maintenance\System\Command;
 
@@ -199,7 +201,7 @@ class SystemInstallCommandTest extends TestCase
             $this->createMock(SystemLocker::class)
         );
 
-        $application = new class extends Application {
+        $application = new class () extends Application {
             public function has(string $name): bool
             {
                 return true;
@@ -306,7 +308,7 @@ class SystemInstallCommandTest extends TestCase
             $this->createMock(SystemLocker::class)
         );
 
-        $application = new class extends Application {
+        $application = new class () extends Application {
             public function has(string $name): bool
             {
                 return true;
@@ -340,7 +342,7 @@ class SystemInstallCommandTest extends TestCase
 
         $dispatcher = new EventDispatcher();
 
-        $dispatcher->addListener(ConsoleEvents::TERMINATE, $listener = new class {
+        $dispatcher->addListener(ConsoleEvents::TERMINATE, $listener = new class () {
             public bool $terminateCalledForSubCommand = false;
 
             public function __invoke(ConsoleTerminateEvent $event): void

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Profiling\Controller;
 
@@ -71,7 +73,7 @@ class ProfilerControllerTest extends TestCase
             ->with('some-token')
             ->willReturn($profile);
 
-        $profile->addCollector(new class implements DataCollectorInterface {
+        $profile->addCollector(new class () implements DataCollectorInterface {
             public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
             {
                 // noop
@@ -153,7 +155,7 @@ class ProfilerControllerTest extends TestCase
         $query = new Query('select * from table where key = ?');
         $query->setValue(
             1,
-            new class implements \Stringable {
+            new class () implements \Stringable {
                 public function __toString(): string
                 {
                     return 'value';

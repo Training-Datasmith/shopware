@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Integration\Core\Framework\Api\Serializer;
 
@@ -315,7 +317,7 @@ class JsonApiEncoderTest extends TestCase
 
         $definition = new CustomFieldPlainTestDefinition();
         $definition->compile(static::getContainer()->get(DefinitionInstanceRegistry::class));
-        $struct = new class extends Entity {
+        $struct = new class () extends Entity {
             use EntityCustomFieldsTrait;
         };
         $struct->setUniqueIdentifier(Uuid::randomHex());

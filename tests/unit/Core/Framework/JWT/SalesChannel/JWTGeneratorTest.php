@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\JWT\SalesChannel;
 
@@ -35,13 +37,13 @@ class JWTGeneratorTest extends TestCase
         $config = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText(Random::getAlphanumericString(32)));
         $dataValidator = $this->createMock(DataValidator::class);
 
-        $jwtStructClass = (new class extends JWTStruct {
+        $jwtStructClass = (new class () extends JWTStruct {
             public string $foo;
 
             public ?string $nullValue;
         })::class;
 
-        $generator = new class($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
+        $generator = new class ($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
             /**
              * @param class-string<JWTStruct> $jwtStructClass
              */
@@ -92,10 +94,10 @@ class JWTGeneratorTest extends TestCase
         $config = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText(Random::getAlphanumericString(32)));
         $dataValidator = $this->createMock(DataValidator::class);
 
-        $jwtStructClass = (new class extends JWTStruct {
+        $jwtStructClass = (new class () extends JWTStruct {
         })::class;
 
-        $generator = new class($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
+        $generator = new class ($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
             /**
              * @param class-string<JWTStruct> $jwtStructClass
              */
@@ -138,10 +140,10 @@ class JWTGeneratorTest extends TestCase
         $config = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText(Random::getAlphanumericString(32)));
         $dataValidator = $this->createMock(DataValidator::class);
 
-        $jwtStructClass = (new class extends JWTStruct {
+        $jwtStructClass = (new class () extends JWTStruct {
         })::class;
 
-        $generator = new class($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
+        $generator = new class ($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
             /**
              * @param class-string<JWTStruct> $jwtStructClass
              */
@@ -188,10 +190,10 @@ class JWTGeneratorTest extends TestCase
 
         $dataValidator = $this->createMock(DataValidator::class);
 
-        $jwtStructClass = (new class extends JWTStruct {
+        $jwtStructClass = (new class () extends JWTStruct {
         })::class;
 
-        $generator = new class($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
+        $generator = new class ($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
             /**
              * @param class-string<JWTStruct> $jwtStructClass
              */
@@ -243,11 +245,11 @@ class JWTGeneratorTest extends TestCase
         $dataValidator = $this->createMock(DataValidator::class);
         $dataValidator->expects($this->once())->method('validate');
 
-        $jwtStructClass = (new class extends JWTStruct {
+        $jwtStructClass = (new class () extends JWTStruct {
             public string $foo;
         })::class;
 
-        $generator = new class($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
+        $generator = new class ($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
             /**
              * @param class-string<JWTStruct> $jwtStructClass
              */
@@ -305,11 +307,11 @@ class JWTGeneratorTest extends TestCase
         $dataValidator = $this->createMock(DataValidator::class);
         $dataValidator->expects($this->never())->method('validate');
 
-        $jwtStructClass = (new class extends JWTStruct {
+        $jwtStructClass = (new class () extends JWTStruct {
             public string $foo;
         })::class;
 
-        $generator = new class($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
+        $generator = new class ($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
             /**
              * @param class-string<JWTStruct> $jwtStructClass
              */
@@ -341,10 +343,10 @@ class JWTGeneratorTest extends TestCase
         $config = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText(Random::getAlphanumericString(32)));
         $dataValidator = $this->createMock(DataValidator::class);
 
-        $jwtStructClass = (new class extends JWTStruct {
+        $jwtStructClass = (new class () extends JWTStruct {
         })::class;
 
-        $generator = new class($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
+        $generator = new class ($config, $dataValidator, $jwtStructClass) extends JWTGenerator {
             /**
              * @param class-string<JWTStruct> $jwtStructClass
              */

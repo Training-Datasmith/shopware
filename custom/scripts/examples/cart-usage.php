@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scripts\Examples;
 
 use Doctrine\DBAL\Connection;
@@ -7,8 +9,8 @@ use Shopware\Core\Checkout\Cart\LineItemFactoryHandler\ProductLineItemFactory;
 use Shopware\Core\Checkout\Cart\SalesChannel\CartService;
 use Shopware\Core\Content\Test\Product\ProductBuilder;
 use Shopware\Core\Framework\Context;
-use  Shopware\Core\Test\Stub\Framework\IdsCollection;
 use Shopware\Core\System\SalesChannel\Context\SalesChannelContextFactory;
+use Shopware\Core\Test\Stub\Framework\IdsCollection;
 use Shopware\Core\Test\TestDefaults;
 
 require_once __DIR__ . '/base-script.php';
@@ -48,6 +50,5 @@ class Main extends BaseScript
         $service->add($cart, [$item], $context);
     }
 }
-
 
 (new Main($kernel))->run();

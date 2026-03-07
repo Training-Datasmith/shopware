@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\DataAbstractionLayer\Write;
 
@@ -46,7 +48,7 @@ class WriteCommandExtractorTest extends TestCase
     #[DataProvider('writeProtectedFieldsProvider')]
     public function testExceptionForWriteProtectedFields(array $payload, ContextSource $scope, bool $valid): void
     {
-        $definition = new class extends EntityDefinition {
+        $definition = new class () extends EntityDefinition {
             final public const ENTITY_NAME = 'webhook';
 
             public function getEntityName(): string
@@ -138,7 +140,7 @@ class WriteCommandExtractorTest extends TestCase
 
     public function testCreateUpdateCommandWithImmutableChanges(): void
     {
-        $definition = new class extends EntityDefinition {
+        $definition = new class () extends EntityDefinition {
             final public const ENTITY_NAME = 'immutable_test';
 
             public function getEntityName(): string

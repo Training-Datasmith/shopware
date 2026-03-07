@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Cart\Order\Transformer;
 
@@ -70,7 +72,7 @@ class AddressTransformer
             'additionalAddressLine2' => $address->getAdditionalAddressLine2(),
             'countryId' => $address->getCountryId(),
             'countryStateId' => $address->getCountryStateId(),
-        ], static fn(?string $value): bool => $value !== null && $value !== '');
+        ], static fn (?string $value): bool => $value !== null && $value !== '');
 
         $addressArray['id'] = Uuid::randomHex();
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Migration;
 
@@ -35,7 +37,7 @@ class IndexerQueuer
         }
 
         // Upgrade possible old format to empty array
-        return array_map(fn($options) => \is_array($options) ? $options : [], $indexers);
+        return array_map(fn ($options) => \is_array($options) ? $options : [], $indexers);
     }
 
     /**

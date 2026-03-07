@@ -1,6 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Integration\Core\Framework\Telemetry;
+
+use function PHPUnit\Framework\assertInstanceOf;
 
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Feature;
@@ -10,9 +14,8 @@ use Shopware\Core\Framework\Telemetry\Metrics\Meter;
 use Shopware\Core\Framework\Telemetry\Metrics\Metric\ConfiguredMetric;
 use Shopware\Core\Framework\Telemetry\Metrics\Transport\TransportCollection;
 use Shopware\Core\Framework\Test\Telemetry\Transport\TraceableTransport;
-use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
 
-use function PHPUnit\Framework\assertInstanceOf;
+use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
 
 /**
  * @internal

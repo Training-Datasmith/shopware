@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\Media\File;
 
@@ -186,7 +188,7 @@ class FileSaver
                     );
                 }
 
-                $updateData['thumbnails'] = array_map(fn($id, int|string $path) => ['id' => $id, 'path' => $path], array_keys($thumbnails), $thumbnails);
+                $updateData['thumbnails'] = array_map(fn ($id, int|string $path) => ['id' => $id, 'path' => $path], array_keys($thumbnails), $thumbnails);
             }
         }
 

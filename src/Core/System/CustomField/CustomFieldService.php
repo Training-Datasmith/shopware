@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\System\CustomField;
 
@@ -87,7 +89,7 @@ class CustomFieldService implements EventSubscriberInterface, ResetInterface
             return;
         }
 
-        $customFieldCommands = array_filter($commands, fn($command) => $command->getEntityName() === CustomFieldSetDefinition::ENTITY_NAME
+        $customFieldCommands = array_filter($commands, fn ($command) => $command->getEntityName() === CustomFieldSetDefinition::ENTITY_NAME
             || $command->getEntityName() === CustomFieldDefinition::ENTITY_NAME);
 
         foreach ($customFieldCommands as $command) {

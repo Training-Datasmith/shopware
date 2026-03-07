@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Cart\SalesChannel;
 
@@ -122,7 +124,7 @@ class CartOrderRoute extends AbstractCartOrderRoute
 
             $this->eventDispatcher->dispatch(new CheckoutOrderPlacedCriteriaEvent($criteria, $context));
 
-            $orderEntity = Profiler::trace('checkout-order::order-loading', fn(): ?OrderEntity => $this->orderRepository->search($criteria, $context->getContext())->getEntities()->first());
+            $orderEntity = Profiler::trace('checkout-order::order-loading', fn (): ?OrderEntity => $this->orderRepository->search($criteria, $context->getContext())->getEntities()->first());
 
             if (!$orderEntity) {
                 throw CartException::invalidPaymentOrderNotStored($orderId);

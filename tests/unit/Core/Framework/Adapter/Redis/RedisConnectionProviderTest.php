@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\Adapter\Redis;
 
@@ -38,7 +40,7 @@ class RedisConnectionProviderTest extends TestCase
             'shopware.redis.connection.ephemeral' => fn () => $this->connections['ephemeral'],
         ];
 
-        $this->serviceLocator = new class($factories) implements ContainerInterface {
+        $this->serviceLocator = new class ($factories) implements ContainerInterface {
             use ServiceLocatorTrait;
         };
 

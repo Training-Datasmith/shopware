@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Service\Requirement;
 
@@ -98,7 +100,7 @@ class RequirementsValidatorTest extends TestCase
 
     private function createRequirement(bool $satisfied): ServiceRequirement
     {
-        return new class($satisfied) implements ServiceRequirement {
+        return new class ($satisfied) implements ServiceRequirement {
             public function __construct(
                 private readonly bool $satisfied,
             ) {

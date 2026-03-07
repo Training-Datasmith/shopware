@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Elasticsearch\Profiler;
 
@@ -7,9 +9,10 @@ use OpenSearch\ClientBuilder;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopware\Elasticsearch\Profiler\ClientProfiler;
 
 use function React\Promise\resolve;
+
+use Shopware\Elasticsearch\Profiler\ClientProfiler;
 
 /**
  * @internal

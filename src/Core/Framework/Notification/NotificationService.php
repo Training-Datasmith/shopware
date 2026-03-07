@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Notification;
 
@@ -62,7 +64,7 @@ class NotificationService
         $criteria->addSorting(new FieldSorting('createdAt', FieldSorting::ASCENDING));
         $criteria->setLimit($limit);
 
-        $notifications = $context->scope(Context::SYSTEM_SCOPE, fn(Context $context) => $this->notificationRepository->search($criteria, $context)->getEntities());
+        $notifications = $context->scope(Context::SYSTEM_SCOPE, fn (Context $context) => $this->notificationRepository->search($criteria, $context)->getEntities());
 
         if ($notifications->count() === 0) {
             return [

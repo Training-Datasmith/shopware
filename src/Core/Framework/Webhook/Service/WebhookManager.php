@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Webhook\Service;
 
@@ -300,7 +302,7 @@ class WebhookManager implements ResetInterface
             return $payload;
         }
 
-        return array_filter($payload, fn(array $writeResult) => isset($writeResult['versionId']) && $writeResult['versionId'] === Defaults::LIVE_VERSION);
+        return array_filter($payload, fn (array $writeResult) => isset($writeResult['versionId']) && $writeResult['versionId'] === Defaults::LIVE_VERSION);
     }
 
     private function isEventDispatchingAllowed(Webhook $webhook, Hookable $event): bool

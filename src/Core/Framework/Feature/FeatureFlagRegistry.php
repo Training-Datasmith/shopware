@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Feature;
 
@@ -50,7 +52,7 @@ class FeatureFlagRegistry
                 $stored = \json_decode($stored, true, 512, \JSON_THROW_ON_ERROR);
             }
 
-            $stored = array_filter($stored, static fn(array $flag) => !\array_key_exists('major', $flag) || !$flag['major']);
+            $stored = array_filter($stored, static fn (array $flag) => !\array_key_exists('major', $flag) || !$flag['major']);
 
             $flags = array_merge($static, $stored);
         } catch (DBALException) {

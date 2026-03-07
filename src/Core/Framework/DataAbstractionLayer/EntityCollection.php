@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\DataAbstractionLayer;
 
@@ -48,7 +50,7 @@ class EntityCollection extends Collection
      */
     public function getIds(): array
     {
-        return $this->fmap(static fn(Entity $entity) => $entity->getUniqueIdentifier());
+        return $this->fmap(static fn (Entity $entity) => $entity->getUniqueIdentifier());
     }
 
     /**
@@ -57,7 +59,7 @@ class EntityCollection extends Collection
     public function filterByProperty(string $property, $value): static
     {
         return $this->filter(
-            static fn(Entity $struct) => $struct->get($property) === $value
+            static fn (Entity $struct) => $struct->get($property) === $value
         );
     }
 

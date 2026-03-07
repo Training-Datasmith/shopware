@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Elasticsearch\Admin\Indexer;
 
@@ -24,7 +26,7 @@ class AbstractAdminIndexerTest extends TestCase
     {
         $languageId = Uuid::randomHex();
 
-        $indexer = new class($languageId) extends AbstractAdminIndexer {
+        $indexer = new class ($languageId) extends AbstractAdminIndexer {
             public function __construct(private readonly string $languageId)
             {
             }

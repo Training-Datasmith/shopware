@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\DataAbstractionLayer\Search;
 
@@ -55,7 +57,7 @@ WHERE product_search_config.language_id = :languageId AND product_search_config_
             );
 
             if ($config !== []) {
-                return array_map(fn(array $item): array => [
+                return array_map(fn (array $item): array => [
                     'and_logic' => $item['and_logic'],
                     'excluded_terms' => json_decode((string) $item['excluded_terms'], true),
                     'min_search_length' => (int) $item['min_search_length'],

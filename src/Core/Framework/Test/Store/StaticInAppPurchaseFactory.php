@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Test\Store;
 
@@ -31,19 +33,19 @@ class StaticInAppPurchaseFactory
                 new JWTDecoder(),
                 new KeyFetcher(
                     new Client(),
-                    new class extends StoreRequestOptionsProvider {
+                    new class () extends StoreRequestOptionsProvider {
                         public function __construct()
                         {
                         }
                     },
                     new StaticSystemConfigService(),
-                    new class extends Logger {
+                    new class () extends Logger {
                         public function __construct()
                         {
                         }
                     }
                 ),
-                new class extends Logger {
+                new class () extends Logger {
                     public function __construct()
                     {
                     }

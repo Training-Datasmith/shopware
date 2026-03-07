@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Adapter\Filesystem;
 
@@ -58,7 +60,7 @@ class PrefixFilesystem implements FilesystemOperator
         $location = $this->preparePath($location);
 
         return $this->filesystem->listContents($location, $deep)->map(
-            fn(StorageAttributes $info) => $info->withPath($this->stripPath($info->path()))
+            fn (StorageAttributes $info) => $info->withPath($this->stripPath($info->path()))
         );
     }
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\Product\Hook\Pricing;
 
@@ -92,7 +94,7 @@ class PriceCollectionFacade implements \IteratorAggregate, \Countable
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator(
-            $this->prices->map(fn(CalculatedPrice $price) => new PriceFacade($this->product, $price, $this->priceStubs, $this->context))
+            $this->prices->map(fn (CalculatedPrice $price) => new PriceFacade($this->product, $price, $this->priceStubs, $this->context))
         );
     }
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Administration\Framework\App\Subscriber;
 
@@ -111,6 +113,6 @@ readonly class SystemLanguageChangedSubscriber implements EventSubscriberInterfa
         string $appId,
         LocaleEntity $locale
     ): ?AppAdministrationSnippetEntity {
-        return $snippets->filter(fn(AppAdministrationSnippetEntity $snippet) => $appId === $snippet->getAppId() && $snippet->getLocaleId() === $locale->getId())->first();
+        return $snippets->filter(fn (AppAdministrationSnippetEntity $snippet) => $appId === $snippet->getAppId() && $snippet->getLocaleId() === $locale->getId())->first();
     }
 }

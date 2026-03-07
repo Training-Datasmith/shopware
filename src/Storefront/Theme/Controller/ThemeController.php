@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Storefront\Theme\Controller;
 
@@ -47,7 +49,7 @@ class ThemeController extends AbstractController
     public function configuration(string $themeId, Context $context): JsonResponse
     {
         if (!Feature::isActive('v6.8.0.0')) {
-            $themeConfiguration = Feature::silent('v6.8.0.0', fn() => $this->themeService->getThemeConfiguration($themeId, true, $context));
+            $themeConfiguration = Feature::silent('v6.8.0.0', fn () => $this->themeService->getThemeConfiguration($themeId, true, $context));
 
             return new JsonResponse($themeConfiguration);
         }
@@ -164,7 +166,7 @@ class ThemeController extends AbstractController
     public function structuredFields(string $themeId, Context $context): JsonResponse
     {
         if (!Feature::isActive('v6.8.0.0')) {
-            $themeConfiguration = Feature::silent('v6.8.0.0', fn() => $this->themeService->getThemeConfigurationStructuredFields($themeId, true, $context));
+            $themeConfiguration = Feature::silent('v6.8.0.0', fn () => $this->themeService->getThemeConfigurationStructuredFields($themeId, true, $context));
 
             return new JsonResponse($themeConfiguration);
         }

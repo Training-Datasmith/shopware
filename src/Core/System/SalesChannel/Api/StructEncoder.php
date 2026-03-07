@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\System\SalesChannel\Api;
 
@@ -208,7 +210,7 @@ class StructEncoder implements ResetInterface
             if ($blockedFields) {
                 $blockedFieldsLookup = \array_flip($blockedFields);
 
-                $data = \array_filter($data, static fn($key) => !isset($blockedFieldsLookup[$key]), \ARRAY_FILTER_USE_KEY);
+                $data = \array_filter($data, static fn ($key) => !isset($blockedFieldsLookup[$key]), \ARRAY_FILTER_USE_KEY);
             }
         }
 

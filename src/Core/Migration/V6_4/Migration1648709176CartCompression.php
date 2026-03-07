@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Migration\V6_4;
 
@@ -42,7 +44,7 @@ class Migration1648709176CartCompression extends MigrationStep
         }
 
         do {
-            $affectedRows = RetryableQuery::retryable($connection, static fn(): int => (int) $connection->executeStatement(
+            $affectedRows = RetryableQuery::retryable($connection, static fn (): int => (int) $connection->executeStatement(
                 'UPDATE cart SET `payload` = `cart` WHERE `payload` IS NULL AND `cart` IS NOT NULL LIMIT :limit',
                 ['limit' => self::UPDATE_LIMIT],
                 ['limit' => ParameterType::INTEGER]

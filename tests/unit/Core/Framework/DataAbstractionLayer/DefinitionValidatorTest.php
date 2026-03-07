@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\DataAbstractionLayer;
 
@@ -180,7 +182,7 @@ class DefinitionValidatorTest extends TestCase
         $registry->method('getByEntityName')->willReturn($definition);
 
         // @phpstan-ignore class.extendsFinalByPhpDoc
-        return new class($registry, $connection) extends DefinitionValidator {
+        return new class ($registry, $connection) extends DefinitionValidator {
             protected function shouldSkipDefinition(string $definitionClass): bool
             {
                 return false;
@@ -206,7 +208,7 @@ class DefinitionValidatorTest extends TestCase
         $registry->method('getByEntityName')->willReturn($definition);
 
         // @phpstan-ignore class.extendsFinalByPhpDoc
-        return new class($registry, $connection) extends DefinitionValidator {
+        return new class ($registry, $connection) extends DefinitionValidator {
             protected function shouldSkipDefinition(string $definitionClass): bool
             {
                 return false;

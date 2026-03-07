@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\Category\SalesChannel;
 
@@ -176,7 +178,7 @@ class CategoryRoute extends AbstractCategoryRoute
      */
     private function getTranslatedSlotConfigs(CategoryEntity $category, array $languageMergeOrder): array
     {
-        $getCategoryTranslationByLanguageId = (static fn(CategoryEntity $category, string $languageId): ?CategoryTranslationEntity => \array_find(
+        $getCategoryTranslationByLanguageId = (static fn (CategoryEntity $category, string $languageId): ?CategoryTranslationEntity => \array_find(
             $category->getTranslations()?->getElements() ?? [],
             static fn (CategoryTranslationEntity $translation): bool => $translation->getLanguageId() === $languageId,
         ));

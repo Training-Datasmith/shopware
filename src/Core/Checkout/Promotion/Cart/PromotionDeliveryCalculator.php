@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Promotion\Cart;
 
@@ -61,7 +63,7 @@ class PromotionDeliveryCalculator
      */
     public function calculate(LineItemCollection $discountLineItems, Cart $original, Cart $toCalculate, SalesChannelContext $context): void
     {
-        $discountLineItems->sort(fn(LineItem $a, LineItem $b) => $b->getPayloadValue('priority') <=> $a->getPayloadValue('priority'));
+        $discountLineItems->sort(fn (LineItem $a, LineItem $b) => $b->getPayloadValue('priority') <=> $a->getPayloadValue('priority'));
 
         $notDiscountedDeliveriesValue = $toCalculate->getDeliveries()->getShippingCosts()->getTotalPriceAmount();
 

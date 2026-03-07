@@ -12,7 +12,7 @@ class Bar
 {
     public function foo(): EntityDefinition
     {
-        return new class extends EntityDefinition {
+        return new class () extends EntityDefinition {
             public function getEntityName(): string
             {
                 return 'ccc';

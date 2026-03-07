@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\Gateway\Context\Command;
 
@@ -16,7 +18,7 @@ class AbstractContextGatewayCommandTest extends TestCase
 {
     public function testCommand(): void
     {
-        $command = new class(['foo' => 'bar'], 'baz') extends AbstractContextGatewayCommand {
+        $command = new class (['foo' => 'bar'], 'baz') extends AbstractContextGatewayCommand {
             /**
              * @param array<string, mixed> $array
              */

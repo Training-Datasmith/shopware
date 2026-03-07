@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Elasticsearch\Admin\Indexer;
 
@@ -562,12 +564,12 @@ SQL,
                     'id' => $manufacturerId,
                     'name' => $this->decodeTranslatedValues($translatedManufacturerNamesEncoded),
                 ] : null,
-                'categories' => array_map(static fn(string $categoryId): array => [
+                'categories' => array_map(static fn (string $categoryId): array => [
                     'id' => $categoryId,
                     'versionId' => Defaults::LIVE_VERSION,
                     '_count' => 1,
                 ], $categoryIds),
-                'visibilities' => array_map(static fn(array $visibility): array => array_merge(['_count' => 1], $visibility), $visibilities),
+                'visibilities' => array_map(static fn (array $visibility): array => array_merge(['_count' => 1], $visibility), $visibilities),
                 'media' => \is_string($row['mediaId'] ?? null) ? [['id' => $row['mediaId'], '_count' => 1]] : [],
                 'tags' => $parsedTagIds,
                 'createdAt' => $this->formatDateTime($row, 'createdAt'),

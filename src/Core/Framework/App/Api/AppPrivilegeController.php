@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\App\Api;
 
@@ -38,7 +40,7 @@ class AppPrivilegeController
     {
         $this->assertHasUserId($context);
 
-        return $context->scope(Context::SYSTEM_SCOPE, fn() => new JsonResponse([
+        return $context->scope(Context::SYSTEM_SCOPE, fn () => new JsonResponse([
             'privileges' => $this->privileges->getRequestedPrivilegesForAllApps(),
         ]));
     }

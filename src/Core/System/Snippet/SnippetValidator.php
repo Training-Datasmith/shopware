@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\System\Snippet;
 
@@ -117,7 +119,7 @@ readonly class SnippetValidator implements SnippetValidatorInterface
 
     protected function getAllFiles(): SnippetFileCollection
     {
-        $snippetFiles = $this->loadedSnippetFiles->filter(fn(AbstractSnippetFile $snippetFile) => $snippetFile instanceof GenericSnippetFile);
+        $snippetFiles = $this->loadedSnippetFiles->filter(fn (AbstractSnippetFile $snippetFile) => $snippetFile instanceof GenericSnippetFile);
 
         $this->hydrateFiles($this->snippetFileHandler->findAdministrationSnippetFiles(), $snippetFiles);
         $this->hydrateFiles($this->snippetFileHandler->findStorefrontSnippetFiles(), $snippetFiles);

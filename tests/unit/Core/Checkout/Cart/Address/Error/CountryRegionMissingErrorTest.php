@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Checkout\Cart\Address\Error;
 
@@ -16,7 +18,7 @@ class CountryRegionMissingErrorTest extends TestCase
 {
     public function testGetMessageKeyIsIdenticalToGetId(): void
     {
-        $error = new class extends CountryRegionMissingError {
+        $error = new class () extends CountryRegionMissingError {
             public function getId(): string
             {
                 return 'country-region-missing';

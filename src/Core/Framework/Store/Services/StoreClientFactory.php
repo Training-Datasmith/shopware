@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Store\Services;
 
@@ -64,7 +66,7 @@ class StoreClientFactory
     {
         return static function (callable $handler) use ($fn): callable {
             /** @var callable(RequestInterface, array<mixed>): Promise $handler */
-            return static fn(RequestInterface $request, array $options) => $handler($request, $options)->then(fn ($response) => $fn($response, $request));
+            return static fn (RequestInterface $request, array $options) => $handler($request, $options)->then(fn ($response) => $fn($response, $request));
         };
     }
 }

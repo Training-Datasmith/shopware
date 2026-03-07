@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\Util;
 
@@ -23,7 +25,7 @@ class BacktraceCollectorTest extends TestCase
         callable $skipFrame,
         ?Frame $expected
     ): void {
-        $collector = (new class($frames) extends BacktraceCollector {
+        $collector = (new class ($frames) extends BacktraceCollector {
             /**
              * @param list<array<string, mixed>> $frames
              */

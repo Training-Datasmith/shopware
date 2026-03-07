@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\Category\Service;
 
@@ -354,6 +356,6 @@ class CategoryBreadcrumbBuilder
      */
     private function filterCategorySeoUrls(array $seoUrls, string $categoryId): array
     {
-        return array_filter($seoUrls, static fn(array $seoUrl): bool => $seoUrl['categoryId'] === $categoryId);
+        return array_filter($seoUrls, static fn (array $seoUrl): bool => $seoUrl['categoryId'] === $categoryId);
     }
 }

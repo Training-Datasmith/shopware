@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\Media\Thumbnail;
 
@@ -176,7 +178,7 @@ class ThumbnailService
 
         $delete = \array_values(\array_map(static fn (string $id): array => ['id' => $id], $toBeDeletedThumbnails->getIds()));
 
-        $update = $this->connection->transactional(fn(): array => $context->state(function () use ($delete, $media, $config, $context, $toBeCreatedSizes): array {
+        $update = $this->connection->transactional(fn (): array => $context->state(function () use ($delete, $media, $config, $context, $toBeCreatedSizes): array {
             $this->thumbnailRepository->delete($delete, $context);
 
             $updated = $this->generateAndSave($media, $config, $context, $toBeCreatedSizes);

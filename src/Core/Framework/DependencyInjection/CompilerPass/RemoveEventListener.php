@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\DependencyInjection\CompilerPass;
 
@@ -23,7 +25,7 @@ abstract class RemoveEventListener
 
         $definition->clearTag('kernel.event_listener');
 
-        $map = \array_map(fn(array $item) => \implode('::', $item), $remove);
+        $map = \array_map(fn (array $item) => \implode('::', $item), $remove);
 
         foreach ($listeners as $listener) {
             $key = $listener['event'] . '::' . $listener['method'];

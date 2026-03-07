@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\Store\InAppPurchases\Services;
 
@@ -221,7 +223,7 @@ class InAppPurchaseProviderTest extends TestCase
      */
     private function generateJwt(array $payload): string
     {
-        $builder = Builder::new(new JoseEncoder(), new class implements ClaimsFormatter {
+        $builder = Builder::new(new JoseEncoder(), new class () implements ClaimsFormatter {
             public function formatClaims(array $claims): array
             {
                 return $claims;

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1); // @phpstan-ignore symplify.multipleClassLikeInFile
+<?php
+
+declare(strict_types=1); // @phpstan-ignore symplify.multipleClassLikeInFile
 
 namespace Shopware\Core\Framework\Notification;
 

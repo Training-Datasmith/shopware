@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Gateway\Command\Handler;
 
@@ -27,7 +29,7 @@ class RemovePaymentMethodCommandHandler extends AbstractCheckoutGatewayCommandHa
         $technicalName = $command->paymentMethodTechnicalName;
         $methods = $response->getAvailablePaymentMethods();
 
-        $methods = $methods->filter(fn(PaymentMethodEntity $method) => $method->getTechnicalName() !== $technicalName);
+        $methods = $methods->filter(fn (PaymentMethodEntity $method) => $method->getTechnicalName() !== $technicalName);
 
         $response->setAvailablePaymentMethods($methods);
     }

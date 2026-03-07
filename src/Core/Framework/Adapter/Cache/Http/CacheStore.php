@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Adapter\Cache\Http;
 
@@ -113,7 +115,7 @@ class CacheStore implements StoreInterface
         }
 
         if (!Feature::isActive('v6.8.0.0') && !Feature::isActive('PERFORMANCE_TWEAKS') && !Feature::isActive('CACHE_REWORK')) {
-            $isValid = Feature::silent('v6.8.0.0', fn(): bool => $this->stateValidator->isValid($request, $response));
+            $isValid = Feature::silent('v6.8.0.0', fn (): bool => $this->stateValidator->isValid($request, $response));
             if (!$isValid) {
                 return null;
             }
@@ -140,7 +142,7 @@ class CacheStore implements StoreInterface
         }
 
         if (!Feature::isActive('v6.8.0.0') && !Feature::isActive('PERFORMANCE_TWEAKS') && !Feature::isActive('CACHE_REWORK')) {
-            $isValid = Feature::silent('v6.8.0.0', fn(): bool => $this->stateValidator->isValid($request, $response));
+            $isValid = Feature::silent('v6.8.0.0', fn (): bool => $this->stateValidator->isValid($request, $response));
             if (!$isValid) {
                 return $key->key;
             }

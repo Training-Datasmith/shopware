@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\Struct;
 
@@ -210,7 +212,7 @@ class AssignArrayTraitTest extends TestCase
 
     public function testIntersectionType(): void
     {
-        $class = (new class extends Struct implements \JsonSerializable, \Countable {
+        $class = (new class () extends Struct implements \JsonSerializable, \Countable {
             /**
              * @var array<mixed>
              */

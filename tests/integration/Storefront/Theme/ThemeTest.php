@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Integration\Storefront\Theme;
 
@@ -559,7 +561,7 @@ class ThemeTest extends TestCase
 
         $scssCompilerMock = $this->createMock(ScssPhpCompiler::class);
 
-        $kernel = new class(static::getContainer()->get('kernel')) implements KernelInterface {
+        $kernel = new class (static::getContainer()->get('kernel')) implements KernelInterface {
             private readonly SimpleTheme $simpleTheme;
 
             public function __construct(private readonly Kernel $kernel)

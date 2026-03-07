@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Promotion\Cart;
 
@@ -415,7 +417,7 @@ class PromotionCollector implements CartDataCollectorInterface
                 $factor
             );
 
-            $originalCodeItem = $original->getLineItems()->firstWhere(static fn(LineItem $item) => ($item->getReferencedId() ?? '') === $code && $item->getPayloadValue('discountId') === $discount->getId());
+            $originalCodeItem = $original->getLineItems()->firstWhere(static fn (LineItem $item) => ($item->getReferencedId() ?? '') === $code && $item->getPayloadValue('discountId') === $discount->getId());
 
             if ($originalCodeItem && \count($originalCodeItem->getExtensions()) > 0) {
                 $discountItem->setExtensions($originalCodeItem->getExtensions());

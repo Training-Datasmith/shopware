@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\DataAbstractionLayer\Event;
 
@@ -121,7 +123,7 @@ class EntityDeleteEventTest extends TestCase
 
         $event = EntityDeleteEvent::create($writeContext, []);
 
-        $callbackFactory = fn () => new class {
+        $callbackFactory = fn () => new class () {
             public int $counter = 0;
 
             public function __invoke(): void

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Checkout\Cart\Order;
 
@@ -22,7 +24,7 @@ class ValidatorTest extends TestCase
     public function testValidate(): void
     {
         $mockValidator = $this->createMock(CartValidatorInterface::class);
-        $mockValidator2 = new class($this->createMock(Error::class)) implements CartValidatorInterface {
+        $mockValidator2 = new class ($this->createMock(Error::class)) implements CartValidatorInterface {
             public function __construct(private readonly Error $error)
             {
             }

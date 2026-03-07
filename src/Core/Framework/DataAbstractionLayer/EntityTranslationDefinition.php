@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\DataAbstractionLayer;
 
@@ -36,7 +38,7 @@ abstract class EntityTranslationDefinition extends EntityDefinition
     {
         return $this->getFields()
                 ->filterByFlag(Required::class)
-                ->filter(fn(Field $field) => !(
+                ->filter(fn (Field $field) => !(
                     $field instanceof FkField
                     || $field instanceof CreatedAtField
                     || $field instanceof UpdatedAtField

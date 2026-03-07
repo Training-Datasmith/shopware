@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Struct;
 
@@ -159,7 +161,7 @@ abstract class Collection extends Struct implements \IteratorAggregate, \Countab
      */
     public function filterInstance(string $class): static
     {
-        return $this->filter(static fn($item) => $item instanceof $class);
+        return $this->filter(static fn ($item) => $item instanceof $class);
     }
 
     /**

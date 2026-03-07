@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Integration\Core\Framework\DataAbstractionLayer\Dbal;
 
@@ -643,7 +645,7 @@ class EntityWriteGatewayTest extends TestCase
      */
     private function callbackSpy(): callable
     {
-        return new class {
+        return new class () {
             public bool $called = false;
 
             public function __invoke(): void
@@ -658,7 +660,7 @@ class EntityWriteGatewayTest extends TestCase
      */
     private function eventListenerCalledSpy(?\Closure $callback = null): callable
     {
-        return new class($callback) {
+        return new class ($callback) {
             public ?ShopwareEvent $event = null;
 
             public function __construct(private ?\Closure $callback = null)

@@ -270,7 +270,7 @@ class ServiceReferenceGeneratorTest extends TestCase
         ScriptReferenceDataCollector::setShopwareClasses([$fqcn]);
         ScriptReferenceDataCollector::setFiles([]);
 
-        $generator = new class($this->twig, $this->projectDir, $fqcn) extends ServiceReferenceGenerator {
+        $generator = new class ($this->twig, $this->projectDir, $fqcn) extends ServiceReferenceGenerator {
             public function __construct(Environment $twig, string $projectDir, string $fqcn)
             {
                 parent::__construct($twig, $projectDir);
@@ -320,7 +320,7 @@ class ServiceReferenceGeneratorTest extends TestCase
 
     public function testGetServiceStubMethodDocsCanBeOverridden(): void
     {
-        $generator = new class($this->twig, $this->projectDir) extends ServiceReferenceGenerator {
+        $generator = new class ($this->twig, $this->projectDir) extends ServiceReferenceGenerator {
             protected function getServiceStubMethodDocs(): array
             {
                 return [];

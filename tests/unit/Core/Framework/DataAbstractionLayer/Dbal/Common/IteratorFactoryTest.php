@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\DataAbstractionLayer\Dbal\Common;
 
@@ -24,7 +26,7 @@ class IteratorFactoryTest extends TestCase
         $connection = $this->createMock(Connection::class);
         $registry = $this->createMock(DefinitionInstanceRegistry::class);
 
-        $definition = new class extends EntityDefinition {
+        $definition = new class () extends EntityDefinition {
             public function getEntityName(): string
             {
                 return 'order';

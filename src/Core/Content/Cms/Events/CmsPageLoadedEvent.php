@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\Cms\Events;
 
@@ -22,8 +24,7 @@ class CmsPageLoadedEvent extends NestedEvent implements ShopwareSalesChannelEven
         /* protected CmsPageCollection $result, */
         protected CmsPageCollection $result,
         protected SalesChannelContext $salesChannelContext
-    )
-    {
+    ) {
     }
 
     public function getRequest(): Request

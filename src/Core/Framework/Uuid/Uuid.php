@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Uuid;
 
@@ -89,7 +91,7 @@ class Uuid
      */
     public static function fromBytesToHexList(array $bytesList): array
     {
-        return array_map(static fn(string $bytes) => self::fromBytesToHex($bytes), $bytesList);
+        return array_map(static fn (string $bytes) => self::fromBytesToHex($bytes), $bytesList);
     }
 
     /**
@@ -101,7 +103,7 @@ class Uuid
      */
     public static function fromHexToBytesList(array $uuids): array
     {
-        return array_map(static fn(string $uuid) => self::fromHexToBytes($uuid), $uuids);
+        return array_map(static fn (string $uuid) => self::fromHexToBytes($uuid), $uuids);
     }
 
     /**

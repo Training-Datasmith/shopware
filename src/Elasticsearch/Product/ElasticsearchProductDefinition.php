@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Elasticsearch\Product;
 
@@ -257,7 +259,7 @@ class ElasticsearchProductDefinition extends AbstractElasticsearchDefinition
                 'isCloseout' => (bool) $item['isCloseout'],
                 'shippingFree' => (bool) $item['shippingFree'],
                 'markAsTopseller' => (bool) $item['markAsTopseller'],
-                'visibilities' => array_map(fn(array $visibility) => array_merge([
+                'visibilities' => array_map(fn (array $visibility) => array_merge([
                     '_count' => 1,
                 ], $visibility), $visibilities),
                 'availableStock' => (int) $item['availableStock'],
@@ -279,7 +281,7 @@ class ElasticsearchProductDefinition extends AbstractElasticsearchDefinition
                 'categoryTree' => ElasticsearchIndexingUtils::parseJson($item, 'categoryTree'),
                 'categoriesRo' => array_values(array_map(fn (string $categoryId): array => ['id' => $categoryId, '_count' => 1], ElasticsearchIndexingUtils::parseJson($item, 'categoryTree'))),
                 'taxId' => $item['taxId'],
-                'tags' => array_filter(array_map(fn(array $tag) => empty($tag['id']) ? null : [
+                'tags' => array_filter(array_map(fn (array $tag) => empty($tag['id']) ? null : [
                     'id' => $tag['id'],
                     'name' => ElasticsearchIndexingUtils::stripText($tag['name'] ?? ''),
                     '_count' => 1,
@@ -298,11 +300,11 @@ class ElasticsearchProductDefinition extends AbstractElasticsearchDefinition
                     'name' => ElasticsearchFieldMapper::translated(field: 'deliveryTimeName', items: $translation),
                     '_count' => 1,
                 ],
-                'properties' => array_values(array_map(fn(string $propertyId) => array_merge([
+                'properties' => array_values(array_map(fn (string $propertyId) => array_merge([
                     'id' => $propertyId,
                     '_count' => 1,
                 ], $groups[$propertyId] ?? []), ElasticsearchIndexingUtils::parseJson($item, 'propertyIds'))),
-                'options' => array_values(array_map(fn(string $optionId) => array_merge([
+                'options' => array_values(array_map(fn (string $optionId) => array_merge([
                     'id' => $optionId,
                     '_count' => 1,
                 ], $groups[$optionId] ?? []), ElasticsearchIndexingUtils::parseJson($item, 'optionIds'))),

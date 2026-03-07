@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Elasticsearch\Admin\Indexer;
 
@@ -425,7 +427,7 @@ SQL;
      */
     private function parseLineItems(array $row): array
     {
-        return array_values(array_map(static fn(array $item) => [
+        return array_values(array_map(static fn (array $item) => [
             'id' => (string) ($item['id'] ?? ''),
             '_count' => 1,
             'productId' => \is_string($item['productId']) ? $item['productId'] : null,

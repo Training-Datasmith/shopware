@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\Cookie\SalesChannel;
 
@@ -55,7 +57,7 @@ class CookieRoute extends AbstractCookieRoute
         $hashData = [];
 
         $groups = array_values($cookieGroups->getElements());
-        usort($groups, static fn(CookieGroup $a, CookieGroup $b): int => strcmp($a->getTechnicalName(), $b->getTechnicalName()));
+        usort($groups, static fn (CookieGroup $a, CookieGroup $b): int => strcmp($a->getTechnicalName(), $b->getTechnicalName()));
 
         foreach ($groups as $cookieGroup) {
             $groupData = [
@@ -72,7 +74,7 @@ class CookieRoute extends AbstractCookieRoute
             $cookieEntries = $cookieGroup->getEntries();
             if ($cookieEntries !== null) {
                 $entries = array_values($cookieEntries->getElements());
-                usort($entries, static fn(CookieEntry $a, CookieEntry $b): int => strcmp($a->cookie, $b->cookie));
+                usort($entries, static fn (CookieEntry $a, CookieEntry $b): int => strcmp($a->cookie, $b->cookie));
 
                 $entriesData = [];
                 foreach ($entries as $cookieEntry) {

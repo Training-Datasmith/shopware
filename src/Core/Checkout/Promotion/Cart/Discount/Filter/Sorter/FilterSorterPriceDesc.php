@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Promotion\Cart\Discount\Filter\Sorter;
 
@@ -20,10 +22,12 @@ class FilterSorterPriceDesc extends AbstractPriceSorter
      */
     protected function sortPriceMap(array $map): array
     {
-        \uksort($map, 
+        \uksort(
+            $map,
             // the prices are stored as strings, so we need to cast them to float
             // we need to store the prices as string, because you can not use floats as array keys
-            static fn(string $a, string $b) => (float) $b <=> (float) $a);
+            static fn (string $a, string $b) => (float) $b <=> (float) $a
+        );
 
         return $map;
     }

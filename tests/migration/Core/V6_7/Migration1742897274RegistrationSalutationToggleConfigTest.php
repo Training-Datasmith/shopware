@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Migration\Core\V6_7;
 
@@ -58,7 +60,9 @@ class Migration1742897274RegistrationSalutationToggleConfigTest extends TestCase
     private function getConditionValues(): array
     {
         return array_map(
-            function (string $json) { return json_decode($json, true); },
+            function (string $json) {
+                return json_decode($json, true);
+            },
             static::getContainer()->get(Connection::class)->fetchAllKeyValue(
                 'SELECT LOWER(HEX(`id`)), `configuration_value` FROM `system_config` WHERE `configuration_key` = ?',
                 ['core.loginRegistration.showSalutation'],

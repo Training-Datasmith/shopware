@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\DataAbstractionLayer;
 
@@ -312,9 +314,9 @@ abstract class EntityDefinition
             return $this->primaryKeys;
         }
 
-        $fields = $this->getFields()->filter(fn(Field $field): bool => $field->is(PrimaryKey::class));
+        $fields = $this->getFields()->filter(fn (Field $field): bool => $field->is(PrimaryKey::class));
 
-        $fields->sort(static fn(Field $a, Field $b) => $b->getExtractPriority() <=> $a->getExtractPriority());
+        $fields->sort(static fn (Field $a, Field $b) => $b->getExtractPriority() <=> $a->getExtractPriority());
 
         return $this->primaryKeys = $fields;
     }

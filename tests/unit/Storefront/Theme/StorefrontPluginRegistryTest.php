@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Storefront\Theme;
 
@@ -62,7 +64,7 @@ class StorefrontPluginRegistryTest extends TestCase
         $pluginFactory = $this->createMock(AbstractStorefrontPluginConfigurationFactory::class);
 
         $config = new StorefrontPluginConfiguration('Plugin1');
-        $bundle = new class extends Bundle {
+        $bundle = new class () extends Bundle {
             protected string $name = 'Plugin1';
         };
 

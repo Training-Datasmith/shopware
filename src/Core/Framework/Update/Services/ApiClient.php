@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Update\Services;
 
@@ -83,7 +85,7 @@ class ApiClient
         /** @var non-empty-array<string> $versions */
         $versions = $this->client->request('GET', 'https://releases.shopware.com/changelog/index.json')->toArray();
 
-        usort($versions, fn($a, $b) => version_compare($b, $a));
+        usort($versions, fn ($a, $b) => version_compare($b, $a));
 
         // Index them by major version
         $mappedVersions = [];

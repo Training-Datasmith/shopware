@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Adapter\Cache\Http;
 
@@ -34,7 +36,7 @@ readonly class CacheRelevantRulesResolver
         $ruleAreas = $this->extensions->publish(
             name: ResolveCacheRelevantRuleIdsExtension::NAME,
             extension: $ruleIdsExtension,
-            function: fn(Request $request, array $ruleAreas, SalesChannelContext $salesChannelContext): array => $ruleAreas,
+            function: fn (Request $request, array $ruleAreas, SalesChannelContext $salesChannelContext): array => $ruleAreas,
         );
 
         return $ruleAreas;

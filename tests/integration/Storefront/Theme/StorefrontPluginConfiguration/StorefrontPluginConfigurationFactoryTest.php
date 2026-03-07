@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Integration\Storefront\Theme\StorefrontPluginConfiguration;
 
@@ -107,7 +109,7 @@ class StorefrontPluginConfigurationFactoryTest extends TestCase
     private function getBundle(string $name, string $basePath, bool $isTheme = false): Bundle
     {
         if ($isTheme) {
-            return new class($name, $basePath) extends Bundle implements ThemeInterface {
+            return new class ($name, $basePath) extends Bundle implements ThemeInterface {
                 public function __construct(
                     string $name,
                     string $basePath
@@ -118,7 +120,7 @@ class StorefrontPluginConfigurationFactoryTest extends TestCase
             };
         }
 
-        return new class($name, $basePath) extends Bundle {
+        return new class ($name, $basePath) extends Bundle {
             public function __construct(
                 string $name,
                 string $basePath

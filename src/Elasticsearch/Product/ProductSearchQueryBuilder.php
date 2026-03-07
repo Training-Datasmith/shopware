@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Elasticsearch\Product;
 
@@ -53,7 +55,7 @@ class ProductSearchQueryBuilder extends AbstractProductSearchQueryBuilder
             throw ElasticsearchException::emptyQuery();
         }
 
-        $configs = array_map(fn(array $item): SearchFieldConfig => new SearchFieldConfig(
+        $configs = array_map(fn (array $item): SearchFieldConfig => new SearchFieldConfig(
             $item['field'],
             $item['ranking'],
             (bool) $item['tokenize'],

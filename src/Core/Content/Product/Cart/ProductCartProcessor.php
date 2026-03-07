@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\Product\Cart;
 
@@ -108,7 +110,7 @@ class ProductCartProcessor implements CartProcessorInterface, CartDataCollectorI
                 // product was fetched, update timestamp to not fetch it again
                 if ($product instanceof ProductEntity) {
                     $lineItem->setDataTimestamp($product->getUpdatedAt() ?? $product->getCreatedAt());
-                // we have asked for this product, but we didn't get it back, so we need to remove it
+                    // we have asked for this product, but we didn't get it back, so we need to remove it
                 } elseif (\in_array($lineItem->getReferencedId(), $ids, true)) {
                     $lineItem->setDataTimestamp(null);
                 }
@@ -617,7 +619,7 @@ class ProductCartProcessor implements CartProcessorInterface, CartDataCollectorI
     {
         $contextHash = $this->generator->getSalesChannelContextHash($context, [RuleAreas::PRODUCT_AREA]);
 
-        $activeTaxRules = array_map(static fn(TaxEntity $taxRule) => $taxRule->getRules()?->getIds() ?: $taxRule->getId(), $context->getTaxRules()->getElements());
+        $activeTaxRules = array_map(static fn (TaxEntity $taxRule) => $taxRule->getRules()?->getIds() ?: $taxRule->getId(), $context->getTaxRules()->getElements());
 
         return Hasher::hash([$contextHash, $activeTaxRules]);
     }

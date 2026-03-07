@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Rule;
 
@@ -22,7 +24,7 @@ class RuleIdMatcher
      */
     public function filter(array $options, array $ruleIds): array
     {
-        return \array_values(\array_filter($options, fn(IdAware&RuleIdAware $option) => $option->getAvailabilityRuleId() === null || \in_array($option->getAvailabilityRuleId(), $ruleIds, true)));
+        return \array_values(\array_filter($options, fn (IdAware&RuleIdAware $option) => $option->getAvailabilityRuleId() === null || \in_array($option->getAvailabilityRuleId(), $ruleIds, true)));
     }
 
     /**
@@ -35,6 +37,6 @@ class RuleIdMatcher
      */
     public function filterCollection(Collection $options, array $ruleIds): Collection
     {
-        return $options->filter(fn(IdAware&RuleIdAware $option) => $option->getAvailabilityRuleId() === null || \in_array($option->getAvailabilityRuleId(), $ruleIds, true));
+        return $options->filter(fn (IdAware&RuleIdAware $option) => $option->getAvailabilityRuleId() === null || \in_array($option->getAvailabilityRuleId(), $ruleIds, true));
     }
 }

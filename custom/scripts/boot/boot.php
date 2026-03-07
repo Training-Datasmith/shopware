@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Scripts\Boot\ScriptKernel;
 use Shopware\Core\Framework\Adapter\Database\MySQLFactory;
 use Shopware\Core\Framework\Adapter\Kernel\KernelFactory;

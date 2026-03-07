@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Checkout\Gateway\Command\Executor;
 
@@ -64,7 +66,7 @@ class CheckoutGatewayCommandExecutorTest extends TestCase
             new ErrorCollection()
         );
 
-        $throwCommand = new class extends AbstractCheckoutGatewayCommand {
+        $throwCommand = new class () extends AbstractCheckoutGatewayCommand {
             public static function getDefaultKeyName(): string
             {
                 return 'this-one-throws';
@@ -102,7 +104,7 @@ class CheckoutGatewayCommandExecutorTest extends TestCase
             new ErrorCollection()
         );
 
-        $throwCommand = new class extends AbstractCheckoutGatewayCommand {
+        $throwCommand = new class () extends AbstractCheckoutGatewayCommand {
             public static function getDefaultKeyName(): string
             {
                 return 'this-one-throws';

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Document\Service;
 
@@ -211,7 +213,7 @@ final class DocumentMerger
                 continue;
             }
 
-            $fileContent = $context->scope(Context::SYSTEM_SCOPE, fn(Context $context) => $this->mediaService->loadFile($documentMediaId, $context));
+            $fileContent = $context->scope(Context::SYSTEM_SCOPE, fn (Context $context) => $this->mediaService->loadFile($documentMediaId, $context));
 
             $technicalName = $document->getDocumentType()?->getTechnicalName() ?? 'unknown';
             $orderNumber = $document->getOrder()?->getOrderNumber() ?? $document->getOrderId();

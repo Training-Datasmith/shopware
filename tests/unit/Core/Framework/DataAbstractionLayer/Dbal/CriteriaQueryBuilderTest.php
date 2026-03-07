@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\DataAbstractionLayer\Dbal;
 
@@ -149,7 +151,7 @@ class CriteriaQueryBuilderTest extends TestCase
 
     private function returnMockDefinition(): EntityDefinition
     {
-        return new class extends EntityDefinition {
+        return new class () extends EntityDefinition {
             public function getEntityName(): string
             {
                 return 'order';

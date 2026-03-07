@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\MeasurementSystem\Unit;
 
@@ -33,9 +35,9 @@ class MeasurementUnitProvider extends AbstractMeasurementUnitProvider implements
     {
         $units = $this->getUnits();
 
-        $availableUnits = $units->map(static fn(MeasurementDisplayUnitEntity $unit) => $unit->shortName);
+        $availableUnits = $units->map(static fn (MeasurementDisplayUnitEntity $unit) => $unit->shortName);
 
-        $foundUnit = $units->firstWhere(static fn(MeasurementDisplayUnitEntity $unitEntity) => $unitEntity->shortName === $unit);
+        $foundUnit = $units->firstWhere(static fn (MeasurementDisplayUnitEntity $unitEntity) => $unitEntity->shortName === $unit);
 
         if (!$foundUnit instanceof MeasurementDisplayUnitEntity) {
             throw MeasurementSystemException::unsupportedMeasurementUnit($unit, $availableUnits);

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\Media\Commands;
 
@@ -81,7 +83,7 @@ class DeleteNotUsedMediaCommand extends Command
 
         $limit = $input->getOption('limit') !== null ? (int) $input->getOption('limit') : 50;
 
-        $listener = new class($io, $limit) {
+        $listener = new class ($io, $limit) {
             private int $steps = 0;
 
             private ?ProgressBar $progressBar = null;

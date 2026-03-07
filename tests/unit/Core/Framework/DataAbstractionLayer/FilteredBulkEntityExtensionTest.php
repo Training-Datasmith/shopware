@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\DataAbstractionLayer;
 
@@ -17,7 +19,7 @@ class FilteredBulkEntityExtensionTest extends TestCase
 {
     public function testFilteredGetsAdded(): void
     {
-        $bulk = new class extends BulkEntityExtension {
+        $bulk = new class () extends BulkEntityExtension {
             public function collect(): \Generator
             {
                 yield 'foo' => [

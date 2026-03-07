@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Checkout\Payment\Cart;
 
@@ -27,7 +29,7 @@ class PaymentTransactionStructFactoryTest extends TestCase
 
     public function testDecoration(): void
     {
-        $factory = new class extends PaymentTransactionStructFactory {
+        $factory = new class () extends PaymentTransactionStructFactory {
             public function getDecorated(): AbstractPaymentTransactionStructFactory
             {
                 return new static();

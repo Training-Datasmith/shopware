@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\DataAbstractionLayer;
 
@@ -182,7 +184,7 @@ class VersionManager
         $writes = $this->buildWrites($commits);
 
         $this->eventDispatcher->dispatch($event = new BeforeVersionMergeEvent($writes));
-        $writes = $event->filterWrites(static fn($operation) => !empty($operation));
+        $writes = $event->filterWrites(static fn ($operation) => !empty($operation));
 
         // execute writes and get access to the write result to dispatch events later on
         $result = $this->executeWrites($writes, $liveContext);

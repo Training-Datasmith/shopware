@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Gateway\Command\Handler;
 
@@ -35,7 +37,7 @@ class AddPaymentMethodExtensionsCommandHandler extends AbstractCheckoutGatewayCo
      */
     public function handle(AbstractCheckoutGatewayCommand $command, CheckoutGatewayResponse $response, SalesChannelContext $context): void
     {
-        $method = $response->getAvailablePaymentMethods()->filter(fn(PaymentMethodEntity $method) => $method->getTechnicalName() === $command->paymentMethodTechnicalName)->first();
+        $method = $response->getAvailablePaymentMethods()->filter(fn (PaymentMethodEntity $method) => $method->getTechnicalName() === $command->paymentMethodTechnicalName)->first();
 
         if (!$method) {
             $this->logger->logOrThrowException(

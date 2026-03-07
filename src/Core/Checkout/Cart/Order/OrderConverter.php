@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Cart\Order;
 
@@ -171,7 +173,7 @@ class OrderConverter
             if ((!$isRecalculation || !$cart->getBehavior()?->hasPermission(CheckoutPermissions::SKIP_PRIMARY_ORDER_IDS)) && $cart->getDeliveries()->count() > 0) {
                 usort(
                     $data['deliveries'],
-                    fn(array $deliveryA, array $deliveryB) => $deliveryB['shippingCosts']->getTotalPrice() <=> $deliveryA['shippingCosts']->getTotalPrice()
+                    fn (array $deliveryA, array $deliveryB) => $deliveryB['shippingCosts']->getTotalPrice() <=> $deliveryA['shippingCosts']->getTotalPrice()
                 );
                 $data['deliveries'][0]['id'] ??= Uuid::randomHex();
                 $data['primaryOrderDeliveryId'] = $data['deliveries'][0]['id'];

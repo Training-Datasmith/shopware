@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Storefront\Framework\Routing;
 
@@ -273,7 +275,8 @@ class StorefrontSubscriberTest extends TestCase
     {
         $event = new ControllerEvent(
             $this->createMock(HttpKernelInterface::class),
-            function (): void {},
+            function (): void {
+            },
             $request,
             HttpKernelInterface::MAIN_REQUEST
         );

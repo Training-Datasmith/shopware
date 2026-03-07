@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Gateway\Command\Handler;
 
@@ -35,7 +37,7 @@ class AddShippingMethodExtensionsCommandHandler extends AbstractCheckoutGatewayC
      */
     public function handle(AbstractCheckoutGatewayCommand $command, CheckoutGatewayResponse $response, SalesChannelContext $context): void
     {
-        $method = $response->getAvailableShippingMethods()->filter(fn(ShippingMethodEntity $method) => $method->getTechnicalName() === $command->shippingMethodTechnicalName)->first();
+        $method = $response->getAvailableShippingMethods()->filter(fn (ShippingMethodEntity $method) => $method->getTechnicalName() === $command->shippingMethodTechnicalName)->first();
 
         if (!$method) {
             $this->logger->logOrThrowException(

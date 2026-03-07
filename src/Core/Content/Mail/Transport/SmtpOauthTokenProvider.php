@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Content\Mail\Transport;
 
@@ -28,7 +30,7 @@ class SmtpOauthTokenProvider
 
     public function getToken(): string
     {
-        return $this->cache->get(self::CACHE_KEY, fn(ItemInterface $cacheItem) => $this->fetchToken($cacheItem));
+        return $this->cache->get(self::CACHE_KEY, fn (ItemInterface $cacheItem) => $this->fetchToken($cacheItem));
     }
 
     private function fetchToken(ItemInterface $cacheItem): string

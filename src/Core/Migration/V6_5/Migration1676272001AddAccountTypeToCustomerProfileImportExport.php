@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Migration\V6_5;
 
@@ -38,7 +40,7 @@ class Migration1676272001AddAccountTypeToCustomerProfileImportExport extends Mig
         }
 
         $mapping = $this->getCustomerProfileMapping($profile['mapping']);
-        $mappingFilterAccountType = array_filter($mapping, fn(array $mapping) => $mapping['key'] === 'accountType');
+        $mappingFilterAccountType = array_filter($mapping, fn (array $mapping) => $mapping['key'] === 'accountType');
         if ($mappingFilterAccountType !== []) {
             return;
         }

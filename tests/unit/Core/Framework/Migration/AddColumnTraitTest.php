@@ -63,7 +63,7 @@ class AddColumnTraitTest extends TestCase
         $instantSql = 'ALTER TABLE `app` ADD COLUMN `source_config` JSON NOT NULL DEFAULT (JSON_OBJECT()), ALGORITHM=INSTANT;';
         $fallbackSql = 'ALTER TABLE `app` ADD COLUMN `source_config` JSON NOT NULL DEFAULT (JSON_OBJECT());';
 
-        $exception = new class('ALGORITHM=INSTANT is not supported') extends \Exception implements DBALException {};
+        $exception = new class ('ALGORITHM=INSTANT is not supported') extends \Exception implements DBALException {};
 
         $connection->expects($this->exactly(2))
             ->method('executeStatement')

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Storefront\Controller\Exception;
 
@@ -35,7 +37,7 @@ class StorefrontException extends HttpException
          * The parameters array often contains large objects (like the page context). Passing them into the exception
          * message may overflow further regex functions. Therefore, we filter out all objects.
          */
-        $parameters = array_filter($parameters, static fn(mixed $param): bool => !\is_object($param));
+        $parameters = array_filter($parameters, static fn (mixed $param): bool => !\is_object($param));
 
         $isCustomApp = str_contains($error->getFile(), self::CUSTOM_APP_PATH);
         $errorCode = $isCustomApp ? self::CAN_NOT_RENDER_CUSTOM_APP_VIEW : self::CAN_NOT_RENDER_VIEW;

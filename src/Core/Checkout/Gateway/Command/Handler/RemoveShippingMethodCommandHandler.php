@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Gateway\Command\Handler;
 
@@ -27,7 +29,7 @@ class RemoveShippingMethodCommandHandler extends AbstractCheckoutGatewayCommandH
         $technicalName = $command->shippingMethodTechnicalName;
         $methods = $response->getAvailableShippingMethods();
 
-        $methods = $methods->filter(fn(ShippingMethodEntity $method) => $method->getTechnicalName() !== $technicalName);
+        $methods = $methods->filter(fn (ShippingMethodEntity $method) => $method->getTechnicalName() !== $technicalName);
 
         $response->setAvailableShippingMethods($methods);
     }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use Shopware\Storefront\Controller\StorefrontController;
 use Symfony\Component\Routing\Attribute\Route;

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Storefront\Framework\Captcha;
 
@@ -39,7 +41,8 @@ class CaptchaRouteListenerTest extends TestCase
     {
         $event = new ControllerEvent(
             $this->createMock(HttpKernelInterface::class),
-            function (): void {},
+            function (): void {
+            },
             new Request(attributes: [PlatformRequest::ATTRIBUTE_CAPTCHA => true]),
             HttpKernelInterface::MAIN_REQUEST
         );
@@ -62,7 +65,8 @@ class CaptchaRouteListenerTest extends TestCase
     {
         $event = new ControllerEvent(
             $this->createMock(HttpKernelInterface::class),
-            function (): void {},
+            function (): void {
+            },
             new Request(attributes: [PlatformRequest::ATTRIBUTE_CAPTCHA => true]),
             HttpKernelInterface::MAIN_REQUEST
         );
@@ -104,7 +108,8 @@ class CaptchaRouteListenerTest extends TestCase
 
         $event = new ControllerEvent(
             $this->createMock(HttpKernelInterface::class),
-            function (): void {},
+            function (): void {
+            },
             $request,
             HttpKernelInterface::MAIN_REQUEST
         );
@@ -170,7 +175,8 @@ class CaptchaRouteListenerTest extends TestCase
 
         $event = new ControllerEvent(
             $this->createMock(HttpKernelInterface::class),
-            function (): void {},
+            function (): void {
+            },
             $request,
             HttpKernelInterface::MAIN_REQUEST
         );
@@ -227,7 +233,8 @@ class CaptchaRouteListenerTest extends TestCase
 
         $event = new ControllerEvent(
             $this->createMock(HttpKernelInterface::class),
-            function (): void {},
+            function (): void {
+            },
             $request,
             HttpKernelInterface::MAIN_REQUEST
         );
@@ -276,7 +283,8 @@ class CaptchaRouteListenerTest extends TestCase
         $request = new Request();
         $event = new ControllerEvent(
             $this->createMock(HttpKernelInterface::class),
-            function (): void {},
+            function (): void {
+            },
             $request,
             HttpKernelInterface::MAIN_REQUEST
         );

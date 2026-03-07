@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Script\Execution;
 
@@ -120,7 +122,7 @@ class ScriptLoader implements EventSubscriberInterface
             if (!isset($appIncludes[$script['app_id']])) {
                 $includes = array_filter($scripts, fn (array $include): bool => $include['hook'] === 'include' && $include['app_id'] === $script['app_id']);
 
-                $appIncludes[$script['app_id']] = array_map(fn(array $include): Script => new Script(
+                $appIncludes[$script['app_id']] = array_map(fn (array $include): Script => new Script(
                     $include['scriptName'],
                     $include['script'],
                     new \DateTimeImmutable($include['lastModified']),

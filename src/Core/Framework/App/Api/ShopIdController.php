@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\App\Api;
 
@@ -85,7 +87,7 @@ class ShopIdController extends AbstractController
         $apps = $this->appRepository
             ->search($criteria, $context)
             ->getEntities()
-            ->map(fn(AppEntity $app) => $app->getTranslation('label'));
+            ->map(fn (AppEntity $app) => $app->getTranslation('label'));
 
         return array_values($apps);
     }

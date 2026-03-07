@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Checkout\Cart\Address\Error;
 
@@ -16,7 +18,7 @@ class SalutationMissingErrorTest extends TestCase
 {
     public function testGetMessageKeyIsIdenticalToGetId(): void
     {
-        $error = new class extends SalutationMissingError {
+        $error = new class () extends SalutationMissingError {
             public function getId(): string
             {
                 return 'salutation-missing';

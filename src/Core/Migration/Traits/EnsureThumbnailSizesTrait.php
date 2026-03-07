@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Migration\Traits;
 
@@ -30,7 +32,7 @@ trait EnsureThumbnailSizesTrait
 
         $sizes = [];
         foreach ($thumbnailSizes as $thumbnailSize) {
-            $result = array_filter($allSizes, fn(array $var) => (int) $var['width'] === $thumbnailSize['width'] && (int) $var['height'] === $thumbnailSize['height']);
+            $result = array_filter($allSizes, fn (array $var) => (int) $var['width'] === $thumbnailSize['width'] && (int) $var['height'] === $thumbnailSize['height']);
 
             if ($result !== []) {
                 $sizes[] = reset($result)['id'];

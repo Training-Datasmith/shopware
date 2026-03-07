@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\Webhook\Service;
 
@@ -70,7 +72,7 @@ class WebhookManagerTest extends TestCase
     public function testDispatchesTwoConsecutiveEventsCorrectly(): void
     {
         $event1 = new AppFlowActionEvent('foobar', ['x-test-header' => 'test-header-val'], ['foo' => 'bar']);
-        $event2 = new class('foobar.event', ['x-test-header' => 'test-header-val'], ['foo' => 'bar']) extends AppFlowActionEvent {};
+        $event2 = new class ('foobar.event', ['x-test-header' => 'test-header-val'], ['foo' => 'bar']) extends AppFlowActionEvent {};
 
         $this->eventFactory
             ->expects($this->exactly(2))

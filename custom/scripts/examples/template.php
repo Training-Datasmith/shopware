@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scripts\Examples;
 
 require_once __DIR__ . '/base-script.php';
@@ -15,6 +17,5 @@ class Main extends BaseScript
 
     }
 }
-
 
 (new Main($kernel))->run();

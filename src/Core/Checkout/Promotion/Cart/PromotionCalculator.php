@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Promotion\Cart;
 
@@ -80,7 +82,7 @@ class PromotionCalculator
     public function calculate(LineItemCollection $discountLineItems, Cart $original, Cart $calculated, SalesChannelContext $context, CartBehavior $behaviour): void
     {
         // sort discount line items by priority before building exclusions and calculating discounts
-        $discountLineItems->sort(fn(LineItem $a, LineItem $b) => $b->getPayloadValue('priority') <=> $a->getPayloadValue('priority'));
+        $discountLineItems->sort(fn (LineItem $a, LineItem $b) => $b->getPayloadValue('priority') <=> $a->getPayloadValue('priority'));
 
         // array that holds all excluded promotion ids.
         // if a promotion has exclusions they are added on the stack

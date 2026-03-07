@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\App\Lifecycle\Persister;
 
@@ -73,6 +75,6 @@ class TaxProviderPersister
             new EqualsFilter('appId', $appId),
         ]));
 
-        return $context->scope(Context::SYSTEM_SCOPE, fn(Context $context) => $this->taxProviderRepository->search($criteria, $context)->getEntities());
+        return $context->scope(Context::SYSTEM_SCOPE, fn (Context $context) => $this->taxProviderRepository->search($criteria, $context)->getEntities());
     }
 }

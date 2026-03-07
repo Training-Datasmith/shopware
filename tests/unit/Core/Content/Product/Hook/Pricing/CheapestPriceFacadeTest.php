@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Content\Product\Hook\Pricing;
 
@@ -118,7 +120,7 @@ class CheapestPriceFacadeTest extends TestCase
 
     private function rampUpPriceFacade(IdsCollection $ids, string $currencyKey, string $taxState): CheapestPriceFacade
     {
-        $entity = new class extends Entity {
+        $entity = new class () extends Entity {
             protected CalculatedPrice $calculatedPrice;
         };
 

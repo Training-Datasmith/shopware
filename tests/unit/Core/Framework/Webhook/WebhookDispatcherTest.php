@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\Webhook;
 
@@ -64,7 +66,7 @@ class WebhookDispatcherTest extends TestCase
 
     public function testAddSubscriberForwardsToInner(): void
     {
-        $subscriber = new class implements EventSubscriberInterface {
+        $subscriber = new class () implements EventSubscriberInterface {
             public static function getSubscribedEvents(): array
             {
                 return [];
@@ -86,7 +88,7 @@ class WebhookDispatcherTest extends TestCase
 
     public function testRemoveSubscriberForwardsToInner(): void
     {
-        $subscriber = new class implements EventSubscriberInterface {
+        $subscriber = new class () implements EventSubscriberInterface {
             public static function getSubscribedEvents(): array
             {
                 return [];
@@ -108,7 +110,8 @@ class WebhookDispatcherTest extends TestCase
 
     public function testAddListenerForwardsToInner(): void
     {
-        $listener = function (): void {};
+        $listener = function (): void {
+        };
 
         $eventDispatcherMock = $this->createMock(EventDispatcher::class);
         $eventDispatcherMock->expects($this->once())
@@ -125,7 +128,8 @@ class WebhookDispatcherTest extends TestCase
 
     public function testRemoveListenerForwardsToInner(): void
     {
-        $listener = function (): void {};
+        $listener = function (): void {
+        };
 
         $eventDispatcherMock = $this->createMock(EventDispatcher::class);
         $eventDispatcherMock->expects($this->once())
@@ -157,7 +161,8 @@ class WebhookDispatcherTest extends TestCase
 
     public function testGetListenerPriorityForwardsToInner(): void
     {
-        $listener = function (): void {};
+        $listener = function (): void {
+        };
 
         $eventDispatcherMock = $this->createMock(EventDispatcher::class);
         $eventDispatcherMock->expects($this->once())

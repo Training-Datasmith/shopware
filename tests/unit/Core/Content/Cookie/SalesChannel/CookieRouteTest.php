@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Content\Cookie\SalesChannel;
 
@@ -169,7 +171,7 @@ class CookieRouteTest extends TestCase
         $standardGroups = new CookieGroupCollection([$standardGroup]);
 
         // Create configuration with extended CookieGroup and CookieEntry objects
-        $extendedGroup = new class('test.group') extends CookieGroup {
+        $extendedGroup = new class ('test.group') extends CookieGroup {
             public string $dynamicProperty = 'this-should-not-affect-hash';
 
             public int $timestamp;
@@ -193,7 +195,7 @@ class CookieRouteTest extends TestCase
             }
         };
 
-        $extendedEntry = new class('test-cookie') extends CookieEntry {
+        $extendedEntry = new class ('test-cookie') extends CookieEntry {
             public string $extraData = 'this-should-not-affect-hash';
 
             /**

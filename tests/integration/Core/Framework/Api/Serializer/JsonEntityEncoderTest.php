@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Integration\Core\Framework\Api\Serializer;
 
@@ -150,7 +152,7 @@ class JsonEntityEncoderTest extends TestCase
 
         $definition = new CustomFieldTestDefinition();
         $definition->compile(static::getContainer()->get(DefinitionInstanceRegistry::class));
-        $struct = new class extends Entity {
+        $struct = new class () extends Entity {
             use EntityCustomFieldsTrait;
         };
         $struct->assign($input);
@@ -241,7 +243,7 @@ class JsonEntityEncoderTest extends TestCase
         $definition = new CustomFieldTestDefinition();
         $definition->compile(static::getContainer()->get(DefinitionInstanceRegistry::class));
 
-        $struct1 = new class extends Entity {
+        $struct1 = new class () extends Entity {
             use EntityCustomFieldsTrait;
         };
         $struct1->setUniqueIdentifier('test-id');
@@ -265,7 +267,7 @@ class JsonEntityEncoderTest extends TestCase
         $definition = new CustomFieldTestDefinition();
         $definition->compile(static::getContainer()->get(DefinitionInstanceRegistry::class));
 
-        $struct2 = new class extends Entity {
+        $struct2 = new class () extends Entity {
             use EntityCustomFieldsTrait;
         };
         $struct2->setUniqueIdentifier('test-id-2');

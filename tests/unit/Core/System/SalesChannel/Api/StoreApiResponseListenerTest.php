@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\System\SalesChannel\Api;
 
@@ -77,7 +79,7 @@ class StoreApiResponseListenerTest extends TestCase
             ->method('encode')
             ->willReturn(['encoded' => 'data']);
 
-        $responseObject = new class extends Struct {};
+        $responseObject = new class () extends Struct {};
 
         $response = $this->createMock(StoreApiResponse::class);
         $response->method('getObject')
@@ -113,7 +115,7 @@ class StoreApiResponseListenerTest extends TestCase
             ->method('encode')
             ->willReturn(['encoded' => 'data']);
 
-        $responseObject = new class extends Struct {};
+        $responseObject = new class () extends Struct {};
 
         $response = $this->createMock(StoreApiResponse::class);
         $response->method('getObject')

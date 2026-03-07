@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Framework\Rule;
 
@@ -66,7 +68,7 @@ class RuleIdMatcherTest extends TestCase
         $option2 = $this->createOption($this->ids->get('option2'), $this->ids->get('rule2'));
         $option3 = $this->createOption($this->ids->get('option3'), $this->ids->get('rule3'));
 
-        $options = new class([$option1, $option2, $option3]) extends Collection {
+        $options = new class ([$option1, $option2, $option3]) extends Collection {
         };
 
         $matcher = new RuleIdMatcher();
@@ -85,7 +87,7 @@ class RuleIdMatcherTest extends TestCase
         $option2 = $this->createOption($this->ids->get('option2'));
         $option3 = $this->createOption($this->ids->get('option3'), $this->ids->get('rule3'));
 
-        $options = new class([$option1, $option2, $option3]) extends Collection {
+        $options = new class ([$option1, $option2, $option3]) extends Collection {
         };
 
         $matcher = new RuleIdMatcher();
@@ -105,7 +107,7 @@ class RuleIdMatcherTest extends TestCase
     {
         $id ??= Uuid::randomHex();
 
-        return new class($id, $ruleId) implements IdAware, RuleIdAware {
+        return new class ($id, $ruleId) implements IdAware, RuleIdAware {
             public function __construct(
                 private readonly string $id,
                 private readonly ?string $ruleId = null,

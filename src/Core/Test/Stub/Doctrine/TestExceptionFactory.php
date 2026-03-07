@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Test\Stub\Doctrine;
 
@@ -13,7 +15,7 @@ class TestExceptionFactory
 {
     public static function createException(string $message): Exception
     {
-        return new class($message) extends \Exception implements Exception {
+        return new class ($message) extends \Exception implements Exception {
             public function __construct(string $message)
             {
                 parent::__construct($message);

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Migration\Core\V6_7;
 
@@ -51,7 +53,9 @@ class Migration1720603803RemoveDefaultPaymentMethodRuleTest extends TestCase
     private function getConditionValues(string $type): array
     {
         return array_map(
-            function (string $json) { return json_decode($json, true); },
+            function (string $json) {
+                return json_decode($json, true);
+            },
             static::getContainer()->get(Connection::class)->fetchAllKeyValue(
                 'SELECT `id`, `value` FROM `rule_condition` WHERE `type`= :type',
                 ['type' => $type],

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Api\Controller;
 
@@ -546,7 +548,7 @@ class ApiController extends AbstractController
 
             // get inverse association to filter to parent value
             $reverse = $definition->getFields()->firstWhere(
-                fn(Field $field) => $field instanceof OneToManyAssociationField
+                fn (Field $field) => $field instanceof OneToManyAssociationField
                     && $parentDefinition === $field->getReferenceDefinition()
                     && $association->getStorageName() === $field->getReferenceField()
             );
@@ -570,7 +572,7 @@ class ApiController extends AbstractController
 
             // get inverse association to filter to parent value
             $reverse = $definition->getFields()->firstWhere(
-                fn(Field $field) => $field instanceof OneToOneAssociationField
+                fn (Field $field) => $field instanceof OneToOneAssociationField
                     && $parentDefinition === $field->getReferenceDefinition()
                     && $association->getStorageName() === $field->getReferenceField()
             );

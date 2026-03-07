@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Storefront\Theme\Subscriber;
 
@@ -43,7 +45,7 @@ class UnusedMediaSubscriber implements EventSubscriberInterface
         $mediaIds = [];
         foreach ($allThemeIds as $themeId) {
             if (!Feature::isActive('v6.8.0.0')) {
-                $config = Feature::silent('v6.8.0.0', fn() => $this->themeService->getThemeConfiguration($themeId, false, $context));
+                $config = Feature::silent('v6.8.0.0', fn () => $this->themeService->getThemeConfiguration($themeId, false, $context));
             } else {
                 $config = $this->themeService->getPlainThemeConfiguration($themeId, $context);
             }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Unit\Core\Checkout\Payment\Cart\PaymentHandler;
 
@@ -99,7 +101,7 @@ class PaymentHandlerRegistryTest extends TestCase
     {
         $registry = new PaymentHandlerRegistry(
             new ServiceLocator([
-                AbstractPaymentHandler::class => fn () => new class {
+                AbstractPaymentHandler::class => fn () => new class () {
                 },
             ]),
             $this->connection,
@@ -185,7 +187,7 @@ class PaymentHandlerRegistryTest extends TestCase
      */
     private function registerHandler(string $handler): ServiceLocator
     {
-        $class = new class extends AbstractPaymentHandler {
+        $class = new class () extends AbstractPaymentHandler {
             public function supports(PaymentHandlerType $type, string $paymentMethodId, Context $context): bool
             {
                 return false;

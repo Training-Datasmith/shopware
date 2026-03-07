@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Cart\Delivery\Struct;
 
@@ -90,7 +92,7 @@ class DeliveryCollection extends Collection
     public function getPrimaryDelivery(?string $primaryDeliveryId): ?Delivery
     {
         if ($primaryDeliveryId) {
-            $delivery = $this->firstWhere(fn(Delivery $delivery) => $delivery->getExtensionOfType(OrderConverter::ORIGINAL_ID, IdStruct::class)?->getId() === $primaryDeliveryId);
+            $delivery = $this->firstWhere(fn (Delivery $delivery) => $delivery->getExtensionOfType(OrderConverter::ORIGINAL_ID, IdStruct::class)?->getId() === $primaryDeliveryId);
         }
 
         return $delivery ?? $this->filter(static fn (Delivery $delivery): bool => $delivery->getShippingCosts()->getTotalPrice() >= 0)->first();

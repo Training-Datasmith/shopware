@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Tests\Integration\Core\Framework\Adapter\Cache\InvalidatorStorage;
 
@@ -177,7 +179,7 @@ class MySQLInvalidatorStorageTest extends TestCase
 
         $statement = $this->createMock(Statement::class);
 
-        $e = new class('Deadlock') extends \Exception implements RetryableException {};
+        $e = new class ('Deadlock') extends \Exception implements RetryableException {};
 
         $statement
             ->method('executeStatement')

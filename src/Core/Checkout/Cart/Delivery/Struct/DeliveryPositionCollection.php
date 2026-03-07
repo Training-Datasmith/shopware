@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Checkout\Cart\Delivery\Struct;
 
@@ -115,7 +117,7 @@ class DeliveryPositionCollection extends Collection
 
     public function getWithoutDeliveryFree(): DeliveryPositionCollection
     {
-        return $this->filter(fn(DeliveryPosition $position) => $position->getLineItem()->getDeliveryInformation()?->getFreeDelivery() === false);
+        return $this->filter(fn (DeliveryPosition $position) => $position->getLineItem()->getDeliveryInformation()?->getFreeDelivery() === false);
     }
 
     public function getApiAlias(): string

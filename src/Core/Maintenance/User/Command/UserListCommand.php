@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopware\Core\Maintenance\User\Command;
 
@@ -86,7 +88,7 @@ class UserListCommand extends Command
      */
     private function mapUsersToJson(UserCollection $users): array
     {
-        return array_values($users->map(fn(UserEntity $user) => [
+        return array_values($users->map(fn (UserEntity $user) => [
             ...$this->mapUser($user),
             'active' => $user->getActive(),
             'roles' => $this->roles($user),
@@ -107,7 +109,7 @@ class UserListCommand extends Command
      */
     private function mapUsersToConsole(UserCollection $users): array
     {
-        return array_values($users->map(fn(UserEntity $user) => [
+        return array_values($users->map(fn (UserEntity $user) => [
             ...$this->mapUser($user),
             'active' => $user->getActive(),
             'roles' => implode(', ', $this->roles($user)),
