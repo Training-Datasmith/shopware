@@ -73,7 +73,7 @@ class AppArchiveValidator
 
     private function assertNoDirectoryTraversal(string $filename): void
     {
-        if (mb_strpos($filename, '..' . \DIRECTORY_SEPARATOR) !== false) {
+        if (mb_strpos($filename, '../') !== false || mb_strpos($filename, '..' . \DIRECTORY_SEPARATOR) !== false) {
             throw AppArchiveValidationFailure::directoryTraversal();
         }
     }

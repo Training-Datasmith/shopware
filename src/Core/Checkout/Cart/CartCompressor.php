@@ -80,7 +80,7 @@ class CartCompressor
         }
 
         /** @phpstan-ignore shopware.unserializeUsage */
-        return \unserialize($uncompressed);
+        return \unserialize($uncompressed, ['allowed_classes' => true]);
     }
 
     private function checkSerializationMaxSize(string $compressed): void

@@ -48,6 +48,13 @@ class CustomSnippetFormatController
         $format = $request->request->all()['format'] ?? [];
         /** @var array<mixed> $data */
         $data = $request->request->all()['data'] ?? [];
+
+        foreach ((array) $format as $snippetPath) {
+            if (\is_string($snippetPath) && str_contains($snippetPath, '..')) {
+                return new JsonResponse(['error' => 'Invalid snippet path'], 400);
+            }
+        }
+
         $parameters = array_merge_recursive(['format' => $format], $data);
 
         return new JsonResponse([

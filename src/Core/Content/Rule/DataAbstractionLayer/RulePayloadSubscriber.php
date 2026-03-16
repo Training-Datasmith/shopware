@@ -54,7 +54,7 @@ class RulePayloadSubscriber implements EventSubscriberInterface
             }
 
             /** @phpstan-ignore shopware.unserializeUsage */
-            $payload = \unserialize($payload);
+            $payload = \unserialize($payload, ['allowed_classes' => true]);
 
             $this->enrichConditions([$payload]);
 
