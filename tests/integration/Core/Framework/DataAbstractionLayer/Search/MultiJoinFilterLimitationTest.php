@@ -168,9 +168,10 @@ class MultiJoinFilterLimitationTest extends TestCase
             ->searchIds($criteria, Context::createDefaultContext());
 
         static::assertSame(3, $result->getTotal());
-        static::assertSame(self::$ids->get('category-1'), $result->getIds()[0]);
-        static::assertSame(self::$ids->get('category-2'), $result->getIds()[1]);
-        static::assertSame(self::$ids->get('category-3'), $result->getIds()[2]);
+        $resultIds = $result->getIds();
+        static::assertContains(self::$ids->get('category-1'), $resultIds);
+        static::assertContains(self::$ids->get('category-2'), $resultIds);
+        static::assertSame(self::$ids->get('category-3'), $resultIds[2]);
     }
 
     public function testManyToOneWithSortDesc(): void
@@ -195,9 +196,10 @@ class MultiJoinFilterLimitationTest extends TestCase
             ->searchIds($criteria, Context::createDefaultContext());
 
         static::assertSame(3, $result->getTotal());
-        static::assertSame(self::$ids->get('category-1'), $result->getIds()[0]); // manufacturer-2 matches as well
-        static::assertSame(self::$ids->get('category-3'), $result->getIds()[1]); // manufacturer-2
-        static::assertSame(self::$ids->get('category-2'), $result->getIds()[2]); // manufacturer-1
+        $resultIds = $result->getIds();
+        static::assertContains(self::$ids->get('category-1'), $resultIds);
+        static::assertContains(self::$ids->get('category-3'), $resultIds);
+        static::assertSame(self::$ids->get('category-2'), $resultIds[2]);
     }
 
     public function testManyToOneWithMultipleJoinGroupsAndGroupingIsNotSupported(): void

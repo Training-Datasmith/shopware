@@ -124,6 +124,11 @@ class Migration1752219159AddLanguageActiveTest extends TestCase
     public function restoreLanguageActiveColumn(): void
     {
         $this->migration->update($this->connection);
+
+        try {
+            $this->connection->executeStatement(\sprintf('DROP TABLE IF EXISTS `%s`;', self::PACK_LANGUAGE_ENTITY_NAME));
+        } catch (\Throwable) {
+        }
     }
 
     private function getInactiveLanguagesCount(string $tableName, string $activeFieldName): int

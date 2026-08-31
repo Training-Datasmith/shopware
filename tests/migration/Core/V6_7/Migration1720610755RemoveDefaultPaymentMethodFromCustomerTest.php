@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopware\Tests\Migration\Core\V6_7;
 
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Test\TestCaseBase\BasicTestDataBehaviour;
 use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
 use Shopware\Core\Framework\Util\Database\TableHelper;
@@ -60,6 +62,16 @@ class Migration1720610755RemoveDefaultPaymentMethodFromCustomerTest extends Test
         if ($exists) {
             $this->addColumn();
         }
+    }
+
+    #[After]
+    public function restoreDefaultPaymentMethodColumn(): void
+    {
+        if (Feature::isActive('v6.8.0.0') || TableHelper::columnExists($this->connection, 'customer', 'default_payment_method_id')) {
+            return;
+        }
+
+        $this->addColumn();
     }
 
     private function addColumn(): void
