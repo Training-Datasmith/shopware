@@ -33,6 +33,8 @@ use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Adapter\Translation\Translator;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\TaxFreeConfig;
 use Shopware\Core\Framework\DataAbstractionLayer\VersionManager;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\WriteContext;
@@ -46,6 +48,8 @@ use Shopware\Core\Test\AppSystemTestBehaviour;
 use Shopware\Core\Test\Integration\Traits\SnapshotTesting;
 use Shopware\Core\Test\Stub\Framework\IdsCollection;
 use Shopware\Core\Test\TestDefaults;
+use Shopware\Storefront\Theme\DatabaseSalesChannelThemeLoader;
+use Shopware\Storefront\Theme\ThemeService;
 use Shopware\Tests\Integration\Core\Checkout\Document\DocumentTrait;
 
 /**
@@ -110,6 +114,8 @@ class InvoiceRendererTest extends TestCase
         $this->invoiceRenderer = static::getContainer()->get(InvoiceRenderer::class);
         $this->cartService = static::getContainer()->get(CartService::class);
         self::$deLanguageId = $this->getDeDeLanguageId();
+
+        $this->ensureStorefrontThemeForDefaultSalesChannel();
     }
 
     protected function tearDown(): void
@@ -870,5 +876,34 @@ class InvoiceRendererTest extends TestCase
         $this->productRepository->create($products, Context::createDefaultContext());
 
         return $this->cartService->add($cart, $lineItems, $this->salesChannelContext);
+    }
+
+    private function ensureStorefrontThemeForDefaultSalesChannel(): void
+    {
+        static::getContainer()->get(Translator::class)->reset();
+
+        if (!static::getContainer()->has(ThemeService::class) || !static::getContainer()->has('theme.repository')) {
+            return;
+        }
+
+        $themeRepository = static::getContainer()->get('theme.repository');
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter('technicalName', 'Storefront'));
+        $storefrontThemeId = $themeRepository->searchIds($criteria, $this->context)->firstId();
+
+        if ($storefrontThemeId === null) {
+            return;
+        }
+
+        static::getContainer()->get(ThemeService::class)->assignTheme(
+            $storefrontThemeId,
+            TestDefaults::SALES_CHANNEL,
+            $this->context,
+            false
+        );
+
+        if (static::getContainer()->has(DatabaseSalesChannelThemeLoader::class)) {
+            static::getContainer()->get(DatabaseSalesChannelThemeLoader::class)->reset();
+        }
     }
 }
