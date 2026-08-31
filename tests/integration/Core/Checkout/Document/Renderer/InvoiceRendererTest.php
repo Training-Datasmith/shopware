@@ -899,7 +899,7 @@ class InvoiceRendererTest extends TestCase
             $storefrontThemeId,
             TestDefaults::SALES_CHANNEL,
             $this->context,
-            false
+            true
         );
 
         if (static::getContainer()->has(DatabaseSalesChannelThemeLoader::class)) {

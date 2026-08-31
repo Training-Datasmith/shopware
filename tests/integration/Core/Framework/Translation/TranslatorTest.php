@@ -401,7 +401,7 @@ class TranslatorTest extends TestCase
         $storefrontThemeId = $themeRepo->searchIds($criteria, Context::createDefaultContext())->firstId();
 
         if ($storefrontThemeId !== null) {
-            $themeService->assignTheme($storefrontThemeId, TestDefaults::SALES_CHANNEL, Context::createDefaultContext(), false);
+            $themeService->assignTheme($storefrontThemeId, TestDefaults::SALES_CHANNEL, Context::createDefaultContext(), true);
         }
 
         $translator->reset();
