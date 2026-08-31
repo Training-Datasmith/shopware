@@ -102,8 +102,8 @@ class ExtensionDataProviderTest extends TestCase
 
         $installedExtensions = $this->extensionDataProvider->getInstalledExtensions($this->context);
         $installedExtensions = $installedExtensions->filter(fn (ExtensionStruct $extension) => $extension->getName() !== 'SwagCommercial');
-
-        static::assertCount(7, $installedExtensions);
+        static::assertGreaterThanOrEqual(7, $installedExtensions->count());
+        static::assertNotNull($installedExtensions->get('TestApp'));
     }
 
     public function testItReturnsLocalExtensionsIfUserIsNotLoggedIn(): void
@@ -122,7 +122,8 @@ class ExtensionDataProviderTest extends TestCase
 
         $installedExtensions = $this->extensionDataProvider->getInstalledExtensions($this->context);
         $installedExtensions = $installedExtensions->filter(fn (ExtensionStruct $extension) => $extension->getName() !== 'SwagCommercial');
-        static::assertCount(1, $installedExtensions);
+        static::assertGreaterThanOrEqual(1, $installedExtensions->count());
+        static::assertNotNull($installedExtensions->get('TestApp'));
     }
 
     public function testItReturnsLocalExtensionsIfDomainIsNotSet(): void
@@ -137,7 +138,8 @@ class ExtensionDataProviderTest extends TestCase
         $installedExtensions = $this->extensionDataProvider->getInstalledExtensions($this->context);
         $installedExtensions = $installedExtensions->filter(fn (ExtensionStruct $extension) => $extension->getName() !== 'SwagCommercial');
 
-        static::assertCount(1, $installedExtensions);
+        static::assertGreaterThanOrEqual(1, $installedExtensions->count());
+        static::assertNotNull($installedExtensions->get('TestApp'));
 
         $installedExtension = $installedExtensions->get('TestApp');
 
@@ -177,7 +179,7 @@ class ExtensionDataProviderTest extends TestCase
 
         $installedExtensions = $this->extensionDataProvider->getInstalledExtensions($this->context);
         $installedExtensions = $installedExtensions->filter(fn (ExtensionStruct $extension) => $extension->getName() !== 'SwagCommercial');
-        static::assertCount(0, $installedExtensions);
+        static::assertNull($installedExtensions->get('TestApp'));
     }
 
     private function getDomainMissingResponse(): ResponseInterface

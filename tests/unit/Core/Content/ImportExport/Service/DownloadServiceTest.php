@@ -41,6 +41,8 @@ class DownloadServiceTest extends TestCase
     #[DataProvider('dataProviderNotFoundFile')]
     public function testNotFoundFile(ImportExportFileEntity $fileEntity, string $accessToken, string $fileId): void
     {
+        $fileEntity->setUpdatedAt(new \DateTimeImmutable());
+
         static::expectException(FileNotFoundException::class);
         static::expectExceptionMessage(\sprintf('Cannot find import/export file with id %s', $fileId));
 
