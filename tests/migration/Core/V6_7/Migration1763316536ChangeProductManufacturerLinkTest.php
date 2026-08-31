@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopware\Tests\Migration\Core\V6_7;
 
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Defaults;
@@ -141,6 +142,14 @@ SQL
         $migration->updateDestructive($this->connection);
 
         static::assertFalse($this->existLinkColumn('product_manufacturer'));
+    }
+
+    #[After]
+    public function restoreProductManufacturerLinkSchema(): void
+    {
+        $migration = new Migration1763316536ChangeProductManufacturerLink();
+        $migration->update($this->connection);
+        $migration->updateDestructive($this->connection);
     }
 
     /**

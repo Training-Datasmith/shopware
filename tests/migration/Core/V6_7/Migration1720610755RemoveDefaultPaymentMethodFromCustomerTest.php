@@ -65,13 +65,14 @@ class Migration1720610755RemoveDefaultPaymentMethodFromCustomerTest extends Test
     }
 
     #[After]
-    public function restoreDefaultPaymentMethodColumn(): void
+    public function removeDefaultPaymentMethodColumn(): void
     {
-        if (Feature::isActive('v6.8.0.0') || TableHelper::columnExists($this->connection, 'customer', 'default_payment_method_id')) {
+        if (!TableHelper::columnExists($this->connection, 'customer', 'default_payment_method_id')) {
             return;
         }
 
-        $this->addColumn();
+        $migration = new Migration1720610755RemoveDefaultPaymentMethodFromCustomer();
+        $migration->updateDestructive($this->connection);
     }
 
     private function addColumn(): void
