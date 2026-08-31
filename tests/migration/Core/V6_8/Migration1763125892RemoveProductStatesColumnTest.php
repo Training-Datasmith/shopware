@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopware\Tests\Migration\Core\V6_8;
 
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Migration\IndexerQueuer;
 use Shopware\Core\Framework\Test\TestCaseBase\KernelLifecycleManager;
 use Shopware\Core\Framework\Util\Database\TableHelper;
@@ -47,6 +49,16 @@ class Migration1763125892RemoveProductStatesColumnTest extends TestCase
         $migration->updateDestructive($this->connection);
 
         static::assertFalse(TableHelper::columnExists($this->connection, 'product', 'states'));
+    }
+
+    #[After]
+    public function restoreStatesColumn(): void
+    {
+        if (Feature::isActive('v6.8.0.0') || TableHelper::columnExists($this->connection, 'product', 'states')) {
+            return;
+        }
+
+        $this->addStatesColumn();
     }
 
     private function addStatesColumn(): void

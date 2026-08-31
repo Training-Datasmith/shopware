@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopware\Tests\Migration\Core\V6_8;
 
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Test\TestCaseBase\KernelLifecycleManager;
 use Shopware\Core\Framework\Util\Database\TableHelper;
 use Shopware\Core\Migration\V6_8\Migration1763125903RemoveOrderLineItemStatesColumn;
@@ -35,6 +37,16 @@ class Migration1763125903RemoveOrderLineItemStatesColumnTest extends TestCase
         $migration->updateDestructive($this->connection);
 
         static::assertFalse(TableHelper::columnExists($this->connection, 'order_line_item', 'states'));
+    }
+
+    #[After]
+    public function restoreStatesColumn(): void
+    {
+        if (Feature::isActive('v6.8.0.0') || TableHelper::columnExists($this->connection, 'order_line_item', 'states')) {
+            return;
+        }
+
+        $this->ensureStatesColumnExists();
     }
 
     private function ensureStatesColumnExists(): void
