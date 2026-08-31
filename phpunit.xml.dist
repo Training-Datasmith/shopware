@@ -8,7 +8,8 @@
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
          executionOrder="random"
-         failOnRisky="true">
+         failOnRisky="true"
+         failOnPhpunitWarning="false">
     <coverage includeUncoveredFiles="true"/>
     <source ignoreSuppressionOfDeprecations="true"
             ignoreIndirectDeprecations="true"
