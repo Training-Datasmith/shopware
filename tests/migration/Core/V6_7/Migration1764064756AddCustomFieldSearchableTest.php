@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopware\Tests\Migration\Core\V6_7;
 
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Log\Package;
@@ -49,5 +50,15 @@ class Migration1764064756AddCustomFieldSearchableTest extends TestCase
         $column = TableHelper::getColumnOfTable($this->connection, 'custom_field', 'include_in_search');
         static::assertTrue($column->isNotNull);
         static::assertSame('0', $column->defaultValue);
+    }
+
+    #[After]
+    public function restoreIncludeInSearchColumn(): void
+    {
+        if (TableHelper::columnExists($this->connection, 'custom_field', 'include_in_search')) {
+            return;
+        }
+
+        $this->migration->update($this->connection);
     }
 }
