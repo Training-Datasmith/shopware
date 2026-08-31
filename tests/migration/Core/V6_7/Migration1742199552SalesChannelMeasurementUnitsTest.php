@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopware\Tests\Migration\Core\V6_7;
 
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Log\Package;
@@ -61,5 +62,11 @@ class Migration1742199552SalesChannelMeasurementUnitsTest extends TestCase
             ['table' => 'sales_channel', 'column' => 'measurement_units']
         );
         static::assertEquals(1, $exists);
+    }
+
+    #[After]
+    public function restoreMeasurementUnitsColumn(): void
+    {
+        (new Migration1742199552SalesChannelMeasurementUnits())->update($this->connection);
     }
 }

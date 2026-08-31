@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopware\Tests\Migration\Core\V6_7;
 
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Defaults;
@@ -117,6 +118,12 @@ class Migration1752219159AddLanguageActiveTest extends TestCase
         }
 
         static::assertSame(0, $this->getUnequalActiveStateCount());
+    }
+
+    #[After]
+    public function restoreLanguageActiveColumn(): void
+    {
+        $this->migration->update($this->connection);
     }
 
     private function getInactiveLanguagesCount(string $tableName, string $activeFieldName): int
