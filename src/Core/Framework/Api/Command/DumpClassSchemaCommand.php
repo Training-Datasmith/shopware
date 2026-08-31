@@ -145,7 +145,7 @@ class DumpClassSchemaCommand extends Command
      */
     private function parseFile(string $filePath): ?array
     {
-        $parser = (new ParserFactory())->createForVersion(PhpVersion::fromString('7.0'));
+        $parser = (new ParserFactory())->createForVersion(PhpVersion::getHostVersion());
 
         $names = $parser->parse((string) file_get_contents($filePath));
 

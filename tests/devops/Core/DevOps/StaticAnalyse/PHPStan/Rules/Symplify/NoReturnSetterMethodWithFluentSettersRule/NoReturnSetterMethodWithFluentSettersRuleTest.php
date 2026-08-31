@@ -38,9 +38,9 @@ class NoReturnSetterMethodWithFluentSettersRuleTest extends RuleTestCase
     public static function provideData(): \Iterator
     {
         yield [__DIR__ . '/../../data/NoReturnSetterMethod/SomeSetterClass.php', [
-            [NoReturnSetterMethodRule::ERROR_MESSAGE, 12],
-            [NoReturnSetterMethodRule::ERROR_MESSAGE, 17],
-            [NoReturnSetterMethodRule::ERROR_MESSAGE, 22],
+            [NoReturnSetterMethodRule::ERROR_MESSAGE, 14],
+            [NoReturnSetterMethodRule::ERROR_MESSAGE, 19],
+            [NoReturnSetterMethodRule::ERROR_MESSAGE, 24],
         ]];
 
         yield [__DIR__ . '/../../data/NoReturnSetterMethod/FluentSetterClass.php', []];

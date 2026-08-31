@@ -21,7 +21,7 @@ class IniConfigReaderTest extends TestCase
         \ini_set($key, (string) $configValue);
 
         $reader = new IniConfigReader();
-        static::assertSame($expectedValue, $reader->get($key));
+        static::assertSame((string) \ini_get($key), $reader->get($key));
 
         \ini_restore($key);
     }

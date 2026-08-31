@@ -277,7 +277,7 @@ class CookieProvider
 
                     if (\array_key_exists('value', $entry)) {
                         $value = $entry['value'];
-                        $cookieEntry->value = $value !== '' ? $value : null;
+                        $cookieEntry->value = $value !== '' ? (string) $value : null;
                     }
 
                     if (isset($entry['expiration'])) {

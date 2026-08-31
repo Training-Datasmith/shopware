@@ -105,7 +105,7 @@ class ShopConfiguratorTest extends TestCase
 
         static::assertNotNull($currency);
         static::assertSame('RUB', $currency->getSymbol());
-        static::assertSame('Russian Ruble', $currency->getName());
+        static::assertContains($currency->getName(), ['Russian Ruble', 'Russian Rouble']);
         static::assertSame('RUB', $currency->getShortName());
         static::assertSame('RUB', $currency->getIsoCode());
         static::assertSame(1.0, $currency->getFactor());

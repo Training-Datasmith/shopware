@@ -72,7 +72,7 @@ class Migration1697112043TemporaryPaymentAndShippingTechnicalNamesTest extends T
             ['ids' => ArrayParameterType::BINARY],
         );
 
-        static::assertSame([
+        static::assertEqualsCanonicalizing([
             [
                 'id' => $this->ids->get('payment-method'),
                 'technical_name' => 'temporary_' . $this->ids->get('payment-method'),
@@ -83,7 +83,7 @@ class Migration1697112043TemporaryPaymentAndShippingTechnicalNamesTest extends T
             ],
         ], $paymentMethods);
 
-        static::assertSame([
+        static::assertEqualsCanonicalizing([
             [
                 'id' => $this->ids->get('shipping-method'),
                 'technical_name' => 'temporary_' . $this->ids->get('shipping-method'),

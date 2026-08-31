@@ -246,7 +246,7 @@ abstract class KernelPluginLoader extends Bundle
         $absolutePluginRootPath = $this->getAbsolutePluginRootPath($projectDir, $pluginRootPath);
 
         if (mb_strpos($absolutePluginRootPath, $projectDir) !== 0) {
-            throw throw PluginException::kernelPluginLoaderError(
+            throw PluginException::kernelPluginLoaderError(
                 $plugin,
                 \sprintf('Plugin dir %s needs to be a sub-directory of the project dir %s', $pluginRootPath, $projectDir)
             );
@@ -287,7 +287,7 @@ abstract class KernelPluginLoader extends Bundle
             if (!$plugin instanceof Plugin) {
                 $reason = \sprintf('Plugin class "%s" must extend "%s"', $plugin::class, Plugin::class);
 
-                throw throw PluginException::kernelPluginLoaderError($pluginData['name'], $reason);
+                throw PluginException::kernelPluginLoaderError($pluginData['name'], $reason);
             }
 
             $this->pluginInstances->add($plugin);

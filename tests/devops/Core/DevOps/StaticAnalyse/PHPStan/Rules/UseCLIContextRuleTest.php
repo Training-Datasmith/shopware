@@ -24,14 +24,14 @@ class UseCLIContextRuleTest extends RuleTestCase
         $this->analyse([__DIR__ . '/data/UseCLIContextRule/TestCommand.php'], [
             [
                 'Method Context::createDefaultContext() should not be used in CLI context. Use Context::createCLIContext() instead.',
-                17,
+                19,
             ],
         ]);
 
         $this->analyse([__DIR__ . '/data/UseCLIContextRule/TaskHandler.php'], [
             [
                 'Method Context::createDefaultContext() should not be used in CLI context. Use Context::createCLIContext() instead.',
-                15,
+                17,
             ],
         ]);
 

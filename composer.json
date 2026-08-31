@@ -515,7 +515,11 @@
             "Shopware\\Tests\\Integration\\": "tests/integration/",
             "Shopware\\Tests\\Bench\\": "tests/performance/bench/",
             "Shopware\\Tests\\Migration\\": "tests/migration/",
-            "Shopware\\Tests\\DevOps\\": "tests/devops/"
-        }
+            "Shopware\\Tests\\DevOps\\": "tests/devops/",
+            "Shopware\\Core\\DevOps\\MyFakeNamespace\\": "tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/DomainExceptionRule/"
+        },
+        "classmap": [
+            "tests/devops/Core/DevOps/StaticAnalyse/PHPStan/Rules/data/AclValidPermissionsRule/invalid-acl-name-in-route-attribute.php"
+        ]
     }
 }

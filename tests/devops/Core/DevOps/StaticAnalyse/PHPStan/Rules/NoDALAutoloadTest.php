@@ -28,11 +28,11 @@ class NoDALAutoloadTest extends RuleTestCase
         $this->analyse([__DIR__ . '/data/NoDalAutoload/not-in-namespace.php'], [
             [
                 'my-entity.prop association has a configured autoload===true, this is forbidden for platform integrations',
-                15,
+                17,
             ],
             [
                 'my-entity.prop2 association has a configured autoload===true, this is forbidden for platform integrations',
-                16,
+                18,
             ],
         ]);
 
@@ -40,11 +40,11 @@ class NoDALAutoloadTest extends RuleTestCase
         $this->analyse([__DIR__ . '/data/NoDalAutoload/in-core-namespace.php'], [
             [
                 'my-entity.prop association has a configured autoload===true, this is forbidden for platform integrations',
-                17,
+                19,
             ],
             [
                 'my-entity.prop2 association has a configured autoload===true, this is forbidden for platform integrations',
-                18,
+                20,
             ],
         ]);
 

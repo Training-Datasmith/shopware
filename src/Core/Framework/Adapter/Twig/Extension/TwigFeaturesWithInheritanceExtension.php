@@ -104,7 +104,7 @@ class TwigFeaturesWithInheritanceExtension extends AbstractExtension
         bool $withContext = true,
         bool $ignoreMissing = false,
         bool $sandboxed = false
-    ): string {
+    ): \Twig\Markup|string {
         // sw-fix-start
         if (\is_array($template)) {
             foreach ($template as &$value) {

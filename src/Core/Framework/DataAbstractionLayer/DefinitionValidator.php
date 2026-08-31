@@ -31,6 +31,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\StorageAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\VersionField;
+use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Struct\ArrayEntity;
 use Symfony\Component\String\Inflector\EnglishInflector;
@@ -88,6 +89,10 @@ class DefinitionValidator
         'coverId',
         'productMediaVersionId',
         'featureSetId',
+    ];
+
+    private const MAJOR_REMOVED_DEFINITIONS = [
+        'import_export_profile_translation',
     ];
 
     private const TABLES_WITHOUT_DEFINITION = [
@@ -182,6 +187,9 @@ class DefinitionValidator
                 continue;
             }
             if (\in_array($definitionClass, [AttributeEntityDefinition::class, AttributeTranslationDefinition::class, AttributeMappingDefinition::class], true)) {
+                continue;
+            }
+            if (Feature::isActive('v6.8.0.0') && \in_array($definition->getEntityName(), self::MAJOR_REMOVED_DEFINITIONS, true)) {
                 continue;
             }
 

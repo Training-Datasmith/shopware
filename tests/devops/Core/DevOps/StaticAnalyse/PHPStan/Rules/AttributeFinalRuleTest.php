@@ -30,7 +30,7 @@ class AttributeFinalRuleTest extends RuleTestCase
             __DIR__ . '/data/AttributeFinalRule/NonFinalAttributeClass.php',
         ], [[
             'Attribute classes must be declared final.',
-            5,
+            7,
         ]]);
     }
 

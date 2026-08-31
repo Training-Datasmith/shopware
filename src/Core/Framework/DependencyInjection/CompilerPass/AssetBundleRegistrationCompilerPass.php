@@ -21,7 +21,7 @@ class AssetBundleRegistrationCompilerPass implements CompilerPassInterface
         $bundles = $container->getParameter('kernel.bundles');
 
         $assetService = $container->getDefinition('assets.packages');
-        $assetService->setFactory(AssetPackageService::create(...));
+        $assetService->setFactory([AssetPackageService::class, 'create']);
 
         $bundleMap = [];
 

@@ -30,7 +30,7 @@ class BlobFieldSerializer implements FieldSerializerInterface
         WriteParameterBag $parameters
     ): \Generator {
         if (!$field instanceof BlobField) {
-            throw throw DataAbstractionLayerException::invalidSerializerField(BlobField::class, $field);
+            throw DataAbstractionLayerException::invalidSerializerField(BlobField::class, $field);
         }
 
         yield $field->getStorageName() => $data->getValue();

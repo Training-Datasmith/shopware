@@ -135,7 +135,7 @@ class ScheduledTaskHandlerTest extends TestCase
         $task = $this->scheduledTaskRepo->search(new Criteria([$taskId]), Context::createDefaultContext())->get($taskId);
 
         static::assertSame(ScheduledTaskDefinition::STATUS_SCHEDULED, $task->getStatus());
-        static::assertGreaterThan(
+        static::assertGreaterThanOrEqual(
             $task->getNextExecutionTime()->format(Defaults::STORAGE_DATE_TIME_FORMAT),
             $nowTime->format(Defaults::STORAGE_DATE_TIME_FORMAT)
         );

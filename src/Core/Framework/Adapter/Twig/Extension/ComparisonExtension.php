@@ -62,7 +62,7 @@ class ComparisonExtension extends AbstractExtension
         return match ($operator) {
             Rule::OPERATOR_EQ => $matches !== [],
             Rule::OPERATOR_NEQ => $matches === [],
-            default => throw throw AdapterException::unsupportedOperator($operator, self::class),
+            default => throw AdapterException::unsupportedOperator($operator, self::class),
         };
     }
 
@@ -75,7 +75,7 @@ class ComparisonExtension extends AbstractExtension
             Rule::OPERATOR_LTE => $value <= $comparable,
             Rule::OPERATOR_GT => $value > $comparable,
             Rule::OPERATOR_LT => $value < $comparable,
-            default => throw throw AdapterException::unsupportedOperator($operator, self::class),
+            default => throw AdapterException::unsupportedOperator($operator, self::class),
         };
     }
 
@@ -88,7 +88,7 @@ class ComparisonExtension extends AbstractExtension
             Rule::OPERATOR_LTE => FloatComparator::lessThanOrEquals($value, $comparable),
             Rule::OPERATOR_GT => FloatComparator::greaterThan($value, $comparable),
             Rule::OPERATOR_LT => FloatComparator::lessThan($value, $comparable),
-            default => throw throw AdapterException::unsupportedOperator($operator, self::class),
+            default => throw AdapterException::unsupportedOperator($operator, self::class),
         };
     }
 }

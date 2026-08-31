@@ -40,7 +40,7 @@ class AbstractClassUsageRuleTest extends RuleTestCase
         $this->analyse([__DIR__ . '/data/AbstractClassUsageRule/implementation-used.php'], [
             [
                 'Decoration error: Parameter Shopware\Core\Framework\Adapter\Translation\Translator $translator of Service is using the decoration pattern, but non-abstract constructor parameter is used.',
-                8,
+                10,
             ],
         ]);
     }

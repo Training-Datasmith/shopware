@@ -27,11 +27,11 @@ class NoStaticRuntimeExceptionReturnRuleTest extends RuleTestCase
         ], [
             [
                 'Domain exception factory method Shopware\Tests\DevOps\Core\DevOps\StaticAnalyse\PHPStan\Rules\data\NoStaticRuntimeExceptionReturnRuleTest\DummyException::runtimeException() might return \RuntimeException, however the ExceptionClass itself already extends \RuntimeException, therefore it should only return self.',
-                9,
+                11,
             ],
             [
                 'Domain exception factory method Shopware\Tests\DevOps\Core\DevOps\StaticAnalyse\PHPStan\Rules\data\NoStaticRuntimeExceptionReturnRuleTest\DummyException::runtimeExceptionOrSelf() might return \RuntimeException, however the ExceptionClass itself already extends \RuntimeException, therefore it should only return self.',
-                14,
+                16,
             ],
         ]);
     }

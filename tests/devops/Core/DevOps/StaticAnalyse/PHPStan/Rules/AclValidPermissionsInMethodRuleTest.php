@@ -25,7 +25,7 @@ class AclValidPermissionsInMethodRuleTest extends RuleTestCase
         $this->analyse([__DIR__ . '/data/AclValidPermissionsRule/invalid-acl-name-in-method-call.php'], [
             [
                 'Permission "non-existing-permission!" is not a valid backend ACL key. If it\'s an entity based permission, please check if entity is listed in the entity-schema.json. If it\'s a custom permissions, please check if it should be added to the allowlist.',
-                07,
+                9,
             ],
         ]);
     }

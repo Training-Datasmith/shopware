@@ -24,7 +24,7 @@ class PublicServiceDecoratorRuleTest extends RuleTestCase
         $this->analyse([__DIR__ . '/data/PublicServiceDecoratorRule/NonPublicDecorator.php'], [
             [
                 'Service "Shopware\Tests\DevOps\Core\DevOps\StaticAnalyse\PHPStan\Rules\data\PublicServiceDecoratorRule\NonPublicDecorator" decorates the public service "translator" but is not marked as public. Decorators of public services must also be public.',
-                9,
+                11,
             ],
         ]);
 
@@ -38,7 +38,7 @@ class PublicServiceDecoratorRuleTest extends RuleTestCase
         $this->analyse([__DIR__ . '/data/PublicServiceDecoratorRule/NonExistDecorator.php'], [
             [
                 'Service "Shopware\Tests\DevOps\Core\DevOps\StaticAnalyse\PHPStan\Rules\data\PublicServiceDecoratorRule\NonExistDecorator" is a decorator for "some.non.exists.service", but the decorated service does not exist.',
-                9,
+                11,
             ],
         ]);
     }

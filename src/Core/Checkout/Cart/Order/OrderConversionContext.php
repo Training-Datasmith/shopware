@@ -138,7 +138,7 @@ class OrderConversionContext extends Struct
      *
      * @return $this
      */
-    public function assign(array $options)
+    public function assign(array $options): object|string
     {
         /** @deprecated tag:v6.8.0 - remove overwrite of assign function */
         if (isset($options['includeOrderDate'])) {

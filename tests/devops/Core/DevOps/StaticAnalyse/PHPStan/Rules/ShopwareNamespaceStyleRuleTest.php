@@ -26,21 +26,21 @@ class ShopwareNamespaceStyleRuleTest extends RuleTestCase
         $this->analyse([__DIR__ . '/data/NamespaceStyle/NoShopware.php'], [
             [
                 'Namespace must start with Shopware',
-                3,
+                5,
             ],
         ]);
 
         $this->analyse([__DIR__ . '/data/NamespaceStyle/GlobalCommand.php'], [
             [
                 'No global Command directories allowed, put your commands in the right domain directory',
-                3,
+                5,
             ],
         ]);
 
         $this->analyse([__DIR__ . '/data/NamespaceStyle/GlobalException.php'], [
             [
                 'No global Exception directories allowed, put your exceptions in the right domain directory',
-                3,
+                5,
             ],
         ]);
     }

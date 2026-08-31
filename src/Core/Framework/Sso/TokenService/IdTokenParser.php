@@ -23,7 +23,7 @@ use Symfony\Component\Clock\ClockInterface;
  * @internal
  */
 #[Package('framework')]
-final readonly class IdTokenParser
+final class IdTokenParser
 {
     private Parser $parser;
 

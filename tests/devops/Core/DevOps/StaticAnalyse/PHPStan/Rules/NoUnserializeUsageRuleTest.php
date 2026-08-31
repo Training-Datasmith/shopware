@@ -27,8 +27,8 @@ class NoUnserializeUsageRuleTest extends RuleTestCase
         $tip = NoUnserializeUsageRule::ERROR_TIP;
 
         $this->analyse([__DIR__ . '/data/NoUnserializeUsageRule/HasUnserialize.php'], [
-            [$message, 9, $tip],
-            [$message, 10, $tip],
+            [$message, 11, $tip],
+            [$message, 12, $tip],
         ]);
     }
 

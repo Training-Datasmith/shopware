@@ -54,6 +54,8 @@ class DownloadServiceTest extends TestCase
     #[DataProvider('dataProviderCreateFileResponse')]
     public function testCreateFileResponse(ImportExportFileEntity $fileEntity, string $accessToken, string $fileId, string $expectOutputFilename): void
     {
+        $fileEntity->setUpdatedAt(new \DateTimeImmutable());
+
         /** @var StaticEntityRepository<EntityCollection<ImportExportFileEntity>> $fileRepository */
         $fileRepository = new StaticEntityRepository([new EntityCollection([$fileEntity])]);
 
